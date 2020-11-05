@@ -19,11 +19,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{1A86
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorld", "samples\HelloWorld\HelloWorld.csproj", "{F22C86A6-0257-43D1-84EC-C8B7B42AB4E6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{941788FE-F1FA-47FA-AEEF-24DFA05B108A}"
-	ProjectSection(SolutionItems) = preProject
-		global.json = global.json
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWranglerDotNet", "src\WasmWranglerDotNet\WasmWranglerDotNet.csproj", "{19B73271-35F6-4049-991A-E5E76855DA56}"
 EndProject
 Global
