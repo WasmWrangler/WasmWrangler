@@ -1,0 +1,49 @@
+<Project>
+  <PropertyGroup>
+    <PublishDirectory Condition="'$(PublishDirectory)' == ''">$(MSBuildThisFileDirectory)../publish/</PublishDirectory>
+    <WasmOutputDirectory>$(PublishDirectory)/$(MSBuildProjectName)/</WasmOutputDirectory>
+  </PropertyGroup>
+
+  <Target Name="WasmPublish" AfterTargets="AfterBuild" DependsOnTargets="
+    WasmCallSDKPackager;
+    WasmCreateBootstraperJs;
+    WasmCopyAssets" />
+
+  <Target Name="WasmCallSDKPackager">
+    <PropertyGroup>
+      <_PackagerInputPath>$(OutputPath)$(AssemblyName).dll</_PackagerInputPath>
+    </PropertyGroup>
+
+    <Exec Command="$(WasmSDKPath)/packager.exe --out=&quot;$(WasmOutputDirectory)&quot; &quot;$(_PackagerInputPath)&quot;" />
+  </Target>
+
+  <Target Name="WasmCreateBootstraperJs">
+    <ItemGroup>
+      <_WasmBootstrapperJsFiles Include="
+        $(WasmOutputDirectory)/mono-config.js;
+        $(WasmOutputDirectory)/runtime.js;
+        $(WasmOutputDirectory)/dotnet.js" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_WasmBootstrapperJsFilesContents Include="$([System.IO.File]::ReadAllText(%(_WasmBootstrapperJsFiles.Identity)))"/>
+    </ItemGroup>
+
+    <WriteLinesToFile File="$(WasmOutputDirectory)bootstrapper.js" Lines="@(_WasmBootstrapperJsFilesContents)" Overwrite="true" />
+
+    <Delete Files="@(_WasmBootstrapperJsFiles)" />
+  </Target>
+
+  <Target Name="WasmCopyAssets">
+    <ItemGroup>
+      <_WasmAssests Include="**/*.css" />
+      <_WasmAssests Include="**/*.html" />
+      <_WasmAssests Include="**/*.js" />
+    </ItemGroup>
+
+    <Copy
+        SourceFiles="%(_WasmAssests.Identity)"
+        DestinationFiles="$(WasmOutputDirectory)%(_WasmAssests.RelativeDir)%(_WasmAssests.RecursiveDir)%(_WasmAssests.FileName)%(_WasmAssests.Extension)"
+        SkipUnchangedFiles="true" />
+  </Target>
+</Project>

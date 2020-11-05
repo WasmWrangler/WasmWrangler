@@ -1,0 +1,15 @@
+<Project>
+  <PropertyGroup>
+    <WasmSDKPath>$(MSBuildThisFileDirectory)../../mono-wasm-test</WasmSDKPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="WebAssembly.Bindings">
+      <HintPath>$(WasmSDKPath)/framework/WebAssembly.Bindings.dll</HintPath>
+    </Reference>
+
+    <Reference Include="WebAssembly.Net.WebSockets">
+      <HintPath>$(WasmSDKPath)/framework/WebAssembly.Net.WebSockets.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

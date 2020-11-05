@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en-us">
+<head>
+</head>
+<body>
+    <h1>Please look in the console of the broswer in order to see the output.</h1>
+    <script type="text/javascript">
+        var App = {
+            init: function () {
+                BINDING.call_static_method("[HelloWorld] HelloWorld.Program:WasmMain");
+            },
+
+            sayHello: function (name) {
+                console.info(`Hello to ${name} from JS!`);
+            }
+        };
+    </script>
+    <script async type="text/javascript" src="bootstrapper.js"></script>
+</body>
+</html>

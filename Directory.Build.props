@@ -1,0 +1,18 @@
+<Project>
+  <PropertyGroup>
+    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <RepositoryRootDirectory>$(MSBuildThisFileDirectory)</RepositoryRootDirectory>
+    <BinDirectory>$(RepositoryRootDirectory)bin/</BinDirectory>
+    <PublishDirectory>$(RepositoryRootDirectory)publish/</PublishDirectory>
+    <OutputPath>$([System.IO.Path]::GetFullPath('$(BinDirectory)$(Configuration)/$(PlatformTarget)'))/$(MSBuildProjectName)</OutputPath>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <Authors>smack0007</Authors>
+    <Copyright>Copyright © Zachary Snow $([System.DateTime]::Now.ToString(yyyy))</Copyright>    
+
+    <RepositoryType>git</RepositoryType>
+
+    <!-- Tells Visual Studio to always run MSBuild. -->
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+  </PropertyGroup>
+</Project>
