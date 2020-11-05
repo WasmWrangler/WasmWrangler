@@ -1,9 +1,32 @@
 <Project>
-  <Target Name="WasmPublish" AfterTargets="AfterBuild" DependsOnTargets="
+  <UsingTask TaskName="WasmWranglerDotNet.GetMonoWasmSdk" AssemblyFile="$(MSBuildThisFileDirectory)../../lib/netstandard2.0/WasmWranglerDotNet.dll" />
+  
+  <Target Name="WasmGetSdkPath">
+    <Message Importance="high" Text="WasmGetSdkPath..." />
+
+    <GetMonoWasmSdk>
+      <Output TaskParameter="SdkPath" PropertyName="WasmSDKPath"/>
+    </GetMonoWasmSdk>
+  </Target>
+  
+  <Target Name="WasmAddReferences" BeforeTargets="Compile" DependsOnTargets="WasmGetSdkPath">
+    <ItemGroup>
+      <Reference Include="WebAssembly.Bindings">
+        <HintPath>$(WasmSDKPath)/framework/WebAssembly.Bindings.dll</HintPath>
+      </Reference>
+
+      <Reference Include="WebAssembly.Net.WebSockets">
+        <HintPath>$(WasmSDKPath)/framework/WebAssembly.Net.WebSockets.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+  </Target>
+  
+  <Target Name="WasmBuild" AfterTargets="AfterBuild" DependsOnTargets="
+    WasmGetSdkPath;
     WasmCallSDKPackager;
     WasmCreateBootstraperJs;
     WasmCopyAssets" />
-
+  
   <Target Name="WasmCallSDKPackager">
     <PropertyGroup>
       <WasmOutputPath Condition="'$(WasmOutputPath)' == ''">$(OutputPath)/wasm</WasmOutputPath>

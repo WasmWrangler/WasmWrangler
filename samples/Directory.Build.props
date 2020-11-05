@@ -1,0 +1,5 @@
+<Project>
+  <Target Name="BeforeRestore" BeforeTargets="Restore">
+    <Message Importance="high" Text="BeforeRestore..." />
+  </Target>
+</Project>
