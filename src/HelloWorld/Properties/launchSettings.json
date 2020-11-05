@@ -1,9 +1,0 @@
-{
-  "profiles": {
-    "HelloWorld": {
-      "commandName": "Executable",
-      "executablePath": "dotnet-serve",
-      "commandLineArgs": "-d \"../../../../publish/HelloWorld\" -p 8080"
-    }
-  }
-}

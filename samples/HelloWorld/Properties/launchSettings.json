@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "HelloWorld": {
+        "commandName": "Executable",
+        "executablePath": "dotnet-serve",
+        "commandLineArgs": "-d \"../../../../bin/Debug/HelloWorld/netcoreapp3.1/wasm\" -p 8080 -o"
+    }
+  }
+}

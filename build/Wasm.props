@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <WasmSDKPath>$(MSBuildThisFileDirectory)../../mono-wasm-test</WasmSDKPath>
+    <WasmSDKPath>$(MSBuildThisFileDirectory)../../mono-wasm</WasmSDKPath>
   </PropertyGroup>
 
   <ItemGroup>

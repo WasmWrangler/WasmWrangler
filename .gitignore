@@ -46,6 +46,3 @@ _ReSharper*/
 
 #NuGet
 packages/
-
-#Output
-publish/
