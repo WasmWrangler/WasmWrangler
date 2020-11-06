@@ -10,7 +10,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Build NuGet package
-      run: dotnet pack src/WasmWrangler -nologo -v:n
+      run: dotnet pack src/WasmWrangler -c Release -nologo -v:n
     - name: Ensure WASM SDK
       run: dotnet restore samples/HelloWorld -nologo -v:n && dotnet msbuild samples/HelloWorld -nologo -t:WasmEnsureSDKAvailable
     - name: Build

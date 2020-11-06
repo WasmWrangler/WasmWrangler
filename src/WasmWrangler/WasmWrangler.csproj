@@ -31,12 +31,4 @@
     <Message Importance="high" Text="WasmSDKName = $(WasmSDKName)" />
     <Message Importance="high" Text="WasmSDKPath = $(WasmSDKPath)" />
   </Target>
-
-  <Target Name="ClearPackageCache" AfterTargets="Pack">
-    <Message Importance="high" Text="ClearPackageCache..." />
-
-    <RemoveDir
-        Condition="$(Configuration) == 'Debug'"
-        Directories="$(UserProfile)/.nuget/packages/WasmWrangerDotNet/0.0.1" />
-  </Target>
 </Project>
