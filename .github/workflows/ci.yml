@@ -12,4 +12,4 @@ jobs:
     - name: Build NuGet package
       run: dotnet pack src/WasmWrangler -nologo -v:n
     - name: Build everything
-      run: dotnet build -nologo -v:n  
+      run: dotnet restore -nologo -v:n && dotnet build -nologo -v:n  
