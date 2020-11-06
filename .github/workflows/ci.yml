@@ -9,5 +9,7 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - name: Build
-      run: dotnet build -nologo -v:n
+    - name: Build NuGet package
+      run: dotnet pack src/WasmWrangler -nologo -v:n
+    - name: Build everything
+      run: dotnet build -nologo -v:n  
