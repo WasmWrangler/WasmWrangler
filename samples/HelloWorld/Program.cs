@@ -1,5 +1,5 @@
 ﻿using System;
-//using WebAssembly;
+using WebAssembly;
 
 namespace HelloWorld
 {
@@ -9,8 +9,8 @@ namespace HelloWorld
         {
             Console.WriteLine("Hello World from WASM!");
 
-            //var app = Runtime.GetGlobalObject("App") as JSObject;
-            //app.Invoke("sayHello", "smack0007");
+            var app = Runtime.GetGlobalObject("App") as JSObject;
+            app.Invoke("sayHello", "smack0007");
         }
     }
 }

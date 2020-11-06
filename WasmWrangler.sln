@@ -3,8 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WasmWranglerDotNet", "WasmWranglerDotNet", "{C9A5FC8A-6F64-4AB9-8269-A9ACEB8BF432}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WasmWrangler", "WasmWrangler", "{C9A5FC8A-6F64-4AB9-8269-A9ACEB8BF432}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		Directory.Build.props = Directory.Build.props
 		nuget.config = nuget.config
 		Readme.md = Readme.md
@@ -19,7 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{1A86
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorld", "samples\HelloWorld\HelloWorld.csproj", "{F22C86A6-0257-43D1-84EC-C8B7B42AB4E6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWranglerDotNet", "src\WasmWranglerDotNet\WasmWranglerDotNet.csproj", "{19B73271-35F6-4049-991A-E5E76855DA56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWrangler", "src\WasmWrangler\WasmWrangler.csproj", "{6FC0C401-956C-4FEC-A8E7-FF0BE5D3A16E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +32,10 @@ Global
 		{F22C86A6-0257-43D1-84EC-C8B7B42AB4E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F22C86A6-0257-43D1-84EC-C8B7B42AB4E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F22C86A6-0257-43D1-84EC-C8B7B42AB4E6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{19B73271-35F6-4049-991A-E5E76855DA56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{19B73271-35F6-4049-991A-E5E76855DA56}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{19B73271-35F6-4049-991A-E5E76855DA56}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{19B73271-35F6-4049-991A-E5E76855DA56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FC0C401-956C-4FEC-A8E7-FF0BE5D3A16E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FC0C401-956C-4FEC-A8E7-FF0BE5D3A16E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FC0C401-956C-4FEC-A8E7-FF0BE5D3A16E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FC0C401-956C-4FEC-A8E7-FF0BE5D3A16E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,7 +44,7 @@ Global
 		{80D41EA8-8769-4D09-93CD-5FFA4860EE0F} = {C9A5FC8A-6F64-4AB9-8269-A9ACEB8BF432}
 		{1A8617F3-099E-4372-AF71-5133F810D4B1} = {C9A5FC8A-6F64-4AB9-8269-A9ACEB8BF432}
 		{F22C86A6-0257-43D1-84EC-C8B7B42AB4E6} = {1A8617F3-099E-4372-AF71-5133F810D4B1}
-		{19B73271-35F6-4049-991A-E5E76855DA56} = {80D41EA8-8769-4D09-93CD-5FFA4860EE0F}
+		{6FC0C401-956C-4FEC-A8E7-FF0BE5D3A16E} = {80D41EA8-8769-4D09-93CD-5FFA4860EE0F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03562B31-F934-4FB1-B65F-2160026E7C33}

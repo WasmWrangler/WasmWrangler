@@ -1,4 +1,6 @@
 <Project>
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
   <Target Name="BeforeRestore" BeforeTargets="Restore">
     <Message Importance="high" Text="BeforeRestore..." />
   </Target>
