@@ -11,5 +11,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Build NuGet package
       run: dotnet pack src/WasmWrangler -nologo -v:n
+    - name: Ensure SDK
+      run: dotnet restore samples/HelloWorld -nologo -v:n && dotnet msbuild samples/HelloWorld -nologo -t:WasmEnsureSDKAvailable
     - name: Build everything
-      run: dotnet restore -nologo -v:n && dotnet build -nologo -v:n  
+      run: dotnet build -nologo -v:n  
