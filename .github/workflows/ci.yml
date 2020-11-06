@@ -9,9 +9,7 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
-    - name: Build NuGet package
-      run: dotnet pack src/WasmWrangler -nologo -v:n
-    - name: Ensure WASM SDK
-      run: dotnet restore samples/HelloWorld -nologo -v:n && dotnet msbuild samples/HelloWorld -nologo -t:WasmEnsureSDKAvailable
-    - name: Build everything
-      run: dotnet build -nologo -v:n  
+    - name: Build
+      run: dotnet msbuild build\Build.proj -nologo -v:n -t:Build
+    - name: Test
+      run: dotnet msbuild build\Build.proj -nologo -v:n -t:Test

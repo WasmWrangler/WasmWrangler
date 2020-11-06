@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <RepositoryUrl>https://github.com/smack0007/{{ProjectName}}.git</RepositoryUrl>
+
+    <PackageProjectUrl>https://github.com/smack0007/{{ProjectName}}/</PackageProjectUrl>
+    <PackageTags></PackageTags>
+
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>

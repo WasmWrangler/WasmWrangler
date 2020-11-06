@@ -9,7 +9,7 @@ namespace HelloWorld
         {
             Console.WriteLine("Hello World from WASM!");
 
-            var app = Runtime.GetGlobalObject("App") as JSObject;
+            var app = (JSObject)Runtime.GetGlobalObject("App");
             app.Invoke("sayHello", "smack0007");
         }
     }

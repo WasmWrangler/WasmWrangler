@@ -1,18 +1,28 @@
 <Project>
   <PropertyGroup>
-    <Configuration Condition="'$(Configuration)' == ''">Debug</Configuration>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <RepositoryRootDirectory>$(MSBuildThisFileDirectory)</RepositoryRootDirectory>
-    <BinDirectory>$(RepositoryRootDirectory)bin/</BinDirectory>
-    <PublishDirectory>$(RepositoryRootDirectory)publish/</PublishDirectory>
+    <BinDirectory>$(RepositoryRootDirectory)bin\</BinDirectory>
     <OutputPath>$([System.IO.Path]::GetFullPath('$(BinDirectory)$(Configuration)/$(PlatformTarget)'))/$(MSBuildProjectName)</OutputPath>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <Authors>smack0007</Authors>
-    <Copyright>Copyright © Zachary Snow $([System.DateTime]::Now.ToString(yyyy))</Copyright>    
+    <Copyright>Copyright © Zachary Snow $([System.DateTime]::Now.ToString(yyyy))</Copyright>
+
+    <VersionPrefix>0.0.1</VersionPrefix>
+
+    <PackageLicenseFile>License.txt</PackageLicenseFile>
 
     <RepositoryType>git</RepositoryType>
 
     <!-- Tells Visual Studio to always run MSBuild. -->
     <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Condition="'$(Configuration)' == 'Release'" Include="$(MSBuildThisFileDirectory)License.txt" Pack="true" PackagePath="$(PackageLicenseFile)"/>
+  </ItemGroup>
+
+  <Import Project="$(MSBuildThisFileDirectory)/build/Project.props" />
+  <Import Project="$(MSBuildThisFileDirectory)/build/GitVersion.targets" />
 </Project>

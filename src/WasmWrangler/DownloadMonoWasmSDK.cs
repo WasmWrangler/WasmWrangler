@@ -10,13 +10,13 @@ namespace WasmWrangler
     public class DownloadMonoWasmSDK : Microsoft.Build.Utilities.Task
     {
         [Required]
-        public string SDKUrl { get; set; }
+        public string SDKUrl { get; set; } = "";
 
         [Required]
-        public string SDKName { get; set; }
+        public string SDKName { get; set; } = "";
 
         [Required]
-        public string SDKPath { get; set; }
+        public string SDKPath { get; set; } = "";
 
         // Taken from Ooui.Wasm: https://github.com/praeclarum/Ooui/blob/master/Ooui.Wasm.Build.Tasks/BuildDistTask.cs#L56
         public override bool Execute()
