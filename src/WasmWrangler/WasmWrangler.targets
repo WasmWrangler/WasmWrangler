@@ -54,7 +54,7 @@
 
   <Target Name="WasmCopyAssets">
     <ItemGroup>
-      <_WasmAssestsPreserveNewest Include="@(None)" Condition="'%(CopyToOutputDirectory)' == 'PreserveNewest'" />
+      <_WasmAssestsPreserveNewest Include="@(None)" Condition="'%(None.CopyToOutputDirectory)' == 'PreserveNewest'" />
     </ItemGroup>
 
     <Copy
@@ -63,7 +63,7 @@
         SkipUnchangedFiles="true" />
 
     <ItemGroup>
-      <_WasmAssestsAlways Include="@(None)" Condition="'%(CopyToOutputDirectory)' == 'Always'" />
+      <_WasmAssestsAlways Include="@(None)" Condition="'%(None.CopyToOutputDirectory)' == 'Always'" />
     </ItemGroup>
 
     <Copy
