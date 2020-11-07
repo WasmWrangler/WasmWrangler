@@ -1,16 +1,5 @@
 <Project DefaultTargets="EnsureWasmWranglerAssembly;WasmEnsureSDKAvailable">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
-  <PropertyGroup>
-    <WasmWranglerAssemblyFile>$(RepositoryRootDirectory)/bin/$(Configuration)/WasmWrangler/netstandard2.0/WasmWrangler.dll</WasmWranglerAssemblyFile>
-  </PropertyGroup>
-
-  <Import Project="$(RepositoryRootDirectory)/src/WasmWrangler/WasmWrangler.props" />
-  <Import Project="$(RepositoryRootDirectory)/src/WasmWrangler/WasmWrangler.targets" />
-  
-  <Target Name="EnsureWasmWranglerAssembly" BeforeTargets="WasmEnsureSDKAvailable">
-    <Exec
-      Condition="!Exists('$(WasmWranglerAssemblyFile)')"
-      Command="dotnet build $(RepositoryRootDirectory)src/WasmWrangler/WasmWrangler.csproj" />
-  </Target>
+  <Import Project="WasmEnsureSDKAvailable.targets" />
 </Project>

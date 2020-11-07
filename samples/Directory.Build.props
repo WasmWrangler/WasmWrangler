@@ -1,5 +1,5 @@
 <Project>
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
-  <Import Project="$(RepositoryRootDirectory)build/WasmEnsureSDKAvailable.proj" />
+  <Import Project="$(RepositoryRootDirectory)build/WasmEnsureSDKAvailable.targets" />
 </Project>
