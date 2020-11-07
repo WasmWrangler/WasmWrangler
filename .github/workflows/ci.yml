@@ -9,6 +9,8 @@ jobs:
     
     steps:
     - uses: actions/checkout@v1
+    - name: Get Wasm SDK
+      run: dotnet msbuild build\WasmEnsureSDKAvailable.proj -nologo
     - name: Build
       run: dotnet msbuild build\Build.proj -nologo -v:n -t:Build
     - name: Test

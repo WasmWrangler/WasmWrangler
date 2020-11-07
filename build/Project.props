@@ -1,8 +1,8 @@
 <Project>
   <PropertyGroup>
-    <RepositoryUrl>https://github.com/smack0007/{{ProjectName}}.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/smack0007/WasmWrangler.git</RepositoryUrl>
 
-    <PackageProjectUrl>https://github.com/smack0007/{{ProjectName}}/</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/smack0007/WasmWrangler/</PackageProjectUrl>
     <PackageTags></PackageTags>
 
     <LangVersion>8.0</LangVersion>
