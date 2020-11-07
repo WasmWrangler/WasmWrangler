@@ -5,13 +5,12 @@
     <WasmWranglerAssemblyFile>$(RepositoryRootDirectory)/bin/$(Configuration)/WasmWrangler/netstandard2.0/WasmWrangler.dll</WasmWranglerAssemblyFile>
   </PropertyGroup>
 
-  <Target Name="EnsureWasmWranglerAssembly" BeforeTargets="WasmEnsureSDKAvailable">
-    <MSBuild
-      Condition="!Exists('$(WasmWranglerAssemblyFile)')"
-      Projects="$(RepositoryRootDirectory)src/WasmWrangler/WasmWrangler.csproj"
-      Targets="Restore;Build" />
-  </Target>
-  
   <Import Project="$(RepositoryRootDirectory)/src/WasmWrangler/WasmWrangler.props" />
   <Import Project="$(RepositoryRootDirectory)/src/WasmWrangler/WasmWrangler.targets" />
+  
+  <Target Name="EnsureWasmWranglerAssembly" BeforeTargets="WasmEnsureSDKAvailable">
+    <Exec
+      Condition="!Exists('$(WasmWranglerAssemblyFile)')"
+      Command="dotnet build $(RepositoryRootDirectory)src/WasmWrangler/WasmWrangler.csproj" />
+  </Target>
 </Project>
