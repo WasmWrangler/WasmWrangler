@@ -22,6 +22,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorld", "samples\Hello
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWrangler", "src\WasmWrangler\WasmWrangler.csproj", "{6FC0C401-956C-4FEC-A8E7-FF0BE5D3A16E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{1F2D69ED-D587-4842-AAE5-511B08F2426F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{1B672D7A-9F28-4EF3-A425-AACB8FC95905}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\ci.yml = .github\workflows\ci.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{E7C8BD18-9DD2-454F-919F-136EDFDD1B51}"
+	ProjectSection(SolutionItems) = preProject
+		build\Build.proj = build\Build.proj
+		build\GitVersion.targets = build\GitVersion.targets
+		build\Project.props = build\Project.props
+		build\WasmEnsureSDKAvailable.proj = build\WasmEnsureSDKAvailable.proj
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +60,9 @@ Global
 		{1A8617F3-099E-4372-AF71-5133F810D4B1} = {C9A5FC8A-6F64-4AB9-8269-A9ACEB8BF432}
 		{F22C86A6-0257-43D1-84EC-C8B7B42AB4E6} = {1A8617F3-099E-4372-AF71-5133F810D4B1}
 		{6FC0C401-956C-4FEC-A8E7-FF0BE5D3A16E} = {80D41EA8-8769-4D09-93CD-5FFA4860EE0F}
+		{1F2D69ED-D587-4842-AAE5-511B08F2426F} = {C9A5FC8A-6F64-4AB9-8269-A9ACEB8BF432}
+		{1B672D7A-9F28-4EF3-A425-AACB8FC95905} = {1F2D69ED-D587-4842-AAE5-511B08F2426F}
+		{E7C8BD18-9DD2-454F-919F-136EDFDD1B51} = {C9A5FC8A-6F64-4AB9-8269-A9ACEB8BF432}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03562B31-F934-4FB1-B65F-2160026E7C33}
