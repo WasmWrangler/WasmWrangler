@@ -35,6 +35,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{E7C8BD18
 		build\GitVersion.targets = build\GitVersion.targets
 		build\Project.props = build\Project.props
 		build\WasmEnsureSDKAvailable.proj = build\WasmEnsureSDKAvailable.proj
+		build\WasmEnsureSDKAvailable.targets = build\WasmEnsureSDKAvailable.targets
 	EndProjectSection
 EndProject
 Global

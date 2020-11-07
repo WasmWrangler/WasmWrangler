@@ -9,6 +9,6 @@
   <Target Name="EnsureWasmWranglerAssembly" BeforeTargets="WasmEnsureSDKAvailable">
     <Exec
       Condition="!Exists('$(WasmWranglerAssemblyFile)')"
-      Command="dotnet build $(RepositoryRootDirectory)src/WasmWrangler/WasmWrangler.csproj" />
+      Command="dotnet build $(RepositoryRootDirectory)src/WasmWrangler/WasmWrangler.csproj -nologo -c $(Configuration)" />
   </Target>
 </Project>
