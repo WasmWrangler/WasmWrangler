@@ -32,12 +32,24 @@
     WasmCopyAssets" />
 
   <Target Name="WasmCallSDKPackager">
+    <PropertyGroup Condition="'$(WasmPackagerFlags)' == ''">
+      <!-- 
+        NOTE: I've disabled the following flag for now as I'm not sure that
+        it brings any benfit. If at some point the flag needs to be reactivated
+        don't forget to add the double dash before "debug".
+      -->
+      <!-- <WasmPackagerFlags Condition="'$(Configuration)' == 'Debug'">debug</WasmPackagerFlags> -->
+    </PropertyGroup>
+    
     <PropertyGroup>
       <WasmOutputPath Condition="'$(WasmOutputPath)' == ''">$(OutputPath)/dist</WasmOutputPath>
-      <_WasmPackagerInputPath>$(OutputPath)$(AssemblyName).dll</_WasmPackagerInputPath>
+      <_WasmPackagerInputPath>&quot;$(OutputPath)$(AssemblyName).dll&quot;</_WasmPackagerInputPath>
+      <_WasmPackagerArgs>--out=&quot;$(WasmOutputPath)&quot; $(WasmPackagerFlags) $(_WasmPackagerInputPath)</_WasmPackagerArgs>
     </PropertyGroup>
 
-    <Exec Command="$(WasmSDKPath)/packager.exe --out=&quot;$(WasmOutputPath)&quot; &quot;$(_WasmPackagerInputPath)&quot;" />
+    <Message Importance="high" Text="WasmPackagerArgs = $(_WasmPackagerArgs)" />
+
+    <Exec Command="$(WasmSDKPath)/packager.exe $(_WasmPackagerArgs)" />
   </Target>
 
   <Target Name="WasmCreateBootstraperJs">
