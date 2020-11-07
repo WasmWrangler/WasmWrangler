@@ -9,7 +9,7 @@
     <MSBuild
       Condition="!Exists('$(WasmWranglerAssemblyFile)')"
       Projects="$(RepositoryRootDirectory)src/WasmWrangler/WasmWrangler.csproj"
-      Targets="Build" />
+      Targets="Restore;Build" />
   </Target>
   
   <Import Project="$(RepositoryRootDirectory)/src/WasmWrangler/WasmWrangler.props" />
