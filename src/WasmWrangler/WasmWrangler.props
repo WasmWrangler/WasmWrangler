@@ -7,7 +7,11 @@
     <WasmSDKPath>$([System.IO.Path]::Combine($([System.IO.Path]::GetTempPath()), '$(WasmSDKName)'))</WasmSDKPath>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(MSBuiltProjectName)' != 'WasmWrangler'">
+  <ItemGroup Condition="$(WasmNoAutomaticReferences) != true">
+    <Reference Include="System.Net.Http.WebAssemblyHttpHandler">
+      <HintPath>$(WasmSDKPath)/framework/System.Net.Http.WebAssemblyHttpHandler.dll</HintPath>
+    </Reference>
+
     <Reference Include="WebAssembly.Bindings">
       <HintPath>$(WasmSDKPath)/framework/WebAssembly.Bindings.dll</HintPath>
     </Reference>

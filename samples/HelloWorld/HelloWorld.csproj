@@ -4,10 +4,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="WasmWrangler" Version="0.0.1" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Update="css\style.css">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>

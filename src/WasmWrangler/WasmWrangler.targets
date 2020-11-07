@@ -1,5 +1,10 @@
 <Project>
-  <UsingTask TaskName="WasmWrangler.DownloadMonoWasmSDK" AssemblyFile="$(MSBuildThisFileDirectory)../../lib/netstandard2.0/WasmWrangler.dll" />
+  <PropertyGroup>
+    <!-- Allows the samples to specify where the WasmWrangler assembly is located. -->
+    <WasmWranglerAssemblyFile Condition="'$(WasmWranglerAssemblyFile)' == ''">$(MSBuildThisFileDirectory)../../lib/netstandard2.0/WasmWrangler.dll</WasmWranglerAssemblyFile>
+  </PropertyGroup>
+  
+  <UsingTask TaskName="WasmWrangler.DownloadMonoWasmSDK" AssemblyFile="$(WasmWranglerAssemblyFile)" />
 
   <Target Name="WasmEnsureSDKAvailable">
     <Message Importance="high" Text="WasmSDKUrl = $(WasmSDKUrl)" />

@@ -1,7 +1,17 @@
 <Project>
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
-  <Target Name="BeforeRestore" BeforeTargets="Restore">
-    <Message Importance="high" Text="BeforeRestore..." />
+  <PropertyGroup>
+    <WasmWranglerAssemblyFile>$(RepositoryRootDirectory)/bin/$(Configuration)/WasmWrangler/netstandard2.0/WasmWrangler.dll</WasmWranglerAssemblyFile>
+  </PropertyGroup>
+
+  <Target Name="EnsureWasmWranglerAssembly" BeforeTargets="Restore">
+    <MSBuild
+      Condition="!Exists('$(WasmWranglerAssemblyFile)')"
+      Projects="$(RepositoryRootDirectory)src/WasmWrangler/WasmWrangler.csproj"
+      Targets="Build" />
   </Target>
+  
+  <Import Project="$(RepositoryRootDirectory)/src/WasmWrangler/WasmWrangler.props" />
+  <Import Project="$(RepositoryRootDirectory)/src/WasmWrangler/WasmWrangler.targets" />
 </Project>

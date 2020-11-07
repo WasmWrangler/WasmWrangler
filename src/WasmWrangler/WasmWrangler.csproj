@@ -2,16 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+
+    <PackageLicenseFile>License.txt</PackageLicenseFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <VersionPrefix>0.0.1</VersionPrefix>
-    <Version>0.0.1</Version>
-    <PackageVersion>0.0.1</PackageVersion>
-    <AssemblyVersion>0.0.1</AssemblyVersion>
-    <FileVersion>0.0.1</FileVersion>
-  </PropertyGroup>
-
+  <ItemGroup>
+    <None Include="$(RepositoryRootDirectory)License.txt" Pack="true" PackagePath="$(PackageLicenseFile)"/>
+  </ItemGroup>
+  
   <ItemGroup>
     <PackageReference Include="Microsoft.Build" Version="15.3.409" />
     <PackageReference Include="Microsoft.Build.Framework" Version="15.3.409" />
@@ -24,10 +22,16 @@
     <None Include="*.targets" Pack="true" PackagePath="build/$(TargetFramework)/%(None.Filename)%(None.Extension)" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <WasmNoAutomaticReferences>true</WasmNoAutomaticReferences>
+  </PropertyGroup>
+  
   <Import Project="WasmWrangler.props" />
+  
   <Target Name="PrintWasmWranglerProps" AfterTargets="Build">
     <Message Importance="high" Text="WasmSDKUrl = $(WasmSDKUrl)" />
     <Message Importance="high" Text="WasmSDKName = $(WasmSDKName)" />
     <Message Importance="high" Text="WasmSDKPath = $(WasmSDKPath)" />
   </Target>
 </Project>
+
