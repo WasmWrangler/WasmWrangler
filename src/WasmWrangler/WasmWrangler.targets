@@ -71,21 +71,18 @@
 
   <Target Name="WasmCopyAssets">
     <ItemGroup>
-      <_WasmAssestsPreserveNewest Include="@(None)" Condition="'%(None.CopyToOutputDirectory)' == 'PreserveNewest'" />
+      <WasmAssests Include="@(None)" Condition="'%(None.CopyToOutputDirectory)' != '' And '%(None.CopyToOutputDirectory)' != 'Never'">
+        <Destination Condition="'%(None.Link)' == ''">$(WasmOutputPath)/%(None.RecursiveDir)%(None.FileName)%(None.Extension)</Destination>
+        <Destination Condition="'%(None.Link)' != ''">$(WasmOutputPath)/%(None.Link)</Destination>
+
+        <SkipUnchangedFiles Condition="'%(None.CopyToOutputDirectory)' == 'Always'">false</SkipUnchangedFiles>
+        <SkipUnchangedFiles Condition="'%(None.CopyToOutputDirectory)' == 'PreserveNewest'">true</SkipUnchangedFiles>
+      </WasmAssests>
     </ItemGroup>
 
     <Copy
-        SourceFiles="%(_WasmAssestsPreserveNewest.Identity)"
-        DestinationFiles="$(WasmOutputPath)/%(_WasmAssestsPreserveNewest.RecursiveDir)%(_WasmAssestsPreserveNewest.FileName)%(_WasmAssestsPreserveNewest.Extension)"
-        SkipUnchangedFiles="true" />
-
-    <ItemGroup>
-      <_WasmAssestsAlways Include="@(None)" Condition="'%(None.CopyToOutputDirectory)' == 'Always'" />
-    </ItemGroup>
-
-    <Copy
-        SourceFiles="%(_WasmAssestsAlways.Identity)"
-        DestinationFiles="$(WasmOutputPath)/%(_WasmAssestsAlways.RecursiveDir)%(_WasmAssestsAlways.FileName)%(_WasmAssestsAlways.Extension)"
-        SkipUnchangedFiles="false" />
+        SourceFiles="%(WasmAssests.Identity)"
+        DestinationFiles="%(WasmAssests.Destination)"
+        SkipUnchangedFiles="%(WasmAssets.SkipUnchangedFiles)" />
   </Target>
 </Project>

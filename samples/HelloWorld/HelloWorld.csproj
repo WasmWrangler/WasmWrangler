@@ -3,7 +3,7 @@
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
 
-    <ItemGroup>
+    <ItemGroup>      
       <None Update="css\style.css">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>

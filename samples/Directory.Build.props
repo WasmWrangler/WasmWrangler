@@ -2,4 +2,12 @@
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
   <Import Project="$(RepositoryRootDirectory)build/WasmEnsureSDKAvailable.targets" />
+
+  <ItemGroup>
+    <PackageReference Include="Font.Awesome" Version="5.15.1" GeneratePathProperty="true" />
+
+    <None Include="$(PkgFont_Awesome)/Content/Content/fontawesome.min.css" Link="css/fontawesome.min.css" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="$(PkgFont_Awesome)/Content/Content/solid.min.css" Link="css/fontawesome.solid.min.css" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="$(PkgFont_Awesome)/Content/webfonts/fa-solid*.*" Link="webfonts/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>
