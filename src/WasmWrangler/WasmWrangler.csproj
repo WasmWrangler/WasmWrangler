@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-
+    
+    
     <PackageLicenseFile>License.txt</PackageLicenseFile>
   </PropertyGroup>
 
@@ -15,6 +16,21 @@
     <PackageReference Include="Microsoft.Build.Framework" Version="15.3.409" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.3.409" />
     <PackageReference Include="Microsoft.Build.Tasks.Core" Version="15.3.409" />
+
+    <PackageReference Include="SharpScss" Version="2.0.0" />
+    <!-- SharpScss needs to be copied to where the output is. -->
+    <!--<PackageReference Include="SharpScss" Version="2.0.0" GeneratePathProperty="true" />
+    <None
+      Include="$(PkgSharpScss)/lib/netstandard2.0/*.*"
+      Link="%(Filename)%(Extension)"
+      CopyToOutputDirectory="PreserveNewest"
+      Pack="true"
+      PackagePath="lib/$(TargetFramework)/%(Filename)%(Extension)" />
+    <None
+      Include="$(PkgSharpScss)/runtimes/**/*.*"
+      Link="runtimes/%(RecursiveDir)%(Filename)%(Extension)"
+      CopyToOutputDirectory="PreserveNewest"
+      Pack="true" />-->
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +39,7 @@
   </ItemGroup>
 
   <PropertyGroup>
+    <!-- Tell WasmWrangler.props not to include Reference(s) -->
     <WasmNoAutomaticReferences>true</WasmNoAutomaticReferences>
   </PropertyGroup>
   

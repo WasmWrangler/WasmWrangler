@@ -1,0 +1,39 @@
+﻿<Project>
+  <Target Name="WasmCallSDKPackager">
+    <PropertyGroup Condition="'$(WasmPackagerFlags)' == ''">
+      <!-- 
+        NOTE: I've disabled the following flag for now as I'm not sure that
+        it brings any benfit. If at some point the flag needs to be reactivated
+        don't forget to add the double dash before "debug".
+      -->
+      <!-- <WasmPackagerFlags Condition="'$(Configuration)' == 'Debug'">debug</WasmPackagerFlags> -->
+    </PropertyGroup>
+
+    <PropertyGroup>
+      <WasmOutputPath Condition="'$(WasmOutputPath)' == ''">$(OutputPath)/dist</WasmOutputPath>
+      <_WasmPackagerInputPath>&quot;$(OutputPath)$(AssemblyName).dll&quot;</_WasmPackagerInputPath>
+      <_WasmPackagerArgs>--out=&quot;$(WasmOutputPath)&quot; $(WasmPackagerFlags) $(_WasmPackagerInputPath)</_WasmPackagerArgs>
+    </PropertyGroup>
+
+    <Message Importance="high" Text="WasmPackagerArgs = $(_WasmPackagerArgs)" />
+
+    <Exec Command="$(WasmSDKPath)/packager.exe $(_WasmPackagerArgs)" />
+  </Target>
+
+  <Target Name="WasmCreateBootstraperJs">
+    <ItemGroup>
+      <_WasmBootstrapperJsFiles Include="
+        $(WasmOutputPath)/mono-config.js;
+        $(WasmOutputPath)/runtime.js;
+        $(WasmOutputPath)/dotnet.js" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_WasmBootstrapperJsFilesContents Include="$([System.IO.File]::ReadAllText(%(_WasmBootstrapperJsFiles.Identity)))"/>
+    </ItemGroup>
+
+    <WriteLinesToFile File="$(WasmOutputPath)/bootstrapper.js" Lines="@(_WasmBootstrapperJsFilesContents)" Overwrite="true" />
+
+    <Delete Files="@(_WasmBootstrapperJsFiles)" />
+  </Target>  
+</Project>

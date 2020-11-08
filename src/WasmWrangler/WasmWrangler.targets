@@ -3,70 +3,25 @@
     <!-- Allows the samples to specify where the WasmWrangler assembly is located. -->
     <WasmWranglerAssemblyFile Condition="'$(WasmWranglerAssemblyFile)' == ''">$(MSBuildThisFileDirectory)../../lib/netstandard2.0/WasmWrangler.dll</WasmWranglerAssemblyFile>
   </PropertyGroup>
-  
-  <UsingTask TaskName="WasmWrangler.DownloadMonoWasmSDK" AssemblyFile="$(WasmWranglerAssemblyFile)" />
 
-  <Target Name="WasmEnsureSDKAvailable">
-    <Message Importance="high" Text="WasmSDKUrl = $(WasmSDKUrl)" />
-    <Message Importance="high" Text="WasmSDKName = $(WasmSDKName)" />
-    <Message Importance="high" Text="WasmSDKPath = $(WasmSDKPath)" />
-
-    <Message
-      Condition="Exists('$(WasmSDKPath)')"
-      Importance="high"
-      Text="Wasm SDK already available." />
-
-    <DownloadMonoWasmSDK
-      Condition="!Exists('$(WasmSDKPath)')"
-      SDKUrl="$(WasmSDKUrl)"
-      SDKName="$(WasmSDKName)"
-      SDKPath="$(WasmSDKPath)" />
-  </Target>
+  <Import Project="$(MSBuildThisFileDirectory)WasmWrangler.EnsureSDKAvailable.targets" />
+  <Import Project="$(MSBuildThisFileDirectory)WasmWrangler.Packager.targets" />
 
   <Target Name="WasmRestore" AfterTargets="Restore" DependsOnTargets="WasmEnsureSDKAvailable" />
-
+  
   <Target Name="WasmBuild" AfterTargets="AfterBuild" DependsOnTargets="
+    WasmCompileScss;
     WasmEnsureSDKAvailable;
     WasmCallSDKPackager;
     WasmCreateBootstraperJs;
     WasmCopyAssets" />
-
-  <Target Name="WasmCallSDKPackager">
-    <PropertyGroup Condition="'$(WasmPackagerFlags)' == ''">
-      <!-- 
-        NOTE: I've disabled the following flag for now as I'm not sure that
-        it brings any benfit. If at some point the flag needs to be reactivated
-        don't forget to add the double dash before "debug".
-      -->
-      <!-- <WasmPackagerFlags Condition="'$(Configuration)' == 'Debug'">debug</WasmPackagerFlags> -->
-    </PropertyGroup>
-    
-    <PropertyGroup>
-      <WasmOutputPath Condition="'$(WasmOutputPath)' == ''">$(OutputPath)/dist</WasmOutputPath>
-      <_WasmPackagerInputPath>&quot;$(OutputPath)$(AssemblyName).dll&quot;</_WasmPackagerInputPath>
-      <_WasmPackagerArgs>--out=&quot;$(WasmOutputPath)&quot; $(WasmPackagerFlags) $(_WasmPackagerInputPath)</_WasmPackagerArgs>
-    </PropertyGroup>
-
-    <Message Importance="high" Text="WasmPackagerArgs = $(_WasmPackagerArgs)" />
-
-    <Exec Command="$(WasmSDKPath)/packager.exe $(_WasmPackagerArgs)" />
-  </Target>
-
-  <Target Name="WasmCreateBootstraperJs">
-    <ItemGroup>
-      <_WasmBootstrapperJsFiles Include="
-        $(WasmOutputPath)/mono-config.js;
-        $(WasmOutputPath)/runtime.js;
-        $(WasmOutputPath)/dotnet.js" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <_WasmBootstrapperJsFilesContents Include="$([System.IO.File]::ReadAllText(%(_WasmBootstrapperJsFiles.Identity)))"/>
-    </ItemGroup>
-
-    <WriteLinesToFile File="$(WasmOutputPath)/bootstrapper.js" Lines="@(_WasmBootstrapperJsFilesContents)" Overwrite="true" />
-
-    <Delete Files="@(_WasmBootstrapperJsFiles)" />
+  
+  <UsingTask TaskName="WasmWrangler.CompileScss" AssemblyFile="$(WasmWranglerAssemblyFile)" />
+  
+  <Target Name="WasmCompileScss">
+    <!--<CompileScss
+      InputFiles="@(Scss)"
+      OutputPath="$(OutputPath)" />-->
   </Target>
 
   <Target Name="WasmCopyAssets">

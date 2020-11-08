@@ -1,15 +1,17 @@
 <Project>
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
+  <!-- Importing this project results in the all the sample projects having WasmWrangler referenced. -->
   <Import Project="$(RepositoryRootDirectory)build/WasmEnsureSDKAvailable.targets" />
 
   <ItemGroup>
+    <PackageReference Include="SharpScss" Version="2.0.0" />
+    
+    <!-- For bootstrap don't copy anything automatically. -->
     <PackageReference Include="bootstrap" Version="4.5.3" ExcludeAssets="all" GeneratePathProperty="true" />
-
     <None Include="$(Pkgbootstrap)/content/Content/bootstrap.min.css" Link="css/bootstrap.min.css" CopyToOutputDirectory="PreserveNewest" />
     
     <PackageReference Include="Font.Awesome" Version="5.15.1" GeneratePathProperty="true" />
-
     <None Include="$(PkgFont_Awesome)/Content/Content/fontawesome.min.css" Link="css/fontawesome.min.css" CopyToOutputDirectory="PreserveNewest" />
     <None Include="$(PkgFont_Awesome)/Content/Content/solid.min.css" Link="css/fontawesome.solid.min.css" CopyToOutputDirectory="PreserveNewest" />
     <None Include="$(PkgFont_Awesome)/Content/webfonts/fa-solid*.*" Link="webfonts/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />

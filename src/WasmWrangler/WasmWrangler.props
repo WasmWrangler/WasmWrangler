@@ -1,4 +1,9 @@
 ﻿<Project>
+  <!-- Update the list of build actions available in Visual Studio. -->
+  <ItemGroup>
+    <AvailableItemName Include="Scss" />
+  </ItemGroup>
+
   <PropertyGroup>
     <!-- The URL of the mono wasm sdk used by WasmWrangler. -->
     <WasmSDKUrl>https://xamjenkinsartifact.blob.core.windows.net/test-mono-mainline-wasm/5471/ubuntu-1804-amd64/sdks/wasm/mono-wasm-8513b8bbc40.zip</WasmSDKUrl>
@@ -19,5 +24,9 @@
     <Reference Include="WebAssembly.Net.WebSockets">
       <HintPath>$(WasmSDKPath)/framework/WebAssembly.Net.WebSockets.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Scss Include="**/*.scss" />
   </ItemGroup>
 </Project>
