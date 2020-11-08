@@ -11,6 +11,6 @@
 
     <Exec
       Condition="!Exists('$(WasmSDKPath)')"
-      Command="$(WasmWranglerCommand) DownloadMonoWasmSDK &quot;$(WasmSDKUrl)&quot; &quot;$(WasmSDKName)&quot; &quot;$(WasmSDKPath)&quot;" />
+      Command="$(WasmWranglerBuildCommand) DownloadMonoWasmSDK &quot;$(WasmSDKUrl)&quot; &quot;$(WasmSDKName)&quot; &quot;$(WasmSDKPath)&quot;" />
   </Target>  
 </Project>

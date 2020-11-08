@@ -1,45 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <OutputType>exe</OutputType>    
+    <TargetFramework>netstandard2.0</TargetFramework>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="$(RepositoryRootDirectory)License.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
-
-    <PackageReference Include="SharpScss" Version="2.0.0" />
-    <!-- SharpScss needs to be copied to where the output is. -->
-    <!--<PackageReference Include="SharpScss" Version="2.0.0" GeneratePathProperty="true" />
-    <None
-      Include="$(PkgSharpScss)/lib/netstandard2.0/*.*"
-      Link="%(Filename)%(Extension)"
-      CopyToOutputDirectory="PreserveNewest"
-      Pack="true"
-      PackagePath="lib/$(TargetFramework)/%(Filename)%(Extension)" />
-    <None
-      Include="$(PkgSharpScss)/runtimes/**/*.*"
-      Link="runtimes/%(RecursiveDir)%(Filename)%(Extension)"
-      CopyToOutputDirectory="PreserveNewest"
-      Pack="true" />-->
+    <None Include="$(RepositoryRootDirectory)License.txt" Visible="false" Pack="true" PackagePath="$(PackageLicenseFile)" />
+    
+    <!-- SharpScss needs to be packed. -->
+    <!--<None Include="$(PkgSharpScss)/lib/netstandard2.0/*.*" Pack="true" PackagePath="lib/$(TargetFramework)/%(Filename)%(Extension)" />
+    <None Include="$(PkgSharpScss)/runtimes/**/*.*" Pack="true" PackagePath="runtimes/%(RecursiveDir)%(Filename)%(Extension)" />-->
   </ItemGroup>
 
   <ItemGroup>
     <None Include="*.props" Pack="true" PackagePath="build/$(TargetFramework)/%(None.Filename)%(None.Extension)" />
     <None Include="*.targets" Pack="true" PackagePath="build/$(TargetFramework)/%(None.Filename)%(None.Extension)" />
-  </ItemGroup>
 
-  <!--<PropertyGroup>
-    <WasmNoAutomaticReferences>true</WasmNoAutomaticReferences>
-  </PropertyGroup>
-  
-  <Import Project="WasmWrangler.props" />
-  
-  <Target Name="PrintWasmWranglerProps" AfterTargets="Build">
-    <Message Importance="high" Text="WasmSDKUrl = $(WasmSDKUrl)" />
-    <Message Importance="high" Text="WasmSDKName = $(WasmSDKName)" />
-    <Message Importance="high" Text="WasmSDKPath = $(WasmSDKPath)" />
-  </Target>-->
+    <None Include="$(MSBuildThisFileDirectory)../WasmWrangler.Build/*.*" Visible="false" Pack="true" PackagePath="build/$(TargetFramework)/WasmWrangler.Build/%(None.Filename)%(None.Extension)" />
+  </ItemGroup>
 </Project>
 

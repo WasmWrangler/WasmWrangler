@@ -1,8 +1,8 @@
 <Project>
   <PropertyGroup>
-    <!-- Allows the samples to specify where the WasmWrangler assembly is located. -->
-    <WasmWranglerAssemblyFile Condition="'$(WasmWranglerAssemblyFile)' == ''">$(MSBuildThisFileDirectory)../../lib/netstandard2.0/WasmWrangler.dll</WasmWranglerAssemblyFile>
-    <WasmWranglerCommand>dotnet &quot;$(WasmWranglerAssemblyFile)&quot;</WasmWranglerCommand>
+    <!-- Allows the samples to specify where the WasmWrangler.Build project is located. -->
+    <WasmWranglerBuildPath Condition="'$(WasmWranglerBuildPath)' == ''">$(MSBuildThisFileDirectory)WasmWrangler.Build</WasmWranglerBuildPath>
+    <WasmWranglerBuildCommand>dotnet run -p &quot;$(WasmWranglerBuildPath)&quot;</WasmWranglerBuildCommand>
   </PropertyGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)WasmWrangler.EnsureSDKAvailable.targets" />
@@ -20,7 +20,7 @@
   <Target Name="WasmCompileScss" Condition="@(SCSS->Count()) &gt; 0">
     <ItemGroup>
       <SCSS Update="*">
-        <RelativePath>%(SCSS.RelativeDir)%(SCSS.RecursiveDir)%(SCSS.FileName).css</RelativePath>
+        <RelativePath>%(SCSS.RecursiveDir)%(SCSS.FileName).css</RelativePath>
       </SCSS>
       <SCSS Update="*">
         <OutputPath>$(OutputPath)%(SCSS.RelativePath)</OutputPath>
@@ -28,7 +28,7 @@
     </ItemGroup>
     
     <Exec
-      Command="$(WasmWranglerCommand) CompileScss &quot;%(SCSS.FullPath)&quot; &quot;%(SCSS.OutputPath)&quot;" />
+      Command="$(WasmWranglerBuildCommand) CompileScss &quot;%(SCSS.FullPath)&quot; &quot;%(SCSS.OutputPath)&quot;" />
   </Target>
 
   <Target Name="WasmCopyAssets">
@@ -36,7 +36,7 @@
       <WasmAssets Include="@(None)" Condition="'%(None.CopyToOutputDirectory)' != '' And '%(None.CopyToOutputDirectory)' != 'Never'">
         <Source>%(None.Identity)</Source>
         
-        <Destination Condition="'%(None.Link)' == ''">$(WasmOutputPath)/%(None.RelativeDir)%(None.RecursiveDir)%(None.FileName)%(None.Extension)</Destination>
+        <Destination Condition="'%(None.Link)' == ''">$(WasmOutputPath)/%(None.RecursiveDir)%(None.FileName)%(None.Extension)</Destination>
         <Destination Condition="'%(None.Link)' != ''">$(WasmOutputPath)/%(None.Link)</Destination>
 
         <SkipUnchangedFiles Condition="'%(None.CopyToOutputDirectory)' == 'Always'">false</SkipUnchangedFiles>
