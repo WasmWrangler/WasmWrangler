@@ -1,0 +1,15 @@
+﻿html {
+    height: 100%;
+}
+
+body {
+    min-height: 100%;
+    display: grid;
+    align-items: center;
+}
+
+#loading {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-column-gap: 15px;
+}

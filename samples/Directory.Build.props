@@ -4,6 +4,10 @@
   <Import Project="$(RepositoryRootDirectory)build/WasmEnsureSDKAvailable.targets" />
 
   <ItemGroup>
+    <PackageReference Include="bootstrap" Version="4.5.3" ExcludeAssets="all" GeneratePathProperty="true" />
+
+    <None Include="$(Pkgbootstrap)/content/Content/bootstrap.min.css" Link="css/bootstrap.min.css" CopyToOutputDirectory="PreserveNewest" />
+    
     <PackageReference Include="Font.Awesome" Version="5.15.1" GeneratePathProperty="true" />
 
     <None Include="$(PkgFont_Awesome)/Content/Content/fontawesome.min.css" Link="css/fontawesome.min.css" CopyToOutputDirectory="PreserveNewest" />
