@@ -2,7 +2,7 @@
   This proj only exists to be called from the command line. The real logic is
   contianed in WasmEnsureSDKAvailable.targets.
 -->
-<Project DefaultTargets="EnsureWasmWranglerAssembly;WasmEnsureSDKAvailable">
+<Project DefaultTargets="WasmEnsureSDKAvailable">
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
   <Import Project="WasmEnsureSDKAvailable.targets" />
