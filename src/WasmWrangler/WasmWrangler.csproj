@@ -1,21 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    
-    
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <OutputType>exe</OutputType>    
     <PackageLicenseFile>License.txt</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="$(RepositoryRootDirectory)License.txt" Pack="true" PackagePath="$(PackageLicenseFile)"/>
-  </ItemGroup>
-  
-  <ItemGroup>
-    <PackageReference Include="Microsoft.Build" Version="15.3.409" />
-    <PackageReference Include="Microsoft.Build.Framework" Version="15.3.409" />
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.3.409" />
-    <PackageReference Include="Microsoft.Build.Tasks.Core" Version="15.3.409" />
+    <None Include="$(RepositoryRootDirectory)License.txt" Pack="true" PackagePath="$(PackageLicenseFile)" />
 
     <PackageReference Include="SharpScss" Version="2.0.0" />
     <!-- SharpScss needs to be copied to where the output is. -->
@@ -38,8 +30,7 @@
     <None Include="*.targets" Pack="true" PackagePath="build/$(TargetFramework)/%(None.Filename)%(None.Extension)" />
   </ItemGroup>
 
-  <PropertyGroup>
-    <!-- Tell WasmWrangler.props not to include Reference(s) -->
+  <!--<PropertyGroup>
     <WasmNoAutomaticReferences>true</WasmNoAutomaticReferences>
   </PropertyGroup>
   
@@ -49,6 +40,6 @@
     <Message Importance="high" Text="WasmSDKUrl = $(WasmSDKUrl)" />
     <Message Importance="high" Text="WasmSDKName = $(WasmSDKName)" />
     <Message Importance="high" Text="WasmSDKPath = $(WasmSDKPath)" />
-  </Target>
+  </Target>-->
 </Project>
 

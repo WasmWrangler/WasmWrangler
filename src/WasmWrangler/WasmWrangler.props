@@ -1,7 +1,7 @@
 ﻿<Project>
   <!-- Update the list of build actions available in Visual Studio. -->
   <ItemGroup>
-    <AvailableItemName Include="Scss" />
+    <AvailableItemName Include="SCSS" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -27,6 +27,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Scss Include="**/*.scss" />
+    <SCSS Include="**/*.scss" />
   </ItemGroup>
 </Project>

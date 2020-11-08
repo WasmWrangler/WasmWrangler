@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <WasmWranglerAssemblyFile>$(RepositoryRootDirectory)bin/$(Configuration)/WasmWrangler/netstandard2.0/WasmWrangler.dll</WasmWranglerAssemblyFile>
+    <WasmWranglerAssemblyFile>$(RepositoryRootDirectory)bin/$(Configuration)/WasmWrangler/netcoreapp3.1/WasmWrangler.dll</WasmWranglerAssemblyFile>
   </PropertyGroup>
 
   <Import Project="$(RepositoryRootDirectory)src/WasmWrangler/WasmWrangler.props" />

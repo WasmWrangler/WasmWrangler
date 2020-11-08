@@ -2,6 +2,7 @@
   <PropertyGroup>
     <!-- Allows the samples to specify where the WasmWrangler assembly is located. -->
     <WasmWranglerAssemblyFile Condition="'$(WasmWranglerAssemblyFile)' == ''">$(MSBuildThisFileDirectory)../../lib/netstandard2.0/WasmWrangler.dll</WasmWranglerAssemblyFile>
+    <WasmWranglerCommand>dotnet &quot;$(WasmWranglerAssemblyFile)&quot;</WasmWranglerCommand>
   </PropertyGroup>
 
   <Import Project="$(MSBuildThisFileDirectory)WasmWrangler.EnsureSDKAvailable.targets" />
@@ -16,28 +17,42 @@
     WasmCreateBootstraperJs;
     WasmCopyAssets" />
   
-  <UsingTask TaskName="WasmWrangler.CompileScss" AssemblyFile="$(WasmWranglerAssemblyFile)" />
-  
-  <Target Name="WasmCompileScss">
-    <!--<CompileScss
-      InputFiles="@(Scss)"
-      OutputPath="$(OutputPath)" />-->
+  <Target Name="WasmCompileScss" Condition="@(SCSS->Count()) &gt; 0">
+    <ItemGroup>
+      <SCSS Update="*">
+        <RelativePath>%(SCSS.RelativeDir)%(SCSS.RecursiveDir)%(SCSS.FileName).css</RelativePath>
+      </SCSS>
+      <SCSS Update="*">
+        <OutputPath>$(OutputPath)%(SCSS.RelativePath)</OutputPath>
+      </SCSS>
+    </ItemGroup>
+    
+    <Exec
+      Command="$(WasmWranglerCommand) CompileScss &quot;%(SCSS.FullPath)&quot; &quot;%(SCSS.OutputPath)&quot;" />
   </Target>
 
   <Target Name="WasmCopyAssets">
     <ItemGroup>
-      <WasmAssests Include="@(None)" Condition="'%(None.CopyToOutputDirectory)' != '' And '%(None.CopyToOutputDirectory)' != 'Never'">
-        <Destination Condition="'%(None.Link)' == ''">$(WasmOutputPath)/%(None.RecursiveDir)%(None.FileName)%(None.Extension)</Destination>
+      <WasmAssets Include="@(None)" Condition="'%(None.CopyToOutputDirectory)' != '' And '%(None.CopyToOutputDirectory)' != 'Never'">
+        <Source>%(None.Identity)</Source>
+        
+        <Destination Condition="'%(None.Link)' == ''">$(WasmOutputPath)/%(None.RelativeDir)%(None.RecursiveDir)%(None.FileName)%(None.Extension)</Destination>
         <Destination Condition="'%(None.Link)' != ''">$(WasmOutputPath)/%(None.Link)</Destination>
 
         <SkipUnchangedFiles Condition="'%(None.CopyToOutputDirectory)' == 'Always'">false</SkipUnchangedFiles>
         <SkipUnchangedFiles Condition="'%(None.CopyToOutputDirectory)' == 'PreserveNewest'">true</SkipUnchangedFiles>
-      </WasmAssests>
+      </WasmAssets>
+
+      <WasmAssets Condition="@(SCSS->Count()) &gt; 0" Include="@(SCSS)">
+        <Source>%(SCSS.OutputPath)</Source>
+        <Destination>$(WasmOutputPath)/%(SCSS.RelativePath)</Destination>
+        <SkipUnchangedFiles>true</SkipUnchangedFiles>
+      </WasmAssets>
     </ItemGroup>
 
     <Copy
-        SourceFiles="%(WasmAssests.Identity)"
-        DestinationFiles="%(WasmAssests.Destination)"
+        SourceFiles="%(WasmAssets.Source)"
+        DestinationFiles="%(WasmAssets.Destination)"
         SkipUnchangedFiles="%(WasmAssets.SkipUnchangedFiles)" />
   </Target>
 </Project>

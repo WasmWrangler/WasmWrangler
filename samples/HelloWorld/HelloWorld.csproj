@@ -2,6 +2,15 @@
     <PropertyGroup>
         <TargetFramework>netcoreapp3.1</TargetFramework>
     </PropertyGroup>
+    <ItemGroup>
+      <None Remove="css\app.scss" />
+    </ItemGroup>
+    <ItemGroup>
+      <Scss Remove="css\app.scss" />
+    </ItemGroup>
+    <ItemGroup>
+      <SCSS Include="css\app.scss" />
+    </ItemGroup>
 
     <ItemGroup>
       <None Update="index.html">

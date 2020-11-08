@@ -1,6 +1,4 @@
 ﻿<Project>
-  <UsingTask TaskName="WasmWrangler.DownloadMonoWasmSDK" AssemblyFile="$(WasmWranglerAssemblyFile)" />
-
   <Target Name="WasmEnsureSDKAvailable">
     <Message Importance="high" Text="WasmSDKUrl = $(WasmSDKUrl)" />
     <Message Importance="high" Text="WasmSDKName = $(WasmSDKName)" />
@@ -11,10 +9,8 @@
       Importance="high"
       Text="Wasm SDK already available." />
 
-    <DownloadMonoWasmSDK
+    <Exec
       Condition="!Exists('$(WasmSDKPath)')"
-      SDKUrl="$(WasmSDKUrl)"
-      SDKName="$(WasmSDKName)"
-      SDKPath="$(WasmSDKPath)" />
+      Command="$(WasmWranglerCommand) DownloadMonoWasmSDK &quot;$(WasmSDKUrl)&quot; &quot;$(WasmSDKName)&quot; &quot;$(WasmSDKPath)&quot;" />
   </Target>  
 </Project>
