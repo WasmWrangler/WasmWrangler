@@ -10,7 +10,6 @@
     </PropertyGroup>
 
     <PropertyGroup>
-      <WasmOutputPath Condition="'$(WasmOutputPath)' == ''">$(OutputPath)/dist</WasmOutputPath>
       <_WasmPackagerInputPath>&quot;$(OutputPath)$(AssemblyName).dll&quot;</_WasmPackagerInputPath>
       <_WasmPackagerArgs>--out=&quot;$(WasmOutputPath)&quot; $(WasmPackagerFlags) $(_WasmPackagerInputPath)</_WasmPackagerArgs>
     </PropertyGroup>

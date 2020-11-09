@@ -1,9 +1,9 @@
 {
   "profiles": {
-    "HelloWorld": {
+    "dotnet-serve": {
         "commandName": "Executable",
-        "executablePath": "dotnet-serve",
-        "commandLineArgs": "-d \"../../../../bin/Debug/HelloWorld/netcoreapp3.1/dist\" -p 8080 -o"
+        "executablePath": "dotnet",
+        "commandLineArgs": "serve -d \"dist\" -p 8080 -o"
     }
   }
 }

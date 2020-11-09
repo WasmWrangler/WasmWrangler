@@ -5,14 +5,20 @@
   </ItemGroup>
 
   <PropertyGroup>
+    <WasmOutputDirectory Condition="'$(WasmOutputDirectory)' == ''">dist</WasmOutputDirectory>
+  </PropertyGroup>
+  
+  <PropertyGroup>
     <!-- The URL of the mono wasm sdk used by WasmWrangler. -->
     <WasmSDKUrl>https://xamjenkinsartifact.blob.core.windows.net/test-mono-mainline-wasm/5471/ubuntu-1804-amd64/sdks/wasm/mono-wasm-8513b8bbc40.zip</WasmSDKUrl>
 
     <WasmSDKName>$([System.IO.Path]::GetFileNameWithoutExtension('$(WasmSDKUrl)'))</WasmSDKName>
     <WasmSDKPath>$([System.IO.Path]::Combine($([System.IO.Path]::GetTempPath()), '$(WasmSDKName)'))</WasmSDKPath>
 
-    <!-- Don't compile typescript files when they are saved. -->
+    <!-- Don't compile typescript files on save. -->
     <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
+    <!-- We can safely assume es6 target since we're using WASM. -->
+    <TypeScriptTarget>es6</TypeScriptTarget>
   </PropertyGroup>
 
   <ItemGroup>

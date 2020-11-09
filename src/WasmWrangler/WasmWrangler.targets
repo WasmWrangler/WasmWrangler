@@ -5,67 +5,14 @@
     <WasmWranglerBuildCommand>dotnet run -p &quot;$(WasmWranglerBuildPath)&quot;</WasmWranglerBuildCommand>
   </PropertyGroup>
 
+  <Target Name="CalculateWasmOutputPath">
+    <PropertyGroup>
+      <WasmOutputPath>$(OutputPath)/$(WasmOutputDirectory)</WasmOutputPath>
+    </PropertyGroup>
+  </Target>
+  
+  <Import Project="$(MSBuildThisFileDirectory)WasmWrangler.Build.targets" />
   <Import Project="$(MSBuildThisFileDirectory)WasmWrangler.EnsureSDKAvailable.targets" />
   <Import Project="$(MSBuildThisFileDirectory)WasmWrangler.Packager.targets" />
-
-  <Target Name="WasmRestore" AfterTargets="Restore" DependsOnTargets="WasmEnsureSDKAvailable" />
-  
-  <Target Name="WasmBuild" AfterTargets="AfterBuild" DependsOnTargets="
-    WasmMoveTypeScriptOutput;
-    WasmCompileScss;
-    WasmEnsureSDKAvailable;
-    WasmCallSDKPackager;
-    WasmCreateBootstraperJs;
-    WasmCopyAssets" />
-
-  <Target Name="WasmMoveTypeScriptOutput">    
-    <Move 
-      SourceFiles="@(GeneratedJavascript)"
-      DestinationFiles="@(GeneratedJavascript->'$(OutputPath)/%(Identity)')" />
-  </Target>
-  
-  <Target Name="WasmCompileScss" Condition="@(SCSS->Count()) &gt; 0">
-    <ItemGroup>
-      <SCSS Update="*">
-        <RelativePath>%(SCSS.RecursiveDir)%(SCSS.FileName).css</RelativePath>
-      </SCSS>
-      <SCSS Update="*">
-        <OutputPath>$(OutputPath)%(SCSS.RelativePath)</OutputPath>
-      </SCSS>
-    </ItemGroup>
-    
-    <Exec
-      Command="$(WasmWranglerBuildCommand) CompileScss &quot;%(SCSS.FullPath)&quot; &quot;%(SCSS.OutputPath)&quot;" />
-  </Target>
-  
-  <Target Name="WasmCopyAssets">
-    <ItemGroup>
-      <WasmAssets Include="@(None)" Condition="'%(None.CopyToOutputDirectory)' != '' And '%(None.CopyToOutputDirectory)' != 'Never'">
-        <Source>%(None.Identity)</Source>
-        
-        <Destination Condition="'%(None.Link)' == ''">$(WasmOutputPath)/%(None.RecursiveDir)%(None.FileName)%(None.Extension)</Destination>
-        <Destination Condition="'%(None.Link)' != ''">$(WasmOutputPath)/%(None.Link)</Destination>
-
-        <SkipUnchangedFiles Condition="'%(None.CopyToOutputDirectory)' == 'Always'">false</SkipUnchangedFiles>
-        <SkipUnchangedFiles Condition="'%(None.CopyToOutputDirectory)' == 'PreserveNewest'">true</SkipUnchangedFiles>
-      </WasmAssets>
-
-      <WasmAssets Condition="@(GeneratedJavascript->Count()) &gt; 0" Include="@(GeneratedJavascript)">
-        <Source>$(OutputPath)/%(GeneratedJavascript.Identity)</Source>
-        <Destination>$(WasmOutputPath)/%(GeneratedJavascript.Identity)</Destination>
-        <SkipUnchangedFiles>true</SkipUnchangedFiles>
-      </WasmAssets>
-      
-      <WasmAssets Condition="@(SCSS->Count()) &gt; 0" Include="@(SCSS)">
-        <Source>%(SCSS.OutputPath)</Source>
-        <Destination>$(WasmOutputPath)/%(SCSS.RelativePath)</Destination>
-        <SkipUnchangedFiles>true</SkipUnchangedFiles>
-      </WasmAssets>
-    </ItemGroup>
-    
-    <Copy
-        SourceFiles="%(WasmAssets.Source)"
-        DestinationFiles="%(WasmAssets.Destination)"
-        SkipUnchangedFiles="%(WasmAssets.SkipUnchangedFiles)" />
-  </Target>
+  <Import Project="$(MSBuildThisFileDirectory)WasmWrangler.Restore.targets" />
 </Project>

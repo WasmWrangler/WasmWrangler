@@ -1,0 +1,3 @@
+﻿<Project>
+  <Target Name="WasmRestore" AfterTargets="Restore" DependsOnTargets="WasmEnsureSDKAvailable" />
+</Project>
