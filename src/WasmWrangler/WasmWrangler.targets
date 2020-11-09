@@ -11,11 +11,18 @@
   <Target Name="WasmRestore" AfterTargets="Restore" DependsOnTargets="WasmEnsureSDKAvailable" />
   
   <Target Name="WasmBuild" AfterTargets="AfterBuild" DependsOnTargets="
+    WasmMoveTypeScriptOutput;
     WasmCompileScss;
     WasmEnsureSDKAvailable;
     WasmCallSDKPackager;
     WasmCreateBootstraperJs;
     WasmCopyAssets" />
+
+  <Target Name="WasmMoveTypeScriptOutput">    
+    <Move 
+      SourceFiles="@(GeneratedJavascript)"
+      DestinationFiles="@(GeneratedJavascript->'$(OutputPath)/%(Identity)')" />
+  </Target>
   
   <Target Name="WasmCompileScss" Condition="@(SCSS->Count()) &gt; 0">
     <ItemGroup>
@@ -30,7 +37,7 @@
     <Exec
       Command="$(WasmWranglerBuildCommand) CompileScss &quot;%(SCSS.FullPath)&quot; &quot;%(SCSS.OutputPath)&quot;" />
   </Target>
-
+  
   <Target Name="WasmCopyAssets">
     <ItemGroup>
       <WasmAssets Include="@(None)" Condition="'%(None.CopyToOutputDirectory)' != '' And '%(None.CopyToOutputDirectory)' != 'Never'">
@@ -43,13 +50,19 @@
         <SkipUnchangedFiles Condition="'%(None.CopyToOutputDirectory)' == 'PreserveNewest'">true</SkipUnchangedFiles>
       </WasmAssets>
 
+      <WasmAssets Condition="@(GeneratedJavascript->Count()) &gt; 0" Include="@(GeneratedJavascript)">
+        <Source>$(OutputPath)/%(GeneratedJavascript.Identity)</Source>
+        <Destination>$(WasmOutputPath)/%(GeneratedJavascript.Identity)</Destination>
+        <SkipUnchangedFiles>true</SkipUnchangedFiles>
+      </WasmAssets>
+      
       <WasmAssets Condition="@(SCSS->Count()) &gt; 0" Include="@(SCSS)">
         <Source>%(SCSS.OutputPath)</Source>
         <Destination>$(WasmOutputPath)/%(SCSS.RelativePath)</Destination>
         <SkipUnchangedFiles>true</SkipUnchangedFiles>
       </WasmAssets>
     </ItemGroup>
-
+    
     <Copy
         SourceFiles="%(WasmAssets.Source)"
         DestinationFiles="%(WasmAssets.Destination)"

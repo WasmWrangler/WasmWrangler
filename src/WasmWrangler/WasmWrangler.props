@@ -1,7 +1,7 @@
 ﻿<Project>
   <!-- Update the list of build actions available in Visual Studio. -->
   <ItemGroup>
-    <AvailableItemName Include="SCSS" />
+    <AvailableItemName Include="SCSS"  />
   </ItemGroup>
 
   <PropertyGroup>
@@ -10,8 +10,18 @@
 
     <WasmSDKName>$([System.IO.Path]::GetFileNameWithoutExtension('$(WasmSDKUrl)'))</WasmSDKName>
     <WasmSDKPath>$([System.IO.Path]::Combine($([System.IO.Path]::GetTempPath()), '$(WasmSDKName)'))</WasmSDKPath>
+
+    <!-- Don't compile typescript files when they are saved. -->
+    <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+  
   <ItemGroup Condition="$(WasmNoAutomaticReferences) != true">
     <Reference Include="System.Net.Http.WebAssemblyHttpHandler">
       <HintPath>$(WasmSDKPath)/framework/System.Net.Http.WebAssemblyHttpHandler.dll</HintPath>
