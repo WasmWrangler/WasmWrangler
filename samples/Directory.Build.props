@@ -7,10 +7,10 @@
   <ItemGroup>    
     <PackageReference Include="bootstrap" Version="4.5.3" ExcludeAssets="all" GeneratePathProperty="true" />
     <None Include="$(Pkgbootstrap)/content/Content/bootstrap.min.css" Link="css/bootstrap.min.css" CopyToOutputDirectory="PreserveNewest" />
-    
-    <PackageReference Include="Font.Awesome" Version="5.15.1" ExcludeAssets="all" GeneratePathProperty="true" />
-    <None Include="$(PkgFont_Awesome)/Content/Content/fontawesome.min.css" Link="css/fontawesome.min.css" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="$(PkgFont_Awesome)/Content/Content/solid.min.css" Link="css/fontawesome.solid.min.css" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="$(PkgFont_Awesome)/Content/webfonts/fa-solid*.*" Link="webfonts/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+
+    <PackageReference Include="Font.Awesome.AspDotNetCore" Version="5.15.1" ExcludeAssets="all" GeneratePathProperty="true" />
+    <None Include="$(PkgFont_Awesome_AspDotNetCore)/contentFiles/any/any/wwwroot/lib/fontawesome/css/fontawesome.min.css" Link="css/fontawesome.min.css" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="$(PkgFont_Awesome_AspDotNetCore)/contentFiles/any/any/wwwroot/lib/fontawesome/css/solid.min.css" Link="css/fontawesome.solid.min.css" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="$(PkgFont_Awesome_AspDotNetCore)/contentFiles/any/any/wwwroot/lib/fontawesome/webfonts/fa-solid*.*" Link="webfonts/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>
