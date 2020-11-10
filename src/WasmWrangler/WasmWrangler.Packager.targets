@@ -29,6 +29,7 @@
 
     <ItemGroup>
       <_WasmBootstrapperJsFilesContents Include="$([System.IO.File]::ReadAllText(%(_WasmBootstrapperJsFiles.Identity)))"/>
+      <_WasmBootstrapperJsFilesContents Include="$([System.IO.File]::ReadAllText(&quot;$(MSBuildThisFileDirectory)/WasmWrangler.Bootstrapper.js&quot;))"/>
     </ItemGroup>
 
     <WriteLinesToFile File="$(WasmOutputPath)/bootstrapper.js" Lines="@(_WasmBootstrapperJsFilesContents)" Overwrite="true" />

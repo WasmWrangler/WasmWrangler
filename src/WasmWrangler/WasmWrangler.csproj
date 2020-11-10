@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="*.js" Pack="true" PackagePath="build/$(TargetFramework)/%(None.Filename)%(None.Extension)" />
     <None Include="*.props" Pack="true" PackagePath="build/$(TargetFramework)/%(None.Filename)%(None.Extension)" />
     <None Include="*.targets" Pack="true" PackagePath="build/$(TargetFramework)/%(None.Filename)%(None.Extension)" />
 

@@ -17,8 +17,10 @@
 
     <!-- Don't compile typescript files on save. -->
     <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
-    <!-- We can safely assume es6 target since we're using WASM. -->
-    <TypeScriptTarget>es6</TypeScriptTarget>
+    
+    <!-- We can safely assume ES2017 target since we're using WASM. -->
+    <TypeScriptTarget Condition="'$(TypeScriptTarget)' == ''">ES2017</TypeScriptTarget>
+    <TypeScriptModuleKind Condition="'$(TypeScriptModuleKind)' == ''">ES2015</TypeScriptModuleKind>
   </PropertyGroup>
 
   <ItemGroup>
