@@ -29,8 +29,6 @@
         <OutputPath>$(OutputPath)%(ScssMapFiles.RelativePath)</OutputPath>
       </ScssMapFiles>
     </ItemGroup>
-
-    <Message Importance="high" Text="ScssMapFiles = @(ScssMapFiles->'%(RelativePath) %(OutputPath)')" />
   </Target>
   
   <Target Name="WasmCompileScss" Condition="@(ScssCompile->Count()) &gt; 0" DependsOnTargets="WasmCalculateScssPaths"
@@ -51,18 +49,21 @@
         <SkipUnchangedFiles Condition="'%(None.CopyToOutputDirectory)' == 'PreserveNewest'">true</SkipUnchangedFiles>
       </WasmAssets>
 
+      <!-- JavaScript files -->
       <WasmAssets Condition="@(GeneratedJavascript->Count()) &gt; 0" Include="@(GeneratedJavascript)">
         <Source>$(OutputPath)/%(GeneratedJavascript.Identity)</Source>
         <Destination>$(WasmOutputPath)/%(GeneratedJavascript.Identity)</Destination>
         <SkipUnchangedFiles>true</SkipUnchangedFiles>
       </WasmAssets>
       
+      <!-- SCSS files -->
       <WasmAssets Condition="@(ScssCompile->Count()) &gt; 0" Include="@(ScssCompile)">
         <Source>%(ScssCompile.OutputPath)</Source>
         <Destination>$(WasmOutputPath)/%(ScssCompile.RelativePath)</Destination>
         <SkipUnchangedFiles>true</SkipUnchangedFiles>
       </WasmAssets>
 
+      <!-- SCSS map files -->
       <WasmAssets Condition="@(ScssCompile->Count()) &gt; 0" Include="@(ScssMapFiles)">
         <Source>%(ScssMapFiles.OutputPath)</Source>
         <Destination>$(WasmOutputPath)/%(ScssMapFiles.RelativePath)</Destination>
