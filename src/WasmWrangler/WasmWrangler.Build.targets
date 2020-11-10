@@ -12,18 +12,31 @@
       DestinationFiles="@(GeneratedJavascript->'$(OutputPath)/%(Identity)')" />
   </Target>
   
-  <Target Name="WasmCompileScss" Condition="@(SCSS->Count()) &gt; 0">
+  <Target Name="WasmCalculateScssPaths">
     <ItemGroup>
-      <SCSS Update="*">
-        <RelativePath>%(SCSS.RecursiveDir)%(SCSS.FileName).css</RelativePath>
-      </SCSS>
-      <SCSS Update="*">
-        <OutputPath>$(OutputPath)%(SCSS.RelativePath)</OutputPath>
-      </SCSS>
+      <ScssCompile Update="*">
+        <RelativePath>%(ScssCompile.RecursiveDir)%(ScssCompile.Filename).css</RelativePath>
+      </ScssCompile>
+      <ScssCompile Update="*">
+        <OutputPath>$(OutputPath)%(ScssCompile.RelativePath)</OutputPath>
+      </ScssCompile>
+
+      <ScssMapFiles Include="@(ScssCompile->'%(RelativePath).map')" />
+      <ScssMapFiles Update="*">
+        <RelativePath>%(ScssMapFiles.Identity)</RelativePath>
+      </ScssMapFiles>
+      <ScssMapFiles Update="*">
+        <OutputPath>$(OutputPath)%(ScssMapFiles.RelativePath)</OutputPath>
+      </ScssMapFiles>
     </ItemGroup>
-    
-    <Exec
-      Command="$(WasmWranglerBuildCommand) CompileScss &quot;%(SCSS.FullPath)&quot; &quot;%(SCSS.OutputPath)&quot;" />
+
+    <Message Importance="high" Text="ScssMapFiles = @(ScssMapFiles->'%(RelativePath) %(OutputPath)')" />
+  </Target>
+  
+  <Target Name="WasmCompileScss" Condition="@(ScssCompile->Count()) &gt; 0" DependsOnTargets="WasmCalculateScssPaths"
+    Inputs="@(ScssCompile)"
+    Outputs="@(ScssCompile->'%(OutputPath)')">
+    <Exec Command="$(WasmWranglerBuildCommand) CompileScss &quot;%(ScssCompile.FullPath)&quot; &quot;%(ScssCompile.OutputPath)&quot;" />
   </Target>
   
   <Target Name="WasmCopyAssets">
@@ -44,9 +57,15 @@
         <SkipUnchangedFiles>true</SkipUnchangedFiles>
       </WasmAssets>
       
-      <WasmAssets Condition="@(SCSS->Count()) &gt; 0" Include="@(SCSS)">
-        <Source>%(SCSS.OutputPath)</Source>
-        <Destination>$(WasmOutputPath)/%(SCSS.RelativePath)</Destination>
+      <WasmAssets Condition="@(ScssCompile->Count()) &gt; 0" Include="@(ScssCompile)">
+        <Source>%(ScssCompile.OutputPath)</Source>
+        <Destination>$(WasmOutputPath)/%(ScssCompile.RelativePath)</Destination>
+        <SkipUnchangedFiles>true</SkipUnchangedFiles>
+      </WasmAssets>
+
+      <WasmAssets Condition="@(ScssCompile->Count()) &gt; 0" Include="@(ScssMapFiles)">
+        <Source>%(ScssMapFiles.OutputPath)</Source>
+        <Destination>$(WasmOutputPath)/%(ScssMapFiles.RelativePath)</Destination>
         <SkipUnchangedFiles>true</SkipUnchangedFiles>
       </WasmAssets>
     </ItemGroup>
