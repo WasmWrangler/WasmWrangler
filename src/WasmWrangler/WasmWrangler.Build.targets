@@ -3,9 +3,7 @@
     CalculateWasmOutputPath;
     WasmMoveTypeScriptOutput;
     WasmCompileScss;
-    WasmEnsureSDKAvailable;
     WasmCallSDKPackager;
-    WasmCreateBootstraperJs;
     WasmCopyAssets" />
 
   <Target Name="WasmMoveTypeScriptOutput">    

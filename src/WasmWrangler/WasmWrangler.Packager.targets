@@ -1,5 +1,18 @@
 ﻿<Project>
-  <Target Name="WasmCallSDKPackager">
+  <Target Name="WasmCalculateFilesToPackage">
+    <ItemGroup>
+      <_WasmFilesToPackage Include="$(OutputPath)/**/*.dll" Exclude="$(WasmOutputPath)/**/*" />
+
+      <_WasmFilesToPackage Update="*">
+        <WasmOutputPath>$(WasmOutputPath)/managed/%(_WasmFilesToPackage.RecursiveDir)%(_WasmFilesToPackage.Filename)%(_WasmFilesToPackage.Extension)</WasmOutputPath>
+      </_WasmFilesToPackage>
+    </ItemGroup>
+  </Target>
+  
+  <Target Name="WasmCallSDKPackager" DependsOnTargets="WasmEnsureSDKAvailable;WasmCalculateFilesToPackage"
+    Inputs="@(_WasmFilesToPackage)"
+    Outputs="@(_WasmFilesToPackage->'%(WasmOutputPath)')">
+
     <PropertyGroup Condition="'$(WasmPackagerFlags)' == ''">
       <!-- 
         NOTE: I've disabled the following flag for now as I'm not sure that
@@ -15,11 +28,9 @@
     </PropertyGroup>
 
     <Message Importance="high" Text="WasmPackagerArgs = $(_WasmPackagerArgs)" />
-
+    
     <Exec Command="$(WasmSDKPath)/packager.exe $(_WasmPackagerArgs)" />
-  </Target>
 
-  <Target Name="WasmCreateBootstraperJs">
     <ItemGroup>
       <_WasmBootstrapperJsFiles Include="
         $(WasmOutputPath)/mono-config.js;
@@ -27,13 +38,14 @@
         $(WasmOutputPath)/dotnet.js" />
     </ItemGroup>
 
-    <ItemGroup>
-      <_WasmBootstrapperJsFilesContents Include="$([System.IO.File]::ReadAllText(%(_WasmBootstrapperJsFiles.Identity)))"/>
-      <_WasmBootstrapperJsFilesContents Include="$([System.IO.File]::ReadAllText(&quot;$(MSBuildThisFileDirectory)/WasmWrangler.Bootstrapper.js&quot;))"/>
+    <!-- Note codition is required for incremental builds. -->
+    <ItemGroup Condition="Exists('$(WasmOutputPath)/mono-config.js')">
+      <_WasmBootstrapperJsFilesContents Include="$([System.IO.File]::ReadAllText(&quot;%(_WasmBootstrapperJsFiles.Identity)&quot;))" />
+      <_WasmBootstrapperJsFilesContents Include="$([System.IO.File]::ReadAllText(&quot;$(MSBuildThisFileDirectory)/WasmWrangler.Bootstrapper.js&quot;))" />
     </ItemGroup>
 
-    <WriteLinesToFile File="$(WasmOutputPath)/bootstrapper.js" Lines="@(_WasmBootstrapperJsFilesContents)" Overwrite="true" />
+    <WriteLinesToFile File="$(WasmOutputPath)/wasm.bootstrapper.js" Lines="@(_WasmBootstrapperJsFilesContents)" Overwrite="true" />
 
     <Delete Files="@(_WasmBootstrapperJsFiles)" />
-  </Target>  
+  </Target>
 </Project>
