@@ -1,6 +1,6 @@
 ﻿/// <reference path="greeter.ts" />
 
-declare var BINDING: any;
+declare var Wasm: any;
 
 class App {
     public static clickCount: number = 0;
@@ -8,7 +8,7 @@ class App {
     public static init(): void {
         document.getElementById("loading").style.display = 'none';
         document.getElementById("app").style.display = 'block';
-        BINDING.call_static_method("[HelloWorld] HelloWorld.App:WasmMain");
+        Wasm.callStaticMethod("HelloWorld", "HelloWorld.App", "WasmMain");
     }
 
     public static sayHello(name: string): void {
@@ -16,7 +16,7 @@ class App {
     }
 
     public static onClick(button: HTMLButtonElement): void {
-        BINDING.call_static_method("[HelloWorld] HelloWorld.App:IncrementClickCount");
+        Wasm.callStaticMethod("HelloWorld", "HelloWorld.App", "IncrementClickCount");
         button.innerText = `Clicked ${App.clickCount} times`;
     }
 }

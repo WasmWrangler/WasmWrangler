@@ -38,14 +38,21 @@
         $(WasmOutputPath)/dotnet.js" />
     </ItemGroup>
 
-    <!-- Note codition is required for incremental builds. -->
+    <!-- NOTE: Codition is required for incremental builds. -->
     <ItemGroup Condition="Exists('$(WasmOutputPath)/mono-config.js')">
       <_WasmBootstrapperJsFilesContents Include="$([System.IO.File]::ReadAllText(&quot;%(_WasmBootstrapperJsFiles.Identity)&quot;))" />
-      <_WasmBootstrapperJsFilesContents Include="$([System.IO.File]::ReadAllText(&quot;$(MSBuildThisFileDirectory)/WasmWrangler.Bootstrapper.js&quot;))" />
     </ItemGroup>
 
     <WriteLinesToFile File="$(WasmOutputPath)/wasm.bootstrapper.js" Lines="@(_WasmBootstrapperJsFilesContents)" Overwrite="true" />
 
     <Delete Files="@(_WasmBootstrapperJsFiles)" />
+
+    <Copy
+      SourceFiles="$(MSBuildThisFileDirectory)/scripts/WasmWrangler.js"
+      DestinationFiles="$(WasmOutputPath)/WasmWrangler.js" />
+
+    <Copy
+      SourceFiles="$(MSBuildThisFileDirectory)/scripts/WasmWrangler.js.map"
+      DestinationFiles="$(WasmOutputPath)/WasmWrangler.js.map" />
   </Target>
 </Project>

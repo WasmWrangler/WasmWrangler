@@ -23,6 +23,7 @@
     <TypeScriptModuleKind Condition="'$(TypeScriptModuleKind)' == ''">ES2015</TypeScriptModuleKind>
   </PropertyGroup>
 
+  <!-- TypeScript support -->
   <ItemGroup>
     <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.0.3">
       <PrivateAssets>all</PrivateAssets>

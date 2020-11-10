@@ -3,6 +3,6 @@
     <WasmWranglerBuildPath>$(RepositoryRootDirectory)src/WasmWrangler.Build</WasmWranglerBuildPath>
   </PropertyGroup>
 
-  <Import Project="$(RepositoryRootDirectory)src/WasmWrangler/WasmWrangler.props" />
-  <Import Project="$(RepositoryRootDirectory)src/WasmWrangler/WasmWrangler.targets" />
+  <Import Project="$(RepositoryRootDirectory)src/WasmWrangler/build/WasmWrangler.props" />
+  <Import Project="$(RepositoryRootDirectory)src/WasmWrangler/build/WasmWrangler.targets" />
 </Project>

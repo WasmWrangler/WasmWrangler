@@ -3,7 +3,7 @@ using WebAssembly;
 
 namespace HelloWorld
 {
-    public class App
+    public static class App
     {
         private static JSObject? _app;
         private static int _clickCount = 0;
