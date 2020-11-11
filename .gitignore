@@ -49,3 +49,4 @@ packages/
 
 #JS Output
 src/WasmWrangler/build/scripts/*.js
+src/WasmWrangler/build/scripts/*.js.map

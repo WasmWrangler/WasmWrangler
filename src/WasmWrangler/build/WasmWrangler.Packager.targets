@@ -31,19 +31,21 @@
     WasmCalculateAppInitSource"
     Inputs="@(_WasmFilesToPackage)"
     Outputs="@(_WasmFilesToPackage->'%(WasmOutputPath)')">
-
-    <PropertyGroup Condition="'$(WasmPackagerFlags)' == ''">
+    <PropertyGroup>
       <!-- 
         NOTE: I've disabled the following flag for now as I'm not sure that
         it brings any benfit. If at some point the flag needs to be reactivated
         don't forget to add the double dash before "debug".
       -->
-      <!-- <WasmPackagerFlags Condition="'$(Configuration)' == 'Debug'">debug</WasmPackagerFlags> -->
-    </PropertyGroup>
-
-    <PropertyGroup>
-      <_WasmPackagerInputPath>&quot;$(OutputPath)$(AssemblyName).dll&quot;</_WasmPackagerInputPath>
-      <_WasmPackagerArgs>--out=&quot;$(WasmOutputPath)&quot; $(WasmPackagerFlags) $(_WasmPackagerInputPath)</_WasmPackagerArgs>
+      <!-- <_WasmPackagerArgs Condition="'$(Configuration)' == 'Debug'">$(_WasmPackagerArgs) debug</_WasmPackagerArgs> -->
+      <!-- prefix tells packager.exe where to look for referenced assemblies -->
+      <_WasmPackagerArgs>$(_WasmPackagerArgs) --prefix=&quot;$(OutputPath) &quot;</_WasmPackagerArgs>
+      <!-- Not sure what appdir does but it's required -->
+      <_WasmPackagerArgs>$(_WasmPackagerArgs) --appdir=&quot;$(OutputPath) &quot;</_WasmPackagerArgs>
+      <!-- Where to put the output -->
+      <_WasmPackagerArgs>$(_WasmPackagerArgs) --out=&quot;$(WasmOutputPath) &quot;</_WasmPackagerArgs>
+      <!-- The entry assembly -->
+      <_WasmPackagerArgs>$(_WasmPackagerArgs) &quot;$(OutputPath)$(AssemblyName).dll&quot;</_WasmPackagerArgs>
     </PropertyGroup>
 
     <Message Importance="high" Text="WasmPackagerArgs = $(_WasmPackagerArgs)" />

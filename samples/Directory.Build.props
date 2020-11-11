@@ -4,7 +4,9 @@
   <!-- Importing this project results in the all the sample projects having WasmWrangler referenced. -->
   <Import Project="$(RepositoryRootDirectory)build/WasmEnsureSDKAvailable.targets" />
 
-  <ItemGroup>    
+  <ItemGroup>
+    <ProjectReference Include="$(RepositoryRootDirectory)/src/WasmWrangler/WasmWrangler.csproj" />
+    
     <PackageReference Include="bootstrap" Version="4.5.3" ExcludeAssets="all" GeneratePathProperty="true" />
     <None Include="$(Pkgbootstrap)/content/Content/bootstrap.min.css" Link="css/bootstrap.min.css" CopyToOutputDirectory="PreserveNewest" />
 

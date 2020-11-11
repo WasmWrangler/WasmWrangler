@@ -5,6 +5,8 @@
     <PackageLicenseFile>License.txt</PackageLicenseFile>
   </PropertyGroup>
 
+  <Import Project="build/WasmWrangler.props" />
+  
   <!--
     NOTE: The TypeScript package is adding the JavaScript output to
     the content. This is why I'm not including it for Release builds.
