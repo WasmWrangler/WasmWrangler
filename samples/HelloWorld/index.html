@@ -14,12 +14,17 @@
 
     <div id="app" style="display:none;" class="jumbotron">
         <h1>Please look in the console of the broswer in order to see the output.</h1>
-        <button class="btn btn-primary" onclick="App.onClick(this)">Click me!</button>
+        <button class="btn btn-primary" onclick="Program.onClick(this)">Click me!</button>
     </div>
 
-    <script type="text/javascript" src="WasmWrangler.js"></script>
-    <script type="text/javascript" src="scripts/greeter.js"></script>
-    <script type="text/javascript" src="scripts/app.js"></script>
+    <!-- You need to include WasmWrangler.js first -->
+    <script type="text/javascript" src="scripts/WasmWrangler.js"></script>
+    
+    <!-- Here you can import any custom scripts -->
+    <script type="text/javascript" src="scripts/Greeter.js"></script>
+    <script type="text/javascript" src="scripts/Program.js"></script>
+    
+    <!-- wasm.boostrapper.js will call the Main() from .NET -->
     <script type="text/javascript" src="wasm.bootstrapper.js"></script>
 </body>
 </html>

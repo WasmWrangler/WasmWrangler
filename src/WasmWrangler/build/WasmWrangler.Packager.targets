@@ -8,8 +8,27 @@
       </_WasmFilesToPackage>
     </ItemGroup>
   </Target>
+
+  <Target Name="WasmCalculateAppInitSource">
+    <PropertyGroup>
+      <WasmEntryAssembly Condition="'$(WasmEntryAssembly)' == ''">$(AssemblyName)</WasmEntryAssembly>
+      <WasmMainEntryPoint Condition="'$(WasmMainEntryPoint)' == ''">$(AssemblyName).Program:Main</WasmMainEntryPoint>
+    </PropertyGroup>
+
+    <Message Importance="high" Text="WasmEntryAssembly = $(WasmEntryAssembly)" />
+    <Message Importance="high" Text="WasmMainEntryPoint = $(WasmMainEntryPoint)" />
+
+    <PropertyGroup>
+      <_WasmAppInitSource>
+        <![CDATA[var App={init:function(){BINDING.call_static_method("[$(WasmEntryAssembly)] $(WasmMainEntryPoint)")%3B}};]]>
+      </_WasmAppInitSource>
+    </PropertyGroup>
+  </Target>
   
-  <Target Name="WasmCallSDKPackager" DependsOnTargets="WasmEnsureSDKAvailable;WasmCalculateFilesToPackage"
+  <Target Name="WasmCallSDKPackager" DependsOnTargets="
+    WasmEnsureSDKAvailable;
+    WasmCalculateFilesToPackage;
+    WasmCalculateAppInitSource"
     Inputs="@(_WasmFilesToPackage)"
     Outputs="@(_WasmFilesToPackage->'%(WasmOutputPath)')">
 
@@ -43,7 +62,7 @@
       <_WasmBootstrapperJsFilesContents Include="$([System.IO.File]::ReadAllText(&quot;%(_WasmBootstrapperJsFiles.Identity)&quot;))" />
     </ItemGroup>
 
-    <WriteLinesToFile File="$(WasmOutputPath)/wasm.bootstrapper.js" Lines="@(_WasmBootstrapperJsFilesContents)" Overwrite="true" />
+    <WriteLinesToFile File="$(WasmOutputPath)/wasm.bootstrapper.js" Lines="$(_WasmAppInitSource);@(_WasmBootstrapperJsFilesContents)" Overwrite="true" />
 
     <Delete Files="@(_WasmBootstrapperJsFiles)" />
   </Target>
