@@ -50,6 +50,13 @@
         <SkipUnchangedFiles Condition="'%(None.CopyToOutputDirectory)' == 'PreserveNewest'">true</SkipUnchangedFiles>
       </WasmAssets>
 
+      <!-- Html files -->
+      <WasmAssets Condition="@(HtmlFiles->Count()) &gt; 0" Include="@(HtmlFiles)">
+        <Source>$(OutputPath)/%(HtmlFiles.Identity)</Source>
+        <Destination>$(WasmOutputPath)/%(HtmlFiles.Identity)</Destination>
+        <SkipUnchangedFiles>true</SkipUnchangedFiles>
+      </WasmAssets>
+      
       <!-- JavaScript files -->
       <WasmAssets Condition="@(GeneratedJavascript->Count()) &gt; 0" Include="@(GeneratedJavascript)">
         <Source>$(OutputPath)/%(GeneratedJavascript.Identity)</Source>

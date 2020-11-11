@@ -1,13 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-    <PropertyGroup>
-      <TargetFramework>netstandard2.0</TargetFramework>
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
 
-      <TypeScriptCompileOnSaveEnabled>False</TypeScriptCompileOnSaveEnabled>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <None Update="index.html">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-    </ItemGroup>
+    <TypeScriptCompileOnSaveEnabled>False</TypeScriptCompileOnSaveEnabled>
+  </PropertyGroup>
 </Project>

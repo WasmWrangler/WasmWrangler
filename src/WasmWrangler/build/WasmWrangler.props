@@ -1,7 +1,8 @@
 ﻿<Project>
   <!-- Update the list of build actions available in Visual Studio. -->
   <ItemGroup>
-    <AvailableItemName Include="ScssCompile"  />
+    <AvailableItemName Include="HtmlFiles" />
+    <AvailableItemName Include="ScssCompile" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -43,6 +44,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- HtmlFiles should be copied over via CopyToOutputDirectory -->
+    <HtmlFiles Include="**/*.html" />
+    <None Condition="@(HtmlFiles->Count()) &gt; 0" Include="@(HtmlFiles)" CopyToOutputDirectory="PreserveNewest" />
+
     <ScssCompile Include="**/*.scss" />
   </ItemGroup>
 </Project>

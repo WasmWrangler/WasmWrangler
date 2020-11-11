@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WasmWrangler", "WasmWrangler", "{C9A5FC8A-6F64-4AB9-8269-A9ACEB8BF432}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		.gitignore = .gitignore
 		Directory.Build.props = Directory.Build.props
 		nuget.config = nuget.config
 		Readme.md = Readme.md
