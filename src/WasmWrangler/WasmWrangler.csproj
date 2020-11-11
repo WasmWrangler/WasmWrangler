@@ -18,16 +18,22 @@
 
   <!-- TypeScript settings -->
   <PropertyGroup>
+    <!-- Disable CompileOnSave as it just to leads to lots of confusion about what is actually running. -->
+    <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
     <TypeScriptTarget>ES2017</TypeScriptTarget>
   </PropertyGroup>
 
-  <!-- What to pack -->
+  <!-- Hide Items -->
+  <ItemGroup>
+    <None Include="build/scripts/*.js;build/scripts/*.js.map" Visible="false" />
+  </ItemGroup>
+  
+  <!-- Pack Items -->
   <ItemGroup>
     <None Include="build/*.props" Pack="true" PackagePath="build/$(TargetFramework)/%(None.Filename)%(None.Extension)" />
-    <None Include="build/*.targets" Pack="true" PackagePath="build/$(TargetFramework)/%(None.Filename)%(None.Extension)" />
+    <None Include="build/*.targets" Pack="true" PackagePath="build/$(TargetFramework)/%(None.Filename)%(None.Extension)" /> 
     
-    <None Include="build/scripts/*.js" Pack="true" PackagePath="build/$(TargetFramework)/scripts/%(None.Filename)%(None.Extension)" />
-    <None Include="build/scripts/*.js.map" Pack="true" PackagePath="build/$(TargetFramework)/scripts/%(None.Filename)%(None.Extension)" />
+    <None Include="build/scripts/*.ts" Pack="true" PackagePath="build/$(TargetFramework)/scripts/%(None.Filename)%(None.Extension)" />
 
     <None Include="$(MSBuildThisFileDirectory)../WasmWrangler.Build/*.*" Visible="false" Pack="true" PackagePath="build/$(TargetFramework)/WasmWrangler.Build/%(None.Filename)%(None.Extension)" />
     

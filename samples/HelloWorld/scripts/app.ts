@@ -1,6 +1,4 @@
-﻿/// <reference path="greeter.ts" />
-
-declare var Wasm: any;
+﻿/// <reference path="./WasmWrangler.ts" />
 
 class App {
     public static clickCount: number = 0;

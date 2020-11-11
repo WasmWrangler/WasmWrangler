@@ -1,0 +1,17 @@
+﻿<Project>
+  <Target Name="WasmInjectScripts">
+    <PropertyGroup>      
+      <_ScriptsDirectory>$(MSBuildProjectDirectory)</_ScriptsDirectory>
+      <_ScriptsDirectory Condition="Exists('$(_ScriptsDirectory)/scripts')">$(_ScriptsDirectory)/scripts/</_ScriptsDirectory>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_ScriptFiles Include="$(MSBuildThisFileDirectory)/scripts/*.ts" />
+    </ItemGroup>
+
+    <Copy
+      SourceFiles="@(_ScriptFiles)"
+      DestinationFolder="$(_ScriptsDirectory)"
+      SkipUnchangedFiles="true" />
+  </Target>
+</Project>

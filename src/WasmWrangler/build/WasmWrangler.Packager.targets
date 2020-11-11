@@ -46,13 +46,5 @@
     <WriteLinesToFile File="$(WasmOutputPath)/wasm.bootstrapper.js" Lines="@(_WasmBootstrapperJsFilesContents)" Overwrite="true" />
 
     <Delete Files="@(_WasmBootstrapperJsFiles)" />
-
-    <Copy
-      SourceFiles="$(MSBuildThisFileDirectory)/scripts/WasmWrangler.js"
-      DestinationFiles="$(WasmOutputPath)/WasmWrangler.js" />
-
-    <Copy
-      SourceFiles="$(MSBuildThisFileDirectory)/scripts/WasmWrangler.js.map"
-      DestinationFiles="$(WasmOutputPath)/WasmWrangler.js.map" />
   </Target>
 </Project>
