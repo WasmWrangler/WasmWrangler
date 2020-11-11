@@ -1,8 +1,7 @@
 ﻿<Project>
   <Target Name="WasmInjectScripts">
     <PropertyGroup>      
-      <_ScriptsDirectory>$(MSBuildProjectDirectory)</_ScriptsDirectory>
-      <_ScriptsDirectory Condition="Exists('$(_ScriptsDirectory)/scripts')">$(_ScriptsDirectory)/scripts/</_ScriptsDirectory>
+      <_ScriptsDirectory>$(MSBuildProjectDirectory)/$(WasmScriptsDirectory)</_ScriptsDirectory>
     </PropertyGroup>
 
     <ItemGroup>

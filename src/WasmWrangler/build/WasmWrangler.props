@@ -7,6 +7,7 @@
 
   <PropertyGroup>
     <WasmOutputDirectory Condition="'$(WasmOutputDirectory)' == ''">dist</WasmOutputDirectory>
+    <WasmScriptsDirectory Condition="'$(WasmScriptsDirectory)' == ''">scripts</WasmScriptsDirectory>
   </PropertyGroup>
   
   <PropertyGroup>
