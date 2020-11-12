@@ -2,33 +2,24 @@
   <!-- Update the list of build actions available in Visual Studio. -->
   <ItemGroup>
     <AvailableItemName Include="HtmlFiles" />
+    <AvailableItemName Include="JSFiles" />
     <AvailableItemName Include="ScssCompile" />
   </ItemGroup>
 
+  <!-- Configuration properties -->
   <PropertyGroup>
     <WasmOutputDirectory Condition="'$(WasmOutputDirectory)' == ''">dist</WasmOutputDirectory>
     <WasmScriptsDirectory Condition="'$(WasmScriptsDirectory)' == ''">scripts</WasmScriptsDirectory>
   </PropertyGroup>
   
+  <!-- Static properties -->
   <PropertyGroup>
     <!-- The URL of the mono wasm sdk used by WasmWrangler. -->
     <WasmSDKUrl>https://xamjenkinsartifact.blob.core.windows.net/test-mono-mainline-wasm/5471/ubuntu-1804-amd64/sdks/wasm/mono-wasm-8513b8bbc40.zip</WasmSDKUrl>
 
     <WasmSDKName>$([System.IO.Path]::GetFileNameWithoutExtension('$(WasmSDKUrl)'))</WasmSDKName>
-    <WasmSDKPath>$([System.IO.Path]::Combine($([System.IO.Path]::GetTempPath()), '$(WasmSDKName)'))</WasmSDKPath>
-    
-    <!-- We can safely assume ES2017 target since we're using WASM. -->
-    <TypeScriptTarget Condition="'$(TypeScriptTarget)' == ''">ES2017</TypeScriptTarget>
-    <TypeScriptModuleKind Condition="'$(TypeScriptModuleKind)' == ''">ES2015</TypeScriptModuleKind>
+    <WasmSDKPath>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)/../mono-wasm'))</WasmSDKPath>
   </PropertyGroup>
-
-  <!-- TypeScript support -->
-  <ItemGroup>
-    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.0.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
-  </ItemGroup>
   
   <ItemGroup Condition="$(WasmNoAutomaticReferences) != true">
     <Reference Include="System.Net.Http.WebAssemblyHttpHandler">
@@ -42,13 +33,5 @@
     <Reference Include="WebAssembly.Net.WebSockets">
       <HintPath>$(WasmSDKPath)/framework/WebAssembly.Net.WebSockets.dll</HintPath>
     </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <!-- HtmlFiles should be copied over via CopyToOutputDirectory -->
-    <HtmlFiles Include="**/*.html" />
-    <None Condition="@(HtmlFiles->Count()) &gt; 0" Include="@(HtmlFiles)" CopyToOutputDirectory="PreserveNewest" />
-
-    <ScssCompile Include="**/*.scss" />
   </ItemGroup>
 </Project>

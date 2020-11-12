@@ -4,6 +4,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
+  
+    <WasmNoAutomaticIncludes>true</WasmNoAutomaticIncludes>
   </PropertyGroup>
 
   <Import Project="build/WasmWrangler.props" />
@@ -25,6 +27,11 @@
   <!-- Hide Items -->
   <ItemGroup>
     <None Include="build/scripts/*.js;build/scripts/*.js.map" Visible="false" />
+  
+    <Compile Remove="mono-wasm\**" />
+    <EmbeddedResource Remove="mono-wasm\**" />
+    <None Remove="mono-wasm\**" />
+    <TypeScriptCompile Remove="mono-wasm\**" />
   </ItemGroup>
   
   <!-- Pack Items -->

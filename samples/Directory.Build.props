@@ -1,18 +1,36 @@
 <Project>
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
 
-  <!-- Importing this project results in the all the sample projects having WasmWrangler referenced. -->
+  <!-- Importing this project results in WasmWrangler.props and WasmWrangler.targets being included -->
   <Import Project="$(RepositoryRootDirectory)build/WasmEnsureSDKAvailable.targets" />
 
+  <PropertyGroup>
+    <!-- We can safely assume ES2017 target since we're using WASM. -->
+    <TypeScriptTarget>ES2017</TypeScriptTarget>
+    <TypeScriptModuleKind>ES2015</TypeScriptModuleKind>
+  </PropertyGroup>
+  
   <ItemGroup>
     <ProjectReference Include="$(RepositoryRootDirectory)/src/WasmWrangler/WasmWrangler.csproj" />
+
+    <!-- TypeScript -->
+    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
     
+    <!-- bootstrap -->
     <PackageReference Include="bootstrap" Version="4.5.3" ExcludeAssets="all" GeneratePathProperty="true" />
     <None Include="$(Pkgbootstrap)/content/Content/bootstrap.min.css" Link="css/bootstrap.min.css" CopyToOutputDirectory="PreserveNewest" />
 
+    <!-- FontAwesome -->
     <PackageReference Include="Font.Awesome.AspDotNetCore" Version="5.15.1" ExcludeAssets="all" GeneratePathProperty="true" />
     <None Include="$(PkgFont_Awesome_AspDotNetCore)/contentFiles/any/any/wwwroot/lib/fontawesome/css/fontawesome.min.css" Link="css/fontawesome.min.css" CopyToOutputDirectory="PreserveNewest" />
     <None Include="$(PkgFont_Awesome_AspDotNetCore)/contentFiles/any/any/wwwroot/lib/fontawesome/css/solid.min.css" Link="css/fontawesome.solid.min.css" CopyToOutputDirectory="PreserveNewest" />
     <None Include="$(PkgFont_Awesome_AspDotNetCore)/contentFiles/any/any/wwwroot/lib/fontawesome/webfonts/fa-solid*.*" Link="webfonts/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="**/*.js;**/*.js.map" />
   </ItemGroup>
 </Project>

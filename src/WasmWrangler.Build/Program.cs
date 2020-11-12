@@ -88,16 +88,19 @@ namespace WasmWrangler
                 var client = new WebClient();
                 var zipPath = sdkPath + ".zip";
                 Console.WriteLine($"Downloading {sdkName} to {zipPath}");
+                
                 if (File.Exists(zipPath))
                     File.Delete(zipPath);
+                
                 client.DownloadFile(sdkUrl, zipPath);
 
-                var sdkTempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
-                ZipFile.ExtractToDirectory(zipPath, sdkTempPath);
                 if (Directory.Exists(sdkPath))
                     Directory.Delete(sdkPath, true);
-                Directory.Move(sdkTempPath, sdkPath);
+
+                ZipFile.ExtractToDirectory(zipPath, sdkPath);
                 Console.WriteLine($"Extracted {sdkName} to {sdkPath}");
+
+                File.Delete(zipPath);
 
                 return true;
             }
