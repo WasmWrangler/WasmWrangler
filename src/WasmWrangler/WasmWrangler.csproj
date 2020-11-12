@@ -1,5 +1,6 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project>
+  <Import Project="Sdk.props" Sdk="Microsoft.NET.Sdk" />
+  
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <PackageLicenseFile>License.txt</PackageLicenseFile>
@@ -7,17 +8,13 @@
 
   <Import Project="build/WasmWrangler.props" />
   
-  <!--
-    NOTE: The TypeScript package is adding the JavaScript output to
-    the content. This is why I'm not including it for Release builds.
-  -->
-  <ItemGroup Condition="'$(Configuration)' == 'Debug'">
+  <ItemGroup>
     <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
-
+  
   <!-- TypeScript settings -->
   <PropertyGroup>
     <!-- Disable CompileOnSave as it just to leads to lots of confusion about what is actually running. -->
@@ -41,5 +38,13 @@
     
     <None Include="$(RepositoryRootDirectory)License.txt" Visible="false" Pack="true" PackagePath="$(PackageLicenseFile)" />
   </ItemGroup>
+
+  <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+  
+  <!--
+    Override this target to prevent TypeScript for adding files to Content
+    so that they won't be packed.
+  -->
+  <Target Name="GetTypeScriptOutputForPublishing" />
 </Project>
 
