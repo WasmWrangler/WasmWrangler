@@ -51,8 +51,6 @@ packages/
 src/WasmWrangler/mono-wasm/
 src/WasmWrangler/mono-wasm.zip
 
-#JS output
-src/WasmWrangler/build/scripts/*.js
-src/WasmWrangler/build/scripts/*.js.map
+#TS output
 samples/**/*.js
 samples/**/*.js.map

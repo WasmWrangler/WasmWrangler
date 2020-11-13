@@ -19,19 +19,27 @@
   
   <!-- TypeScript settings -->
   <PropertyGroup>
-    <!-- Disable CompileOnSave as it just to leads to lots of confusion about what is actually running. -->
-    <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
+    <!-- We need to tell TypeScript what items to compile -->
+    <EnableDefaultTypeScriptItems>false</EnableDefaultTypeScriptItems>
     <TypeScriptTarget>ES2017</TypeScriptTarget>
+    <TypeScriptGeneratesDeclarations>true</TypeScriptGeneratesDeclarations>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
   </PropertyGroup>
 
-  <!-- Hide Items -->
   <ItemGroup>
-    <None Include="build/scripts/*.js;build/scripts/*.js.map" Visible="false" />
-  
-    <Compile Remove="mono-wasm\**" />
-    <EmbeddedResource Remove="mono-wasm\**" />
-    <None Remove="mono-wasm\**" />
-    <TypeScriptCompile Remove="mono-wasm\**" />
+    <!--
+      Exclude the generated .d.ts file from compilation otherwise we can't compile more
+      than once.
+    -->
+    <TypeScriptCompile Include="build/scripts/*.ts" Exclude="build/scripts/*.d.ts" />
+  </ItemGroup>
+
+  <!-- Hide Items -->
+  <ItemGroup>  
+    <Compile Remove="mono-wasm/**" />
+    <EmbeddedResource Remove="mono-wasm/**" />
+    <None Remove="mono-wasm/**" />
+    <TypeScriptCompile Remove="mono-wasm/**" />
   </ItemGroup>
   
   <!-- Pack Items -->
@@ -39,7 +47,7 @@
     <None Include="build/*.props" Pack="true" PackagePath="build/$(TargetFramework)/%(None.Filename)%(None.Extension)" />
     <None Include="build/*.targets" Pack="true" PackagePath="build/$(TargetFramework)/%(None.Filename)%(None.Extension)" /> 
     
-    <None Include="build/scripts/*.ts" Pack="true" PackagePath="build/$(TargetFramework)/scripts/%(None.Filename)%(None.Extension)" />
+    <None Include="build/scripts/*.*" Pack="true" PackagePath="build/$(TargetFramework)/scripts/%(None.Filename)%(None.Extension)" />
 
     <None Include="$(MSBuildThisFileDirectory)../WasmWrangler.Build/*.*" Visible="false" Pack="true" PackagePath="build/$(TargetFramework)/WasmWrangler.Build/%(None.Filename)%(None.Extension)" />
     

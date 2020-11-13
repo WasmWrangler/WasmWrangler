@@ -1,4 +1,4 @@
-﻿/// <reference path="WasmWrangler.ts" />
+﻿/// <reference path="WasmWrangler.d.ts" />
 /// <reference path="Greeter.ts" />
 
 class Program {

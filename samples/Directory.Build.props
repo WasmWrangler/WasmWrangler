@@ -29,8 +29,4 @@
     <None Include="$(PkgFont_Awesome_AspDotNetCore)/contentFiles/any/any/wwwroot/lib/fontawesome/css/solid.min.css" Link="css/fontawesome.solid.min.css" CopyToOutputDirectory="PreserveNewest" />
     <None Include="$(PkgFont_Awesome_AspDotNetCore)/contentFiles/any/any/wwwroot/lib/fontawesome/webfonts/fa-solid*.*" Link="webfonts/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="**/*.js;**/*.js.map" />
-  </ItemGroup>
 </Project>
