@@ -5,7 +5,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <_ScriptFiles Include="$(MSBuildThisFileDirectory)/scripts/*.*" />
+      <_ScriptFiles Include="
+        $(MSBuildThisFileDirectory)/scripts/*.js;
+        $(MSBuildThisFileDirectory)/scripts/*.d.ts" />
     </ItemGroup>
 
     <Copy
