@@ -9,7 +9,7 @@
   <!-- Configuration properties -->
   <PropertyGroup>
     <WasmOutputDirectory Condition="'$(WasmOutputDirectory)' == ''">dist</WasmOutputDirectory>
-    <WasmScriptsDirectory Condition="'$(WasmScriptsDirectory)' == ''">scripts</WasmScriptsDirectory>
+    <WasmScriptsDirectory Condition="'$(WasmScriptsDirectory)' == ''">js</WasmScriptsDirectory>
   </PropertyGroup>
   
   <!-- Static properties -->
