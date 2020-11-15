@@ -9,6 +9,7 @@
   <!-- Configuration properties -->
   <PropertyGroup>
     <WasmOutputDirectory Condition="'$(WasmOutputDirectory)' == ''">dist</WasmOutputDirectory>
+    <WasmLibDirectory Condition="'$(WasmLibDirectory)' == ''">lib</WasmLibDirectory>
     <WasmScriptsDirectory Condition="'$(WasmScriptsDirectory)' == ''">js</WasmScriptsDirectory>
   </PropertyGroup>
   
@@ -21,6 +22,7 @@
     <WasmSDKPath>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)/../mono-wasm'))</WasmSDKPath>
   </PropertyGroup>
   
+  <!-- Wasm References -->
   <ItemGroup Condition="$(WasmNoAutomaticReferences) != true">
     <Reference Include="System.Net.Http.WebAssemblyHttpHandler">
       <HintPath>$(WasmSDKPath)/framework/System.Net.Http.WebAssemblyHttpHandler.dll</HintPath>

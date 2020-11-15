@@ -9,9 +9,9 @@
 
   <Target Name="WasmFindFilesToInclude">    
     <ItemGroup Condition="$(WasmNoAutomaticIncludes) != true">
-      <HtmlFiles Include="**/*.html" />
-      <JsFiles Include="**/*.js;**/*.js.map" />
-      <ScssCompile Include="**/*.scss" />
+      <HtmlFiles Include="**/*.html" Exclude="$(WasmLibDirectory)/**" />
+      <JsFiles Include="**/*.js;**/*.js.map" Exclude="$(WasmLibDirectory)/**"  />
+      <ScssCompile Include="**/*.scss" Exclude="$(WasmLibDirectory)/**" />
     </ItemGroup>
 
     <Copy
@@ -52,6 +52,7 @@
   
   <Target Name="WasmCopyAssets">
     <ItemGroup>
+      <!-- CopyToOutputDirectory files -->
       <WasmAssets Include="@(None)" Condition="'%(None.CopyToOutputDirectory)' != '' And '%(None.CopyToOutputDirectory)' != 'Never'">
         <Source>%(None.Identity)</Source>
         
@@ -62,6 +63,15 @@
         <SkipUnchangedFiles Condition="'%(None.CopyToOutputDirectory)' == 'PreserveNewest'">true</SkipUnchangedFiles>
       </WasmAssets>
 
+      <!-- Lib files -->
+      <_WasmLibFiles Condition="Exists('$(WasmLibDirectory)')" Include="$(WasmLibDirectory)/**/*" />
+      
+      <WasmAssets Condition="Exists('$(WasmLibDirectory)')" Include="@(_WasmLibFiles)">
+        <Source>$(WasmLibDirectory)/%(_WasmLibFiles.RecursiveDir)%(_WasmLibFiles.Filename)%(_WasmLibFiles.Extension)</Source>
+        <Destination>$(WasmOutputPath)/$(WasmLibDirectory)/%(_WasmLibFiles.RecursiveDir)%(_WasmLibFiles.Filename)%(_WasmLibFiles.Extension)</Destination>
+        <SkipUnchangedFiles>true</SkipUnchangedFiles>
+      </WasmAssets>
+      
       <!-- Html files -->
       <WasmAssets Condition="@(HtmlFiles->Count()) &gt; 0" Include="@(HtmlFiles)">
         <Source>$(OutputPath)/%(HtmlFiles.RecursiveDir)%(HtmlFiles.Filename)%(HtmlFiles.Extension)</Source>

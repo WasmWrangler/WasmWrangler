@@ -18,10 +18,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    
-    <!-- bootstrap -->
-    <PackageReference Include="bootstrap" Version="4.5.3" ExcludeAssets="all" GeneratePathProperty="true" />
-    <None Include="$(Pkgbootstrap)/content/Content/bootstrap.min.css" Link="css/bootstrap.min.css" CopyToOutputDirectory="PreserveNewest" />
 
     <!-- FontAwesome -->
     <PackageReference Include="Font.Awesome.AspDotNetCore" Version="5.15.1" ExcludeAssets="all" GeneratePathProperty="true" />
