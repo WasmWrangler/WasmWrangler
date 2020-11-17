@@ -33,6 +33,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{E7C8BD18-9DD2-454F-919F-136EDFDD1B51}"
 	ProjectSection(SolutionItems) = preProject
 		build\Build.proj = build\Build.proj
+		build\Build.props = build\Build.props
 		build\GitVersion.targets = build\GitVersion.targets
 		build\Project.props = build\Project.props
 		build\WasmEnsureSDKAvailable.proj = build\WasmEnsureSDKAvailable.proj
@@ -46,7 +47,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{E2214A25-F
 		docs\MSBuildProps.md = docs\MSBuildProps.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WasmWrangler.BindingGenerator", "src\WasmWrangler.BindingGenerator\WasmWrangler.BindingGenerator.csproj", "{46A1534F-0EB4-4749-8A7B-20C0DEB779C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWrangler.BindingGenerator", "src\WasmWrangler.BindingGenerator\WasmWrangler.BindingGenerator.csproj", "{46A1534F-0EB4-4749-8A7B-20C0DEB779C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

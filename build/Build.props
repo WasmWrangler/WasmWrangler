@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <ProjectProjectsExcludePattern>$(RepositoryRootDirectory)src/WasmWrangler/mono-wasm/**/*.csproj</ProjectProjectsExcludePattern>
+  </PropertyGroup>
+</Project>

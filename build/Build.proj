@@ -4,9 +4,11 @@
   </PropertyGroup>
 
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+  <Import Project="$(MSBuildThisFileDirectory)Build.props" />
 
   <ItemGroup>
     <ProjectSolutions Include="$(RepositoryRootDirectory)/*.sln" />
+    <ProjectProjects Include="$(RepositoryRootDirectory)/**/*.csproj" Exclude="$(ProjectProjectsExcludePattern)" />
     <ProjectSources Include="$(RepositoryRootDirectory)/src/**/*.csproj" />
     <ProjectTests Include="$(RepositoryRootDirectory)/tests/**/*.csproj" />
   </ItemGroup>
@@ -24,6 +26,16 @@
     
     <Exec
       Command="dotnet clean %(ProjectSolutions.Identity) -nologo"
+      WorkingDirectory="$(RepositoryRootDirectory)" />
+  </Target>
+  
+  <!--
+  Restore
+  -->
+
+  <Target Name="Restore">    
+    <Exec
+      Command="dotnet restore %(ProjectProjects.Identity)"
       WorkingDirectory="$(RepositoryRootDirectory)" />
   </Target>
   
