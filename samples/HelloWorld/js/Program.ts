@@ -6,6 +6,7 @@ class Program {
 
     public static sayHello(name: string): void {
         Greeter.greet(name);
+        console.info()
     }
 
     public static onClick(button: HTMLButtonElement): void {

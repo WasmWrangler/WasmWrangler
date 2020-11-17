@@ -1,0 +1,15 @@
+{
+  "Name": "document",
+  "Methods": [
+    {
+      "Name": "getElementById",
+      "Args": [
+        {
+          "Name": "element",
+          "Type": "string"
+        }
+      ],
+      "ReturnType": "JSObject"
+    }
+  ]
+}

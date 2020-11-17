@@ -1,0 +1,32 @@
+{
+  "Name": "console",
+  "Methods": [
+    {
+      "Name": "dir",
+      "Args": [
+        {
+          "Name":  "item",
+          "Type": "object?",
+          "Default": "null"
+        },
+        {
+          "Name":  "options",
+          "Type": "object?",
+          "Default": "null"
+        }
+      ],
+      "ReturnType": "void"
+    },
+    {
+      "Name": "info",
+      "Args": [
+        {
+          "Name": "data",
+          "Params": true,
+          "Type": "object[]"
+        }
+      ],
+      "ReturnType": "void"
+    }
+  ]
+}

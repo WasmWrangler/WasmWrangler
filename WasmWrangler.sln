@@ -46,6 +46,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{E2214A25-F
 		docs\MSBuildProps.md = docs\MSBuildProps.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WasmWrangler.BindingGenerator", "src\WasmWrangler.BindingGenerator\WasmWrangler.BindingGenerator.csproj", "{46A1534F-0EB4-4749-8A7B-20C0DEB779C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +66,10 @@ Global
 		{F222D437-A4C7-4CBC-8B8D-83EE9372EABA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F222D437-A4C7-4CBC-8B8D-83EE9372EABA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F222D437-A4C7-4CBC-8B8D-83EE9372EABA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46A1534F-0EB4-4749-8A7B-20C0DEB779C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46A1534F-0EB4-4749-8A7B-20C0DEB779C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46A1534F-0EB4-4749-8A7B-20C0DEB779C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46A1534F-0EB4-4749-8A7B-20C0DEB779C2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +84,7 @@ Global
 		{E7C8BD18-9DD2-454F-919F-136EDFDD1B51} = {C9A5FC8A-6F64-4AB9-8269-A9ACEB8BF432}
 		{F222D437-A4C7-4CBC-8B8D-83EE9372EABA} = {80D41EA8-8769-4D09-93CD-5FFA4860EE0F}
 		{E2214A25-F5B5-4BA1-AB68-AF1257F7642C} = {C9A5FC8A-6F64-4AB9-8269-A9ACEB8BF432}
+		{46A1534F-0EB4-4749-8A7B-20C0DEB779C2} = {80D41EA8-8769-4D09-93CD-5FFA4860EE0F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {03562B31-F934-4FB1-B65F-2160026E7C33}

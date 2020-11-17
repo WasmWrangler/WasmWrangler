@@ -66,5 +66,13 @@
     so that they won't be packed.
   -->
   <Target Name="GetTypeScriptOutputForPublishing" />
+
+  <Target Name="GenerateWasmWranglerBindings" BeforeTargets="CoreCompile">
+    <ItemGroup>
+      <_WasmWranglerBindgings Include="src/**/JS.*.json" />
+    </ItemGroup>
+    
+    <Exec Command="dotnet run -p &quot;$(RepositoryRootDirectory)src/WasmWrangler.BindingGenerator&quot; %(_WasmWranglerBindgings.Identity)" />
+  </Target>
 </Project>
 
