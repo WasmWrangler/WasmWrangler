@@ -9,5 +9,7 @@ namespace WasmWrangler.BindingGenerator
         public WasmWranglerMethodArgBinding[] Args { get; set; } = Array.Empty<WasmWranglerMethodArgBinding>();
 
         public string ReturnType { get; set; } = "void";
+
+        public bool WrapReturn { get; set; } = false;
     }
 }

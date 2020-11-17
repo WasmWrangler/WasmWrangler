@@ -14,10 +14,19 @@ namespace HelloWorld
             Console.WriteLine("Hello World from WASM!");
 
             var loading = JS.document.getElementById("loading");
-            loading.GetObjectProperty<JSObject>("style").SetObjectProperty("display", "none");
+
+            if (loading != null)
+            {
+                Console.WriteLine(loading.innerText);
+                loading.style.SetObjectProperty("display", "none");
+            }
 
             var app = JS.document.getElementById("app");
-            app.GetObjectProperty<JSObject>("style").SetObjectProperty("display", "block");
+
+            if (app != null)
+            {
+                app.style.SetObjectProperty("display", "block");
+            }
 
             _js = (JSObject)Runtime.GetGlobalObject("Program");
             _js.Invoke("sayHello", "smack0007");

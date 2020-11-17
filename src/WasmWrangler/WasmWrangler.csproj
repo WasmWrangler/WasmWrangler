@@ -50,7 +50,7 @@
     <None Include="build/js/*.js;build/js/*.d.ts" Pack="true" PackagePath="build/$(TargetFramework)/js/%(None.Filename)%(None.Extension)" />
 
     <None Include="$(MSBuildThisFileDirectory)../WasmWrangler.Build/*.*" Visible="false" Pack="true" PackagePath="build/$(TargetFramework)/WasmWrangler.Build/%(None.Filename)%(None.Extension)" />
-    
+
     <None Include="$(RepositoryRootDirectory)License.txt" Visible="false" Pack="true" PackagePath="$(PackageLicenseFile)" />
     
     <None Include="build\js\WasmWrangler.d.ts" />
@@ -69,7 +69,7 @@
 
   <Target Name="GenerateWasmWranglerBindings" BeforeTargets="CoreCompile">
     <ItemGroup>
-      <_WasmWranglerBindgings Include="src/**/JS.*.json" />
+      <_WasmWranglerBindgings Include="src/**/*.json" />
     </ItemGroup>
     
     <Exec Command="dotnet run -p &quot;$(RepositoryRootDirectory)src/WasmWrangler.BindingGenerator&quot; %(_WasmWranglerBindgings.Identity)" />

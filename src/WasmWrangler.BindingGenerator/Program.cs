@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 
@@ -34,6 +33,28 @@ namespace WasmWrangler.BindingGenerator
             sb.AppendLine();
             sb.AppendLine("namespace WasmWrangler");
             sb.AppendLine("{");
+            
+
+            switch (binding.Type)
+            {
+                case "GlobalObject":
+                    GenerateGlobalObject(sb, binding);
+                    break;
+
+                case "JSObjectWrapper":
+                    GenerateJSObjectWrapper(sb, binding);
+                    break;
+            }
+            
+            sb.AppendLine("}");
+
+            File.WriteAllText(outputFile, sb.ToString());
+
+            return 0;
+        }
+
+        private static void GenerateGlobalObject(StringBuilder sb, WasmWranglerBinding binding)
+        {
             sb.AppendLine("\tpublic static partial class JS");
             sb.AppendLine("\t{");
             sb.AppendLine($"\t\tpublic static partial class {binding.Name}");
@@ -53,18 +74,49 @@ namespace WasmWrangler.BindingGenerator
             sb.AppendLine();
 
             foreach (var method in binding.Methods)
-                GenerateMethodBinding(sb, method);
+                GenerateMethod(sb, method);
 
             sb.AppendLine("\t\t}");
             sb.AppendLine("\t}");
-            sb.AppendLine("}");
-
-            File.WriteAllText(outputFile, sb.ToString());
-
-            return 0;
         }
 
-        private static void GenerateMethodBinding(StringBuilder sb, WasmWranglerMethodBinding method)
+        private static void GenerateJSObjectWrapper(StringBuilder sb, WasmWranglerBinding binding)
+        {
+            sb.AppendLine($"\tpublic partial class {binding.Name}");
+            sb.AppendLine("\t{");
+            sb.AppendLine("\t\tprivate readonly JSObject _js;");
+            sb.AppendLine();
+            sb.AppendLine($"\t\tpublic {binding.Name}(JSObject js)");
+            sb.AppendLine("\t\t{");
+            sb.AppendLine("\t\t\t_js = js;");
+            sb.AppendLine("\t\t}");
+            sb.AppendLine();
+            sb.AppendLine($"\t\tpublic static {binding.Name}? Wrap(JSObject? js) => js != null ? new {binding.Name}(js) : null;");
+            sb.AppendLine();
+            sb.AppendLine($"\t\tpublic static implicit operator JSObject({binding.Name} obj) => obj._js;");
+            sb.AppendLine();
+
+            foreach (var property in binding.Properties)
+                GenerateProperty(sb, property);
+
+            sb.AppendLine("\t}");
+        }
+
+        private static void GenerateProperty(StringBuilder sb, WasmWranglerPropertyBinding property)
+        {
+            sb.AppendLine($"\t\tpublic {property.Type} {property.Name}");
+            sb.AppendLine("\t\t{");
+            
+            if (property.CanGet)
+                sb.AppendLine($"\t\t\tget => _js.GetObjectProperty<{property.Type}>(nameof({property.Name}));");
+
+            if (property.CanSet)
+                sb.AppendLine($"\t\t\tset => _js.SetObjectProperty(nameof({property.Name}), value);");
+
+            sb.AppendLine("\t\t}");
+        }
+
+        private static void GenerateMethod(StringBuilder sb, WasmWranglerMethodBinding method)
         {
             sb.Append($"\t\t\tpublic static {method.ReturnType} {method.Name}(");
 
@@ -85,14 +137,28 @@ namespace WasmWrangler.BindingGenerator
             sb.Append("\t\t\t\t");
 
             if (method.ReturnType != "void")
-                sb.Append($"return ({method.ReturnType})");
+            {
+                if (method.WrapReturn)
+                {
+                    sb.Append($"return {method.ReturnType.TrimEnd('?')}.Wrap((JSObject?)");
+                }
+                else
+                {
+                    sb.Append($"return ({method.ReturnType})");
+                }
+            }
 
             sb.Append($"_js.Invoke(nameof({method.Name})");
 
             for (int i = 0; i < method.Args.Length; i++)
                 sb.Append($", {method.Args[i].Name}");
 
-            sb.AppendLine(");");
+            sb.Append(")");
+
+            if (method.ReturnType != "void" && method.WrapReturn)
+                sb.Append(")");
+
+            sb.AppendLine(";");
             sb.AppendLine("\t\t\t}");
 
             sb.AppendLine();

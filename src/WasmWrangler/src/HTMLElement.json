@@ -1,0 +1,19 @@
+{
+  "Name": "HTMLElement",
+  "Type": "JSObjectWrapper",
+  "Properties": [
+    {
+      "Name": "innerText",
+      "Type": "string",
+      "CanGet": true,
+      "CanSet": true
+    },
+    {
+      "Name": "style",
+      "Type": "JSObject",
+      "CanGet": true
+    }
+  ],
+  "Methods": [
+  ]
+}

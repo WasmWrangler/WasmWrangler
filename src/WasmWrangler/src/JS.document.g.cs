@@ -21,9 +21,9 @@ namespace WasmWrangler
 				}
 			}
 
-			public static JSObject getElementById(string element)
+			public static HTMLElement? getElementById(string element)
 			{
-				return (JSObject)_js.Invoke(nameof(getElementById), element);
+				return HTMLElement.Wrap((JSObject?)_js.Invoke(nameof(getElementById), element));
 			}
 
 		}

@@ -1,16 +1,17 @@
 {
   "Name": "console",
+  "Type": "GlobalObject",
   "Methods": [
     {
       "Name": "dir",
       "Args": [
         {
-          "Name":  "item",
+          "Name": "item",
           "Type": "object?",
           "Default": "null"
         },
         {
-          "Name":  "options",
+          "Name": "options",
           "Type": "object?",
           "Default": "null"
         }

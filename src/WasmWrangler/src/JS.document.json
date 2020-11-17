@@ -1,5 +1,6 @@
 {
   "Name": "document",
+  "Type": "GlobalObject",
   "Methods": [
     {
       "Name": "getElementById",
@@ -9,7 +10,8 @@
           "Type": "string"
         }
       ],
-      "ReturnType": "JSObject"
+      "ReturnType": "HTMLElement?",
+      "WrapReturn": true
     }
   ]
 }
