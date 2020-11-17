@@ -1,6 +1,12 @@
 name: CI
 
-on: [push]
+on:
+  push:
+    paths-ignore:
+    - 'assets/**'
+    - 'doc/**'
+    - 'Readme.md'
+  pull_request:
 
 jobs:
   build:
@@ -8,7 +14,14 @@ jobs:
     runs-on: windows-latest
     
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Install .NET 5.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '5.0.x'
+
     - name: Get Wasm SDK
       run: dotnet msbuild build\WasmEnsureSDKAvailable.proj -nologo
     - name: Build
