@@ -1,4 +1,4 @@
-﻿/// <reference path="WasmWrangler.d.ts" />
+﻿/// <reference path="../lib/WasmWrangler.d.ts" />
 /// <reference path="Greeter.ts" />
 
 class Program {
@@ -6,7 +6,6 @@ class Program {
 
     public static sayHello(name: string): void {
         Greeter.greet(name);
-        console.info()
     }
 
     public static onClick(button: HTMLButtonElement): void {

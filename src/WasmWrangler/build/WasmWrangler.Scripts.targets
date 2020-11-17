@@ -1,7 +1,7 @@
 ﻿<Project>
   <Target Name="WasmInjectScripts">
     <PropertyGroup>
-      <_ScriptsDirectory>$(MSBuildProjectDirectory)/$(WasmScriptsDirectory)</_ScriptsDirectory>
+      <_ScriptsDirectory>$(MSBuildProjectDirectory)/$(WasmLibDirectory)</_ScriptsDirectory>
     </PropertyGroup>
 
     <ItemGroup>

@@ -2,4 +2,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Hide .js and .js.map output -->
+    <None Update="js/**/*.js;js/**/*.js.map">
+      <Visible>false</Visible>
+    </None>
+  </ItemGroup>
 </Project>
