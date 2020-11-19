@@ -2,7 +2,7 @@
   "profiles": {
     "WasmWrangler.BindingGenerator": {
       "commandName": "Project",
-      "commandLineArgs": "\"../../../../src/WasmWrangler/src\""
+      "commandLineArgs": "\"../../../../src/WasmWrangler/src/dom.wwb\""
     }
   }
 }

@@ -1,0 +1,18 @@
+﻿using WebAssembly;
+
+namespace WasmWrangler
+{
+    interface HTMLElement : JSObjectWrapper {
+        string innerText { get; set; }
+    }
+
+    interface console : JSGlobalObject {
+        void dir(object? item = null, object? options = null);
+
+        void info(params object[] data);
+    }
+
+    interface document : JSGlobalObject {
+        HTMLElement? getElementById(string element);
+    }
+}
