@@ -15,7 +15,9 @@ namespace WasmWrangler
 
 		public static HTMLElement? Wrap(JSObject? js) => js != null ? new HTMLElement(js) : null;
 
-		public static implicit operator JSObject(HTMLElement obj) => obj._js;
+        public static explicit operator HTMLElement(JSObject js) => new HTMLElement(js);
+
+        public static explicit operator JSObject(HTMLElement obj) => obj._js;
 
 		public string innerText
 		{

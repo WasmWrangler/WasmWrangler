@@ -99,39 +99,40 @@ namespace WasmWrangler.BindingGenerator
             }
         }
 
-        private static void GenerateInterface(OutputBuffer output, InterfaceDeclarationSyntax node)
+        private static void GenerateInterface(OutputBuffer output, InterfaceDeclarationSyntax @interface)
         {
-            if (node.BaseList == null)
-                throw new InvalidOperationException(CreateErrorMessage(node, $"Expected interface {node.Identifier} to have base interface."));
+            if (@interface.BaseList == null)
+                throw new InvalidOperationException(CreateErrorMessage(@interface, $"Expected interface {@interface.Identifier} to have base interface."));
 
-            var baseClasses = node.BaseList.ChildNodes();
+            var baseClasses = @interface.BaseList.ChildNodes();
 
             if (baseClasses.Count() > 1)
-                throw new InvalidOperationException(CreateErrorMessage(node, $"Expected interface {node.Identifier} to have only 1 base interface."));
+                throw new InvalidOperationException(CreateErrorMessage(@interface, $"Expected interface {@interface.Identifier} to have only 1 base interface."));
 
             var baseClass = ((SimpleBaseTypeSyntax)baseClasses.Single()).ToString();
 
             switch (baseClass)
             {
                 case "JSGlobalObject":
-                    GenerateJSObjectWrapper(output, node);
+                    GenerateJSGlobalObject(output, @interface);
                     break;
 
                 case "JSObjectWrapper":
+                    GenerateJSObjectWrapper(output, @interface);
                     break;
 
                 default:
-                    throw new InvalidOperationException(CreateErrorMessage(node, $"Unexpected base interface: {baseClass}"));
+                    throw new InvalidOperationException(CreateErrorMessage(@interface, $"Unexpected base interface: {baseClass}"));
             }
         }
 
-        private static void GenerateJSGlobalObject(OutputBuffer output, WasmWranglerBinding binding)
+        private static void GenerateJSGlobalObject(OutputBuffer output, InterfaceDeclarationSyntax @interface)
         {
             output.AppendLine("public static partial class JS");
             output.AppendLine("{");
             output.IncreaseIndent();
 
-            output.AppendLine($"public static partial class {binding.Name}");
+            output.AppendLine($"public static partial class {@interface.Identifier}");
             output.AppendLine("{");
             output.AppendLine("\tprivate static JSObject? __js;");
             output.AppendLine();
@@ -140,7 +141,7 @@ namespace WasmWrangler.BindingGenerator
             output.AppendLine("\t\tget");
             output.AppendLine("\t\t{");
             output.AppendLine("\t\t\tif (__js == null)");
-            output.AppendLine($"\t\t\t\t__js = (JSObject)Runtime.GetGlobalObject(nameof({binding.Name}));");
+            output.AppendLine($"\t\t\t\t__js = (JSObject)Runtime.GetGlobalObject(nameof({@interface.Identifier}));");
             output.AppendLine();
             output.AppendLine("\t\t\treturn __js;");
             output.AppendLine("\t\t}");
@@ -149,8 +150,8 @@ namespace WasmWrangler.BindingGenerator
 
             output.IncreaseIndent();
 
-            foreach (var method in binding.Methods)
-                GenerateMethod(output, method);
+            foreach (var member in @interface.Members)
+                GenerateInterfaceMember(output, member, true);
 
             output.DecreaseIndent();
 
@@ -161,26 +162,26 @@ namespace WasmWrangler.BindingGenerator
             output.AppendLine();
         }
 
-        private static void GenerateJSObjectWrapper(OutputBuffer output, InterfaceDeclarationSyntax node)
+        private static void GenerateJSObjectWrapper(OutputBuffer output, InterfaceDeclarationSyntax @interface)
         {
-            output.AppendLine($"public partial class {node.Identifier}");
+            output.AppendLine($"public partial class {@interface.Identifier}");
             output.AppendLine("{");
             output.AppendLine("\tprivate readonly JSObject _js;");
             output.AppendLine();
-            output.AppendLine($"\tpublic {node.Identifier}(JSObject js)");
+            output.AppendLine($"\tpublic {@interface.Identifier}(JSObject js)");
             output.AppendLine("\t{");
             output.AppendLine("\t\t_js = js;");
             output.AppendLine("\t}");
             output.AppendLine();
-            output.AppendLine($"\tpublic static {node.Identifier}? Wrap(JSObject? js) => js != null ? new {node.Identifier}(js) : null;");
+            output.AppendLine($"\tpublic static {@interface.Identifier}? Wrap(JSObject? js) => js != null ? new {@interface.Identifier}(js) : null;");
             output.AppendLine();
-            output.AppendLine($"\tpublic static implicit operator JSObject({node.Identifier} obj) => obj._js;");
+            output.AppendLine($"\tpublic static implicit operator JSObject({@interface.Identifier} obj) => obj._js;");
             output.AppendLine();
 
             output.IncreaseIndent();
 
-            //foreach (var property in binding.Properties)
-            //    GenerateProperty(output, property);
+            foreach (var member in @interface.Members)
+                GenerateInterfaceMember(output, member, false);
 
             output.DecreaseIndent();
             
@@ -188,66 +189,79 @@ namespace WasmWrangler.BindingGenerator
             output.AppendLine();
         }
 
-        private static void GenerateProperty(OutputBuffer output, WasmWranglerPropertyBinding property)
+        private static void GenerateInterfaceMember(OutputBuffer output, MemberDeclarationSyntax member, bool asStatic)
         {
-            output.AppendLine($"public {property.Type} {property.Name}");
-            output.AppendLine("{");
-            
-            if (property.CanGet)
-                output.AppendLine($"\tget => _js.GetObjectProperty<{property.Type}>(nameof({property.Name}));");
+            switch (member)
+            {
+                case MethodDeclarationSyntax method:
+                    GenerateMethod(output, method, asStatic);
+                    break;
 
-            if (property.CanSet)
-                output.AppendLine($"\tset => _js.SetObjectProperty(nameof({property.Name}), value);");
+                case PropertyDeclarationSyntax property:
+                    GenerateProperty(output, property, asStatic);
+                    break;
 
-            output.AppendLine("}");
+                default:
+                    throw new InvalidOperationException(CreateErrorMessage(member, $"Unexpected member: {member}"));
+            }
         }
 
-        private static void GenerateMethod(OutputBuffer output, WasmWranglerMethodBinding method)
+        private static void GenerateMethod(OutputBuffer output, MethodDeclarationSyntax method, bool asStatic)
         {
-            output.Append($"public static {method.ReturnType} {method.Name}(");
+            output.Append($"public ");
 
-            for (int i = 0; i < method.Args.Length; i++)
-            {
-                if (i > 0)
-                    output.Append(", ");
+            if (asStatic)
+                output.Append("static ");
 
-                if (method.Args[i].Params)
-                    output.Append("params ");
+            output.Append($"{method.ReturnType} {method.Identifier}");
+            output.AppendLine(method.ParameterList.ToString());
 
-                output.Append($"{method.Args[i].Type} {method.Args[i].Name}");
-            }
-
-            output.AppendLine(")");
             output.AppendLine("{");
 
             output.Append("\t");
 
-            if (method.ReturnType != "void")
+            if (method.ReturnType.ToString() != "void")
             {
-                if (method.WrapReturn)
-                {
-                    output.Append($"return {method.ReturnType.TrimEnd('?')}.Wrap((JSObject?)");
-                }
-                else
-                {
-                    output.Append($"return ({method.ReturnType})");
-                }
+                output.Append($"return ({method.ReturnType})(JSObject?)");
+
+                //if (method.WrapReturn)
+                //{
+                //    output.Append($"return {method.ReturnType.TrimEnd('?')}.Wrap((JSObject?)");
+                //}
+                //else
+                //{
+                //    output.Append($"return ({method.ReturnType})");
+                //}
             }
 
-            output.Append($"_js.Invoke(nameof({method.Name})");
+            output.Append($"_js.Invoke(nameof({method.Identifier})");
 
-            for (int i = 0; i < method.Args.Length; i++)
-                output.Append($", {method.Args[i].Name}");
+            foreach (var parameter in method.ParameterList.Parameters)
+                output.Append($", {parameter.Identifier}");
 
             output.Append(")");
 
-            if (method.ReturnType != "void" && method.WrapReturn)
-                output.Append(")");
+            //if (method.ReturnType.ToString() != "void" && method.WrapReturn)
+            //    output.Append(")");
 
             output.AppendLine(";");
             output.AppendLine("}");
 
             output.AppendLine();
+        }
+
+        private static void GenerateProperty(OutputBuffer output, PropertyDeclarationSyntax property, bool asStatic)
+        {
+            output.AppendLine($"public {property.Type} {property.Identifier}");
+            output.AppendLine("{");
+
+            //if (property.CanGet)
+            //    output.AppendLine($"\tget => _js.GetObjectProperty<{property.Type}>(nameof({property.Name}));");
+
+            //if (property.CanSet)
+            //    output.AppendLine($"\tset => _js.SetObjectProperty(nameof({property.Name}), value);");
+
+            output.AppendLine("}");
         }
     }
 }

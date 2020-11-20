@@ -3,34 +3,62 @@
 using WebAssembly;
 namespace WasmWrangler
 {
-	public partial class console
+	
+
+	public static partial class JS
 	{
-		private readonly JSObject _js;
-
-		public console(JSObject js)
+		public static partial class console
 		{
-			_js = js;
+			private static JSObject? __js;
+
+			private static JSObject _js
+			{
+				get
+				{
+					if (__js == null)
+						__js = (JSObject)Runtime.GetGlobalObject(nameof(console));
+
+					return __js;
+				}
+			}
+
+			public static void dir(object? item = null, object? options = null)
+			{
+				_js.Invoke(nameof(dir), item, options);
+			}
+
+			public static void info(params object[] data)
+			{
+				_js.Invoke(nameof(info), data);
+			}
+
 		}
-
-		public static console? Wrap(JSObject? js) => js != null ? new console(js) : null;
-
-		public static implicit operator JSObject(console obj) => obj._js;
-
 	}
 
-	public partial class document
+	public static partial class JS
 	{
-		private readonly JSObject _js;
-
-		public document(JSObject js)
+		public static partial class document
 		{
-			_js = js;
+			private static JSObject? __js;
+
+			private static JSObject _js
+			{
+				get
+				{
+					if (__js == null)
+						__js = (JSObject)Runtime.GetGlobalObject(nameof(document));
+
+					return __js;
+				}
+			}
+
+			public static HTMLElement? getElementById(string element)
+			{
+                object result;
+                return (result = _js.Invoke(nameof(getElementById), element)) != null ? (HTMLElement?)(JSObject)result : null;
+            }
+
 		}
-
-		public static document? Wrap(JSObject? js) => js != null ? new document(js) : null;
-
-		public static implicit operator JSObject(document obj) => obj._js;
-
 	}
 
 }

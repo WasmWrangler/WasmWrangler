@@ -16,3 +16,10 @@ dotnet msbuild build/WasmEnsureSDKAvailable.proj
 
 This builds the WasmWrangler assembly and calls the `WasmEnsureSDKAvailable` target which will download the
 SDK if it's not available on your machine.
+
+You'll also need to install the libman CLI tool:
+
+```
+dotnet tool install -g Microsoft.Web.LibraryManager.Cli
+```
+

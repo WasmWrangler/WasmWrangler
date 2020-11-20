@@ -32,12 +32,7 @@
     Inputs="@(_WasmFilesToPackage)"
     Outputs="@(_WasmFilesToPackage->'%(WasmOutputPath)')">
     <PropertyGroup>
-      <!-- 
-        NOTE: I've disabled the following flag for now as I'm not sure that
-        it brings any benfit. If at some point the flag needs to be reactivated
-        don't forget to add the double dash before "debug".
-      -->
-      <!-- <_WasmPackagerArgs Condition="'$(Configuration)' == 'Debug'">$(_WasmPackagerArgs) debug</_WasmPackagerArgs> -->
+      <_WasmPackagerArgs Condition="'$(Configuration)' == 'Debug'">--debug</_WasmPackagerArgs>
       <!-- prefix tells packager.exe where to look for referenced assemblies -->
       <_WasmPackagerArgs>$(_WasmPackagerArgs) --prefix=&quot;$(OutputPath) &quot;</_WasmPackagerArgs>
       <!-- Not sure what appdir does but it's required -->
