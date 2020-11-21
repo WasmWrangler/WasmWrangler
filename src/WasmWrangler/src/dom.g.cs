@@ -3,7 +3,28 @@
 using WebAssembly;
 namespace WasmWrangler
 {
-	
+	public partial class HTMLElement
+	{
+		private readonly JSObject _js;
+
+		internal HTMLElement(object obj)
+		{
+			if (!(obj is JSObject))
+				throw new WasmWranglerException($"Expected {nameof(obj)} to be an instance of JSObject.");
+
+			_js = (JSObject)obj;
+		}
+
+		public string innerText
+		{
+			get => _js.GetObjectProperty<string>(nameof(innerText));
+			set => _js.SetObjectProperty(nameof(innerText), value);
+		}
+		public JSObject style
+		{
+			get => _js.GetObjectProperty<JSObject>(nameof(style));
+		}
+	}
 
 	public static partial class JS
 	{
@@ -54,9 +75,13 @@ namespace WasmWrangler
 
 			public static HTMLElement? getElementById(string element)
 			{
-                object result;
-                return (result = _js.Invoke(nameof(getElementById), element)) != null ? (HTMLElement?)(JSObject)result : null;
-            }
+				var result = _js.Invoke(nameof(getElementById), element);
+
+				if (result == null)
+					return null;
+
+				return new HTMLElement(result);
+			}
 
 		}
 	}

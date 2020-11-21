@@ -4,6 +4,8 @@ namespace WasmWrangler
 {
     interface HTMLElement : JSObjectWrapper {
         string innerText { get; set; }
+
+        JSObject style { get; }
     }
 
     interface console : JSGlobalObject {

@@ -168,14 +168,13 @@ namespace WasmWrangler.BindingGenerator
             output.AppendLine("{");
             output.AppendLine("\tprivate readonly JSObject _js;");
             output.AppendLine();
-            output.AppendLine($"\tpublic {@interface.Identifier}(JSObject js)");
+            output.AppendLine($"\tinternal {@interface.Identifier}(object obj)");
             output.AppendLine("\t{");
-            output.AppendLine("\t\t_js = js;");
+            output.AppendLine("\t\tif (!(obj is JSObject))");
+            output.AppendLine("\t\t\tthrow new WasmWranglerException($\"Expected {nameof(obj)} to be an instance of JSObject.\");");
+            output.AppendLine();
+            output.AppendLine("\t\t_js = (JSObject)obj;");
             output.AppendLine("\t}");
-            output.AppendLine();
-            output.AppendLine($"\tpublic static {@interface.Identifier}? Wrap(JSObject? js) => js != null ? new {@interface.Identifier}(js) : null;");
-            output.AppendLine();
-            output.AppendLine($"\tpublic static implicit operator JSObject({@interface.Identifier} obj) => obj._js;");
             output.AppendLine();
 
             output.IncreaseIndent();
@@ -218,33 +217,36 @@ namespace WasmWrangler.BindingGenerator
 
             output.AppendLine("{");
 
-            output.Append("\t");
-
             if (method.ReturnType.ToString() != "void")
             {
-                output.Append($"return ({method.ReturnType})(JSObject?)");
+                output.Append($"\tvar result = _js.Invoke(nameof({method.Identifier})");
 
-                //if (method.WrapReturn)
-                //{
-                //    output.Append($"return {method.ReturnType.TrimEnd('?')}.Wrap((JSObject?)");
-                //}
-                //else
-                //{
-                //    output.Append($"return ({method.ReturnType})");
-                //}
+                foreach (var parameter in method.ParameterList.Parameters)
+                    output.Append($", {parameter.Identifier}");
+
+                output.AppendLine(");");
+                output.AppendLine();
+                output.AppendLine("\tif (result == null)");
+                output.AppendLine("\t\treturn null;");
+                output.AppendLine();
+
+                var returnType = method.ReturnType.ToString();
+
+                if (returnType.EndsWith("?"))
+                    returnType = returnType.TrimEnd('?');
+
+                output.AppendLine($"\treturn new {returnType}(result);");
+            }
+            else
+            {
+                output.Append($"\t_js.Invoke(nameof({method.Identifier})");
+
+                foreach (var parameter in method.ParameterList.Parameters)
+                    output.Append($", {parameter.Identifier}");
+
+                output.AppendLine(");");
             }
 
-            output.Append($"_js.Invoke(nameof({method.Identifier})");
-
-            foreach (var parameter in method.ParameterList.Parameters)
-                output.Append($", {parameter.Identifier}");
-
-            output.Append(")");
-
-            //if (method.ReturnType.ToString() != "void" && method.WrapReturn)
-            //    output.Append(")");
-
-            output.AppendLine(";");
             output.AppendLine("}");
 
             output.AppendLine();
@@ -252,14 +254,33 @@ namespace WasmWrangler.BindingGenerator
 
         private static void GenerateProperty(OutputBuffer output, PropertyDeclarationSyntax property, bool asStatic)
         {
-            output.AppendLine($"public {property.Type} {property.Identifier}");
+            output.Append($"public ");
+
+            if (asStatic)
+                output.Append("static ");
+
+            output.AppendLine($"{property.Type} {property.Identifier}");
             output.AppendLine("{");
 
-            //if (property.CanGet)
-            //    output.AppendLine($"\tget => _js.GetObjectProperty<{property.Type}>(nameof({property.Name}));");
+            if (property.AccessorList != null)
+            {
+                foreach (var accessor in property.AccessorList.Accessors)
+                {
+                    switch (accessor.Keyword.ToString())
+                    {
+                        case "get":
+                            output.AppendLine($"\tget => _js.GetObjectProperty<{property.Type}>(nameof({property.Identifier}));");
+                            break;
 
-            //if (property.CanSet)
-            //    output.AppendLine($"\tset => _js.SetObjectProperty(nameof({property.Name}), value);");
+                        case "set":
+                            output.AppendLine($"\tset => _js.SetObjectProperty(nameof({property.Identifier}), value);");
+                            break;
+
+                        default:
+                            throw new InvalidOperationException(CreateErrorMessage(accessor, $"Unexpected accessor: {accessor.Keyword}"));
+                    }
+                }
+            }
 
             output.AppendLine("}");
         }
