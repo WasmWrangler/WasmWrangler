@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    // Seems to be important to target ES5
+    "target": "ES5",
+    "outDir": "./obj/js"
+  },
+  "include": [
+    "js/**/*"
+  ]
+}

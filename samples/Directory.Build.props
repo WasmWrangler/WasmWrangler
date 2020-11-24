@@ -3,20 +3,8 @@
 
   <!-- Importing this project results in WasmWrangler.props and WasmWrangler.targets being included -->
   <Import Project="$(RepositoryRootDirectory)build/WasmEnsureSDKAvailable.targets" />
-
-  <PropertyGroup>
-    <!-- We can safely assume ES2017 target since we're using WASM. -->
-    <TypeScriptTarget>ES2017</TypeScriptTarget>
-    <TypeScriptModuleKind>ES2015</TypeScriptModuleKind>
-  </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="$(RepositoryRootDirectory)/src/WasmWrangler/WasmWrangler.csproj" />
-
-    <!-- TypeScript -->
-    <PackageReference Include="Microsoft.TypeScript.MSBuild" Version="4.0.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
+    <ProjectReference Include="$(RepositoryRootDirectory)/src/WasmWrangler/WasmWrangler.csproj" />    
   </ItemGroup>
 </Project>

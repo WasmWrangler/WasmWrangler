@@ -29,6 +29,7 @@ namespace HelloWorld
             }
 
             _js = (JSObject)Runtime.GetGlobalObject("Program");
+            JS.console.dir(_js);
             _js.Invoke("sayHello", "smack0007");
         }
 
