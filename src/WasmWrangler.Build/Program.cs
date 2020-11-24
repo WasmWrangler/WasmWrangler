@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
-using System.Text;
-using SharpScss;
 
 namespace WasmWrangler
 {
@@ -20,18 +17,6 @@ namespace WasmWrangler
 
             switch (args[0])
             {
-                case nameof(CompileScss):
-                    if (args.Length < 3)
-                    {
-                        Console.Error.WriteLine($"Please provide 2 arguments for {nameof(CompileScss)}.");
-                        return 1;
-                    }
-
-                    if (!CompileScss(args[1], args[2]))
-                        return 1;
-
-                    break;
-
                 case nameof(DownloadMonoWasmSDK):
                     if (args.Length < 4)
                     {
@@ -46,33 +31,6 @@ namespace WasmWrangler
             }
 
             return 0;
-        }
-
-        private static bool CompileScss(string inputFile, string outputFile)
-        {
-            Console.WriteLine($"{nameof(CompileScss)}: {inputFile} => {outputFile}");
-
-            var options = new ScssOptions()
-            {
-                GenerateSourceMap = true
-            };
-
-            try
-            {
-                options.InputFile = inputFile;
-                options.OutputFile = outputFile;
-                var result = Scss.ConvertFileToCss(inputFile, options);
-                File.WriteAllText(outputFile, result.Css);
-                File.WriteAllText(outputFile + ".map", result.SourceMap);
-            }
-            catch (Exception ex)
-            {
-                Console.Error.WriteLine($"{nameof(CompileScss)} failed while trying to compile \"{inputFile}\":");
-                Console.Error.WriteLine(ex);
-                return false;
-            }
-
-            return true;
         }
 
         // Taken from Ooui.Wasm: https://github.com/praeclarum/Ooui/blob/master/Ooui.Wasm.Build.Tasks/BuildDistTask.cs#L56

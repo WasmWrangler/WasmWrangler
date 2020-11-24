@@ -1,109 +1,26 @@
 ﻿<Project>
   <Target Name="WasmBuild" AfterTargets="AfterBuild" DependsOnTargets="
     WasmInjectScripts;
-    WasmFindFilesToInclude;
     CalculateWasmOutputPath;
-    WasmCompileScss;
     WasmCallSDKPackager;
     WasmCopyAssets" />
-
-  <Target Name="WasmFindFilesToInclude">    
-    <ItemGroup Condition="$(WasmNoAutomaticIncludes) != true">
-      <HtmlFiles Include="**/*.html" Exclude="$(WasmLibDirectory)/**" />
-      <JsFiles Include="**/*.js;**/*.js.map" Exclude="$(WasmLibDirectory)/**"  />
-      <ScssCompile Include="**/*.scss" Exclude="$(WasmLibDirectory)/**" />
-    </ItemGroup>
-
-    <Copy
-      SourceFiles="%(HtmlFiles.Identity)"
-      DestinationFiles="$(OutputPath)/%(HtmlFiles.RecursiveDir)%(HtmlFiles.Filename)%(HtmlFiles.Extension)"
-      SkipUnchangedFiles="true" />
-    
-    <Copy
-      SourceFiles="%(JsFiles.Identity)"
-      DestinationFiles="$(OutputPath)/%(JsFiles.RecursiveDir)%(JsFiles.Filename)%(JsFiles.Extension)"
-      SkipUnchangedFiles="true" />
-  </Target>
-  
-  <Target Name="WasmCalculateScssPaths">
-    <ItemGroup>
-      <ScssCompile Update="*">
-        <RelativePath>%(ScssCompile.RecursiveDir)%(ScssCompile.Filename).css</RelativePath>
-      </ScssCompile>
-      <ScssCompile Update="*">
-        <OutputPath>$(OutputPath)%(ScssCompile.RelativePath)</OutputPath>
-      </ScssCompile>
-
-      <ScssMapFiles Include="@(ScssCompile->'%(RelativePath).map')" />
-      <ScssMapFiles Update="*">
-        <RelativePath>%(ScssMapFiles.Identity)</RelativePath>
-      </ScssMapFiles>
-      <ScssMapFiles Update="*">
-        <OutputPath>$(OutputPath)%(ScssMapFiles.RelativePath)</OutputPath>
-      </ScssMapFiles>
-    </ItemGroup>
-  </Target>
-  
-  <Target Name="WasmCompileScss" Condition="@(ScssCompile->Count()) &gt; 0" DependsOnTargets="WasmCalculateScssPaths"
-    Inputs="@(ScssCompile)"
-    Outputs="@(ScssCompile->'%(OutputPath)')">
-    <Exec Command="$(WasmWranglerBuildCommand) CompileScss &quot;%(ScssCompile.FullPath)&quot; &quot;%(ScssCompile.OutputPath)&quot;" />
-  </Target>
   
   <Target Name="WasmCopyAssets">
     <ItemGroup>
-      <!-- CopyToOutputDirectory files -->
-      <WasmAssets Include="@(None)" Condition="'%(None.CopyToOutputDirectory)' != '' And '%(None.CopyToOutputDirectory)' != 'Never'">
-        <Source>%(None.Identity)</Source>
-        
-        <Destination Condition="'%(None.Link)' == ''">$(WasmOutputPath)/%(None.RecursiveDir)%(None.FileName)%(None.Extension)</Destination>
-        <Destination Condition="'%(None.Link)' != ''">$(WasmOutputPath)/%(None.Link)</Destination>
+      <_WasmDistFiles Include="$(WasmOutputPath)/**/*" />
+      <WasmFilesToCopy Include="$(OutputPath)/**/*" Exclude="@(WasmFilesToPackage);@(_WasmDistFiles)" />
 
-        <SkipUnchangedFiles Condition="'%(None.CopyToOutputDirectory)' == 'Always'">false</SkipUnchangedFiles>
-        <SkipUnchangedFiles Condition="'%(None.CopyToOutputDirectory)' == 'PreserveNewest'">true</SkipUnchangedFiles>
-      </WasmAssets>
-
-      <!-- Lib files -->
-      <_WasmLibFiles Condition="Exists('$(WasmLibDirectory)')" Include="$(WasmLibDirectory)/**/*" />
-      
-      <WasmAssets Condition="Exists('$(WasmLibDirectory)')" Include="@(_WasmLibFiles)">
-        <Source>$(WasmLibDirectory)/%(_WasmLibFiles.RecursiveDir)%(_WasmLibFiles.Filename)%(_WasmLibFiles.Extension)</Source>
-        <Destination>$(WasmOutputPath)/$(WasmLibDirectory)/%(_WasmLibFiles.RecursiveDir)%(_WasmLibFiles.Filename)%(_WasmLibFiles.Extension)</Destination>
-        <SkipUnchangedFiles>true</SkipUnchangedFiles>
-      </WasmAssets>
-      
-      <!-- Html files -->
-      <WasmAssets Condition="@(HtmlFiles->Count()) &gt; 0" Include="@(HtmlFiles)">
-        <Source>$(OutputPath)/%(HtmlFiles.RecursiveDir)%(HtmlFiles.Filename)%(HtmlFiles.Extension)</Source>
-        <Destination>$(WasmOutputPath)/%(HtmlFiles.RecursiveDir)%(HtmlFiles.Filename)%(HtmlFiles.Extension)</Destination>
-        <SkipUnchangedFiles>true</SkipUnchangedFiles>
-      </WasmAssets>
-      
-      <!-- JavaScript files -->
-      <WasmAssets Condition="@(JsFiles->Count()) &gt; 0" Include="@(JsFiles)">
-        <Source>$(OutputPath)/%(JsFiles.RecursiveDir)%(JsFiles.Filename)%(JsFiles.Extension)</Source>
-        <Destination>$(WasmOutputPath)/%(JsFiles.RecursiveDir)%(JsFiles.Filename)%(JsFiles.Extension)</Destination>
-        <SkipUnchangedFiles>true</SkipUnchangedFiles>
-      </WasmAssets>
-      
-      <!-- SCSS files -->
-      <WasmAssets Condition="@(ScssCompile->Count()) &gt; 0" Include="@(ScssCompile)">
-        <Source>%(ScssCompile.OutputPath)</Source>
-        <Destination>$(WasmOutputPath)/%(ScssCompile.RelativePath)</Destination>
-        <SkipUnchangedFiles>true</SkipUnchangedFiles>
-      </WasmAssets>
-
-      <!-- SCSS map files -->
-      <WasmAssets Condition="@(ScssCompile->Count()) &gt; 0" Include="@(ScssMapFiles)">
-        <Source>%(ScssMapFiles.OutputPath)</Source>
-        <Destination>$(WasmOutputPath)/%(ScssMapFiles.RelativePath)</Destination>
-        <SkipUnchangedFiles>true</SkipUnchangedFiles>
-      </WasmAssets>
+      <WasmFilesToCopy Update="*">
+        <Source>%(WasmFilesToCopy.Identity)</Source>
+        <Destination>$(WasmOutputPath)/%(WasmFilesToCopy.RecursiveDir)%(WasmFilesToCopy.Filename)%(WasmFilesToCopy.Extension)</Destination>
+      </WasmFilesToCopy>
     </ItemGroup>
-    
+
+    <Message Importance="high" Text="@(WasmFilesToCopy->'%(Source) => %(Destination)', '%0A')" />
+        
     <Copy
-        SourceFiles="%(WasmAssets.Source)"
-        DestinationFiles="%(WasmAssets.Destination)"
-        SkipUnchangedFiles="%(WasmAssets.SkipUnchangedFiles)" />
+        SourceFiles="%(WasmFilesToCopy.Source)"
+        DestinationFiles="%(WasmFilesToCopy.Destination)"
+        SkipUnchangedFiles="true" />
   </Target>
 </Project>

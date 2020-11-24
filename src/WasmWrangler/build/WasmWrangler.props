@@ -1,16 +1,8 @@
 ﻿<Project>
-  <!-- Update the list of build actions available in Visual Studio. -->
-  <ItemGroup>
-    <AvailableItemName Include="HtmlFiles" />
-    <AvailableItemName Include="JSFiles" />
-    <AvailableItemName Include="ScssCompile" />
-  </ItemGroup>
-
   <!-- Configuration properties -->
   <PropertyGroup>
+    <WasmJsDirectory Condition="'$(WasmJsDirectory)' == ''">js</WasmJsDirectory>
     <WasmOutputDirectory Condition="'$(WasmOutputDirectory)' == ''">dist</WasmOutputDirectory>
-    <WasmLibDirectory Condition="'$(WasmLibDirectory)' == ''">lib</WasmLibDirectory>
-    <WasmScriptsDirectory Condition="'$(WasmScriptsDirectory)' == ''">js</WasmScriptsDirectory>
   </PropertyGroup>
   
   <!-- Static properties -->

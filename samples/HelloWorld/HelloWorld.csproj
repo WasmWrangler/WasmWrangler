@@ -4,9 +4,32 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <!-- Hide .js and .js.map output -->
+    <None Update="css\app.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+
+    <None Include="$(RepositoryRootDirectory)/ext/twitter-bootstrap/css/bootstrap.min.css" Link="css/bootstrap.min.css" CopyToOutputDirectory="PreserveNewest" />
+    
+    <None Include="$(RepositoryRootDirectory)/ext/font-awesome/css/fontawesome.min.css" Link="css/fontawesome.min.css" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="$(RepositoryRootDirectory)/ext/font-awesome/css/solid.min.css" Link="css/fontawesome.solid.min.css" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="$(RepositoryRootDirectory)/ext/font-awesome/webfonts/fa-solid*.*" Link="webfonts/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    
+    <!-- Hide JS output -->
     <None Update="js/**/*.js;js/**/*.js.map">
       <Visible>false</Visible>
     </None>
   </ItemGroup>
+
+  <Target Name="AddJsFilesToOutput" BeforeTargets="WasmCopyAssets">
+    <Message Importance="high" Text="AddJsFilesToOutput..." />
+    
+    <ItemGroup>
+      <JsFiles Include="js/**/*.js;js/**/*.js.map" />
+    </ItemGroup>
+
+    <Copy SourceFiles="%(JsFiles.Identity)" DestinationFiles="$(OutputPath)/js/%(JsFiles.RecursiveDir)%(JsFiles.Filename)%(JsFiles.Extension)" SkipUnchangedFiles="true" />
+  </Target>
 </Project>

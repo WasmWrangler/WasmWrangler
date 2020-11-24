@@ -1,11 +1,11 @@
 ﻿<Project>
   <Target Name="WasmCalculateFilesToPackage">
     <ItemGroup>
-      <_WasmFilesToPackage Include="$(OutputPath)/**/*.dll" Exclude="$(WasmOutputPath)/**/*" />
+      <WasmFilesToPackage Include="$(OutputPath)/**/*.dll" Exclude="$(WasmOutputPath)/**/*" />
 
-      <_WasmFilesToPackage Update="*">
-        <WasmOutputPath>$(WasmOutputPath)/managed/%(_WasmFilesToPackage.RecursiveDir)%(_WasmFilesToPackage.Filename)%(_WasmFilesToPackage.Extension)</WasmOutputPath>
-      </_WasmFilesToPackage>
+      <WasmFilesToPackage Update="*">
+        <WasmOutputPath>$(WasmOutputPath)/managed/%(WasmFilesToPackage.RecursiveDir)%(WasmFilesToPackage.Filename)%(WasmFilesToPackage.Extension)</WasmOutputPath>
+      </WasmFilesToPackage>
     </ItemGroup>
   </Target>
 
@@ -24,13 +24,13 @@
       </_WasmAppInitSource>
     </PropertyGroup>
   </Target>
-  
+
   <Target Name="WasmCallSDKPackager" DependsOnTargets="
     WasmEnsureSDKAvailable;
     WasmCalculateFilesToPackage;
     WasmCalculateAppInitSource"
-    Inputs="@(_WasmFilesToPackage)"
-    Outputs="@(_WasmFilesToPackage->'%(WasmOutputPath)')">
+    Inputs="@(WasmFilesToPackage)"
+    Outputs="@(WasmFilesToPackage->'%(WasmOutputPath)')">
     <PropertyGroup>
       <_WasmPackagerArgs Condition="'$(Configuration)' == 'Debug'">--debug</_WasmPackagerArgs>
       <!-- prefix tells packager.exe where to look for referenced assemblies -->
@@ -44,7 +44,7 @@
     </PropertyGroup>
 
     <Message Importance="high" Text="WasmPackagerArgs = $(_WasmPackagerArgs)" />
-    
+
     <Exec Command="$(WasmSDKPath)/packager.exe $(_WasmPackagerArgs)" />
 
     <ItemGroup>

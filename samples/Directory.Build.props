@@ -18,11 +18,5 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-
-    <!-- FontAwesome -->
-    <PackageReference Include="Font.Awesome.AspDotNetCore" Version="5.15.1" ExcludeAssets="all" GeneratePathProperty="true" />
-    <None Include="$(PkgFont_Awesome_AspDotNetCore)/contentFiles/any/any/wwwroot/lib/fontawesome/css/fontawesome.min.css" Link="css/fontawesome.min.css" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="$(PkgFont_Awesome_AspDotNetCore)/contentFiles/any/any/wwwroot/lib/fontawesome/css/solid.min.css" Link="css/fontawesome.solid.min.css" CopyToOutputDirectory="PreserveNewest" />
-    <None Include="$(PkgFont_Awesome_AspDotNetCore)/contentFiles/any/any/wwwroot/lib/fontawesome/webfonts/fa-solid*.*" Link="webfonts/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

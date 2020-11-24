@@ -4,8 +4,5 @@
     <OutputType>exe</OutputType>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="SharpScss" Version="2.0.0" />  
-  </ItemGroup>
 </Project>
 
