@@ -23,7 +23,7 @@
     
     <ItemGroup>
       <JsFiles Include="obj/js/**/*.js;obj/js/**/*.js.map" />
-      <JsFiles Include="js/WasmWrangler.js" />
+      <JsFiles Include="js/WasmWrangler.js;js/WasmWrangler.js.map" />
     </ItemGroup>
 
     <Copy SourceFiles="%(JsFiles.Identity)" DestinationFiles="$(OutputPath)/js/%(JsFiles.RecursiveDir)%(JsFiles.Filename)%(JsFiles.Extension)" SkipUnchangedFiles="true" />
