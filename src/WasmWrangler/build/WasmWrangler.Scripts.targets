@@ -6,8 +6,9 @@
 
     <ItemGroup>
       <_ScriptFiles Include="
+        $(MSBuildThisFileDirectory)/js/*.d.ts;
         $(MSBuildThisFileDirectory)/js/*.js;
-        $(MSBuildThisFileDirectory)/js/*.d.ts" />
+        $(MSBuildThisFileDirectory)/js/*.js.map" />
     </ItemGroup>
 
     <Copy

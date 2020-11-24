@@ -4,12 +4,11 @@
     "strict": true,
     "noEmitOnError": true,
     "removeComments": false,
+    "declaration": true,
     "sourceMap": true,
-    // Seems to be important to target ES5
-    "target": "ES5",
-    "outDir": "./obj/js"
+    "target": "es5"
   },
   "include": [
-    "js/**/*"
+    "build/js/**/*"
   ]
 }

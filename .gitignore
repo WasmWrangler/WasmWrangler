@@ -55,5 +55,6 @@ src/WasmWrangler/mono-wasm.zip
 samples/**/*.js
 samples/**/*.js.map
 !samples/**/WasmWrangler.js
+src/WasmWrangler/build/js/**/*.d.ts
 src/WasmWrangler/build/js/**/*.js
 src/WasmWrangler/build/js/**/*.js.map
