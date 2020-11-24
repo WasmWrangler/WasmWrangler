@@ -1,9 +1,9 @@
 {
   "profiles": {
     "dotnet-serve": {
-        "commandName": "Executable",
-        "executablePath": "dotnet",
-        "commandLineArgs": "serve -d \"dist\" -p 8080 -o"
+      "commandName": "Executable",
+      "executablePath": "dotnet",
+      "commandLineArgs": "serve -d \"dist\" -p 8080 -o"
     }
   }
 }
