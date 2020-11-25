@@ -1,6 +1,12 @@
+[![The MIT License](https://img.shields.io/badge/license-MIT-orange.svg?style=flat-square)](http://opensource.org/licenses/MIT)
+[![Build Status](https://github.com/WasmWrangler/WasmWrangler/workflows/CI/badge.svg)](https://github.com/WasmWrangler/WasmWrangler/actions)
+
 # WasmWrangler
 
+<img align="right" width="170px" height="170px" src="https://github.com/WasmWrangler/WasmWrangler/raw/master/assets/Logo.png">
 
+WasmWrangler is a NuGet package that enables your C# application to be run in a browser. Think of it as the
+[Vanilla JS](http://vanilla-js.com/) for C#.
 
 ## Building
 
