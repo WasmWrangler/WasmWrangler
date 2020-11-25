@@ -10,7 +10,6 @@ on:
 
 jobs:
   build:
-
     runs-on: windows-latest
     
     steps:
@@ -22,14 +21,14 @@ jobs:
       with:
         dotnet-version: '5.0.x'
 
-    - name: Install libman
-      run: dotnet tool install -g microsoft.web.librarymanager.cli
-
     - name: Get Wasm SDK
       run: dotnet msbuild build\WasmEnsureSDKAvailable.proj -nologo
+
     - name: Restore
       run: dotnet msbuild build\Build.proj -nologo -v:n -t:Restore
+
     - name: Build
       run: dotnet msbuild build\Build.proj -nologo -v:n -t:Build
+
     - name: Test
       run: dotnet msbuild build\Build.proj -nologo -v:n -t:Test  
