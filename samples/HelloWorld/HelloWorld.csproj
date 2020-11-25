@@ -16,16 +16,7 @@
     <None Include="$(RepositoryRootDirectory)/ext/font-awesome/css/fontawesome.min.css" Link="css/fontawesome.min.css" CopyToOutputDirectory="PreserveNewest" />
     <None Include="$(RepositoryRootDirectory)/ext/font-awesome/css/solid.min.css" Link="css/fontawesome.solid.min.css" CopyToOutputDirectory="PreserveNewest" />
     <None Include="$(RepositoryRootDirectory)/ext/font-awesome/webfonts/fa-solid*.*" Link="webfonts/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+
+    <None Include="js/WasmWrangler.js;js/WasmWrangler.js.map" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
-
-  <Target Name="CompileTS" BeforeTargets="WasmCopyAssets">
-    <Exec Command="tsc" />
-    
-    <ItemGroup>
-      <JsFiles Include="obj/js/**/*.js;obj/js/**/*.js.map" />
-      <JsFiles Include="js/WasmWrangler.js;js/WasmWrangler.js.map" />
-    </ItemGroup>
-
-    <Copy SourceFiles="%(JsFiles.Identity)" DestinationFiles="$(OutputPath)/js/%(JsFiles.RecursiveDir)%(JsFiles.Filename)%(JsFiles.Extension)" SkipUnchangedFiles="true" />
-  </Target>
 </Project>
