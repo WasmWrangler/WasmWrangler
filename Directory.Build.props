@@ -25,7 +25,7 @@
     <!-- Version -->
     <VersionMajor>0</VersionMajor>
     <VersionMinor>0</VersionMinor>
-    <VersionPatch>1</VersionPatch>
+    <VersionPatch>2</VersionPatch>
 
     <Version>$(VersionMajor).$(VersionMinor).$(VersionPatch)</Version>
     <VersionPrefix>$(Version)</VersionPrefix>

@@ -72,10 +72,11 @@
   -->
   
   <Target Name="Release" DependsOnTargets="
+    EnsureNoChanges;
+    EnsureVersionDoesNotExist;
     Clean;
     Build;
     Test;
-    EnsureNoChanges;
     Pack;
     PushNuGet;
     TagRepository" />
@@ -88,6 +89,16 @@
     <Error
       Condition="$(GitStatus) != ''"
       Text="There are currently uncommitted changes." />
+  </Target>
+
+  <Target Name="EnsureVersionDoesNotExist">
+    <Exec Command="git tag -l v$(Version)" ConsoleToMSBuild="true" StandardOutputImportance="Low" ContinueOnError="true">
+      <Output TaskParameter="ConsoleOutput" PropertyName="GitTag" />
+    </Exec>
+
+    <Error
+      Condition="$(GitTag) != ''"
+      Text="There already exists a commit tagged with the version &quot;$(Version)&quot;." />
   </Target>
   
   <Target Name="PushNuGet">
