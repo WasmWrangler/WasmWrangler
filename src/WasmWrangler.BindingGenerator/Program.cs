@@ -248,12 +248,38 @@ namespace WasmWrangler.BindingGenerator
             }
 
             output.AppendLine("}");
-
             output.AppendLine();
         }
 
         private static void GenerateProperty(OutputBuffer output, PropertyDeclarationSyntax property, bool asStatic)
         {
+            if (property.AccessorList == null)
+                throw new InvalidOperationException(CreateErrorMessage(property, $"AccessorList was expected."));
+
+            string? wrappedType = null;
+
+            foreach (var attribute in property.AttributeLists.Select(x => x.ToString().Trim('[', ']')))
+            {
+                if (attribute.StartsWith("Wrap(") && attribute.EndsWith(")"))
+                {
+                    wrappedType = attribute.Substring("Wrap(".Length, attribute.Length - "Wrap(".Length - ")".Length);
+                }
+            }
+
+            bool canRead = property.AccessorList.Accessors.Any(x => x.Keyword.ToString() == "get");
+            bool canWrite = property.AccessorList.Accessors.Any(x => x.Keyword.ToString() == "set");
+
+            if (canRead && !canWrite) // readonly
+            {
+                output.Append($"private ");
+
+                if (asStatic)
+                    output.Append("static ");
+
+                output.AppendLine($"{property.Type}? _{property.Identifier};");
+                output.AppendLine();
+            }
+
             output.Append($"public ");
 
             if (asStatic)
@@ -262,27 +288,36 @@ namespace WasmWrangler.BindingGenerator
             output.AppendLine($"{property.Type} {property.Identifier}");
             output.AppendLine("{");
 
-            if (property.AccessorList != null)
+            if (canRead && canWrite)
             {
-                foreach (var accessor in property.AccessorList.Accessors)
+                if (wrappedType == null)
                 {
-                    switch (accessor.Keyword.ToString())
-                    {
-                        case "get":
-                            output.AppendLine($"\tget => _js.GetObjectProperty<{property.Type}>(nameof({property.Identifier}));");
-                            break;
-
-                        case "set":
-                            output.AppendLine($"\tset => _js.SetObjectProperty(nameof({property.Identifier}), value);");
-                            break;
-
-                        default:
-                            throw new InvalidOperationException(CreateErrorMessage(accessor, $"Unexpected accessor: {accessor.Keyword}"));
-                    }
+                    output.AppendLine($"\tget => _js.GetObjectProperty<{property.Type}>(nameof({property.Identifier}));");
+                    output.AppendLine($"\tset => _js.SetObjectProperty(nameof({property.Identifier}), value);");
                 }
+                else
+                {
+                    throw new NotImplementedException("Wrap not implemented for read / write properties.");
+                }
+            }
+            else if (canRead && !canWrite) // readonly
+            {
+                output.Append($"\tget => _{property.Identifier} ?? (_{property.Identifier} = ");
+
+                if (wrappedType == null)
+                {
+                    output.Append($"_js.GetObjectProperty<{property.Type}>(nameof({property.Identifier}))");
+                }
+                else
+                {
+                    output.Append($"new {property.Type}(_js.GetObjectProperty<JSObject>(nameof({property.Identifier})))");
+                }
+
+                output.AppendLine(");");
             }
 
             output.AppendLine("}");
+            output.AppendLine();
         }
     }
 }

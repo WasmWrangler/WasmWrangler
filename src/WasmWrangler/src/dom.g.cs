@@ -3,6 +3,1904 @@
 using WebAssembly;
 namespace WasmWrangler
 {
+	public partial class CSSStyleDeclaration
+	{
+		private readonly JSObject _js;
+
+		internal CSSStyleDeclaration(object obj)
+		{
+			if (!(obj is JSObject))
+				throw new WasmWranglerException($"Expected {nameof(obj)} to be an instance of JSObject.");
+
+			_js = (JSObject)obj;
+		}
+
+		public string? alignContent
+		{
+			get => _js.GetObjectProperty<string?>(nameof(alignContent));
+			set => _js.SetObjectProperty(nameof(alignContent), value);
+		}
+
+		public string? alignItems
+		{
+			get => _js.GetObjectProperty<string?>(nameof(alignItems));
+			set => _js.SetObjectProperty(nameof(alignItems), value);
+		}
+
+		public string? alignSelf
+		{
+			get => _js.GetObjectProperty<string?>(nameof(alignSelf));
+			set => _js.SetObjectProperty(nameof(alignSelf), value);
+		}
+
+		public string? alignmentBaseline
+		{
+			get => _js.GetObjectProperty<string?>(nameof(alignmentBaseline));
+			set => _js.SetObjectProperty(nameof(alignmentBaseline), value);
+		}
+
+		public string? all
+		{
+			get => _js.GetObjectProperty<string?>(nameof(all));
+			set => _js.SetObjectProperty(nameof(all), value);
+		}
+
+		public string? animation
+		{
+			get => _js.GetObjectProperty<string?>(nameof(animation));
+			set => _js.SetObjectProperty(nameof(animation), value);
+		}
+
+		public string? animationDelay
+		{
+			get => _js.GetObjectProperty<string?>(nameof(animationDelay));
+			set => _js.SetObjectProperty(nameof(animationDelay), value);
+		}
+
+		public string? animationDirection
+		{
+			get => _js.GetObjectProperty<string?>(nameof(animationDirection));
+			set => _js.SetObjectProperty(nameof(animationDirection), value);
+		}
+
+		public string? animationDuration
+		{
+			get => _js.GetObjectProperty<string?>(nameof(animationDuration));
+			set => _js.SetObjectProperty(nameof(animationDuration), value);
+		}
+
+		public string? animationFillMode
+		{
+			get => _js.GetObjectProperty<string?>(nameof(animationFillMode));
+			set => _js.SetObjectProperty(nameof(animationFillMode), value);
+		}
+
+		public string? animationIterationCount
+		{
+			get => _js.GetObjectProperty<string?>(nameof(animationIterationCount));
+			set => _js.SetObjectProperty(nameof(animationIterationCount), value);
+		}
+
+		public string? animationName
+		{
+			get => _js.GetObjectProperty<string?>(nameof(animationName));
+			set => _js.SetObjectProperty(nameof(animationName), value);
+		}
+
+		public string? animationPlayState
+		{
+			get => _js.GetObjectProperty<string?>(nameof(animationPlayState));
+			set => _js.SetObjectProperty(nameof(animationPlayState), value);
+		}
+
+		public string? animationTimingFunction
+		{
+			get => _js.GetObjectProperty<string?>(nameof(animationTimingFunction));
+			set => _js.SetObjectProperty(nameof(animationTimingFunction), value);
+		}
+
+		public string? backfaceVisibility
+		{
+			get => _js.GetObjectProperty<string?>(nameof(backfaceVisibility));
+			set => _js.SetObjectProperty(nameof(backfaceVisibility), value);
+		}
+
+		public string? background
+		{
+			get => _js.GetObjectProperty<string?>(nameof(background));
+			set => _js.SetObjectProperty(nameof(background), value);
+		}
+
+		public string? backgroundAttachment
+		{
+			get => _js.GetObjectProperty<string?>(nameof(backgroundAttachment));
+			set => _js.SetObjectProperty(nameof(backgroundAttachment), value);
+		}
+
+		public string? backgroundClip
+		{
+			get => _js.GetObjectProperty<string?>(nameof(backgroundClip));
+			set => _js.SetObjectProperty(nameof(backgroundClip), value);
+		}
+
+		public string? backgroundColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(backgroundColor));
+			set => _js.SetObjectProperty(nameof(backgroundColor), value);
+		}
+
+		public string? backgroundImage
+		{
+			get => _js.GetObjectProperty<string?>(nameof(backgroundImage));
+			set => _js.SetObjectProperty(nameof(backgroundImage), value);
+		}
+
+		public string? backgroundOrigin
+		{
+			get => _js.GetObjectProperty<string?>(nameof(backgroundOrigin));
+			set => _js.SetObjectProperty(nameof(backgroundOrigin), value);
+		}
+
+		public string? backgroundPosition
+		{
+			get => _js.GetObjectProperty<string?>(nameof(backgroundPosition));
+			set => _js.SetObjectProperty(nameof(backgroundPosition), value);
+		}
+
+		public string? backgroundPositionX
+		{
+			get => _js.GetObjectProperty<string?>(nameof(backgroundPositionX));
+			set => _js.SetObjectProperty(nameof(backgroundPositionX), value);
+		}
+
+		public string? backgroundPositionY
+		{
+			get => _js.GetObjectProperty<string?>(nameof(backgroundPositionY));
+			set => _js.SetObjectProperty(nameof(backgroundPositionY), value);
+		}
+
+		public string? backgroundRepeat
+		{
+			get => _js.GetObjectProperty<string?>(nameof(backgroundRepeat));
+			set => _js.SetObjectProperty(nameof(backgroundRepeat), value);
+		}
+
+		public string? backgroundSize
+		{
+			get => _js.GetObjectProperty<string?>(nameof(backgroundSize));
+			set => _js.SetObjectProperty(nameof(backgroundSize), value);
+		}
+
+		public string? baselineShift
+		{
+			get => _js.GetObjectProperty<string?>(nameof(baselineShift));
+			set => _js.SetObjectProperty(nameof(baselineShift), value);
+		}
+
+		public string? blockSize
+		{
+			get => _js.GetObjectProperty<string?>(nameof(blockSize));
+			set => _js.SetObjectProperty(nameof(blockSize), value);
+		}
+
+		public string? border
+		{
+			get => _js.GetObjectProperty<string?>(nameof(border));
+			set => _js.SetObjectProperty(nameof(border), value);
+		}
+
+		public string? borderBlockEnd
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderBlockEnd));
+			set => _js.SetObjectProperty(nameof(borderBlockEnd), value);
+		}
+
+		public string? borderBlockEndColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderBlockEndColor));
+			set => _js.SetObjectProperty(nameof(borderBlockEndColor), value);
+		}
+
+		public string? borderBlockEndStyle
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderBlockEndStyle));
+			set => _js.SetObjectProperty(nameof(borderBlockEndStyle), value);
+		}
+
+		public string? borderBlockEndWidth
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderBlockEndWidth));
+			set => _js.SetObjectProperty(nameof(borderBlockEndWidth), value);
+		}
+
+		public string? borderBlockStart
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderBlockStart));
+			set => _js.SetObjectProperty(nameof(borderBlockStart), value);
+		}
+
+		public string? borderBlockStartColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderBlockStartColor));
+			set => _js.SetObjectProperty(nameof(borderBlockStartColor), value);
+		}
+
+		public string? borderBlockStartStyle
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderBlockStartStyle));
+			set => _js.SetObjectProperty(nameof(borderBlockStartStyle), value);
+		}
+
+		public string? borderBlockStartWidth
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderBlockStartWidth));
+			set => _js.SetObjectProperty(nameof(borderBlockStartWidth), value);
+		}
+
+		public string? borderBottom
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderBottom));
+			set => _js.SetObjectProperty(nameof(borderBottom), value);
+		}
+
+		public string? borderBottomColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderBottomColor));
+			set => _js.SetObjectProperty(nameof(borderBottomColor), value);
+		}
+
+		public string? borderBottomLeftRadius
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderBottomLeftRadius));
+			set => _js.SetObjectProperty(nameof(borderBottomLeftRadius), value);
+		}
+
+		public string? borderBottomRightRadius
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderBottomRightRadius));
+			set => _js.SetObjectProperty(nameof(borderBottomRightRadius), value);
+		}
+
+		public string? borderBottomStyle
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderBottomStyle));
+			set => _js.SetObjectProperty(nameof(borderBottomStyle), value);
+		}
+
+		public string? borderBottomWidth
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderBottomWidth));
+			set => _js.SetObjectProperty(nameof(borderBottomWidth), value);
+		}
+
+		public string? borderCollapse
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderCollapse));
+			set => _js.SetObjectProperty(nameof(borderCollapse), value);
+		}
+
+		public string? borderColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderColor));
+			set => _js.SetObjectProperty(nameof(borderColor), value);
+		}
+
+		public string? borderImage
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderImage));
+			set => _js.SetObjectProperty(nameof(borderImage), value);
+		}
+
+		public string? borderImageOutset
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderImageOutset));
+			set => _js.SetObjectProperty(nameof(borderImageOutset), value);
+		}
+
+		public string? borderImageRepeat
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderImageRepeat));
+			set => _js.SetObjectProperty(nameof(borderImageRepeat), value);
+		}
+
+		public string? borderImageSlice
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderImageSlice));
+			set => _js.SetObjectProperty(nameof(borderImageSlice), value);
+		}
+
+		public string? borderImageSource
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderImageSource));
+			set => _js.SetObjectProperty(nameof(borderImageSource), value);
+		}
+
+		public string? borderImageWidth
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderImageWidth));
+			set => _js.SetObjectProperty(nameof(borderImageWidth), value);
+		}
+
+		public string? borderInlineEnd
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderInlineEnd));
+			set => _js.SetObjectProperty(nameof(borderInlineEnd), value);
+		}
+
+		public string? borderInlineEndColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderInlineEndColor));
+			set => _js.SetObjectProperty(nameof(borderInlineEndColor), value);
+		}
+
+		public string? borderInlineEndStyle
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderInlineEndStyle));
+			set => _js.SetObjectProperty(nameof(borderInlineEndStyle), value);
+		}
+
+		public string? borderInlineEndWidth
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderInlineEndWidth));
+			set => _js.SetObjectProperty(nameof(borderInlineEndWidth), value);
+		}
+
+		public string? borderInlineStart
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderInlineStart));
+			set => _js.SetObjectProperty(nameof(borderInlineStart), value);
+		}
+
+		public string? borderInlineStartColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderInlineStartColor));
+			set => _js.SetObjectProperty(nameof(borderInlineStartColor), value);
+		}
+
+		public string? borderInlineStartStyle
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderInlineStartStyle));
+			set => _js.SetObjectProperty(nameof(borderInlineStartStyle), value);
+		}
+
+		public string? borderInlineStartWidth
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderInlineStartWidth));
+			set => _js.SetObjectProperty(nameof(borderInlineStartWidth), value);
+		}
+
+		public string? borderLeft
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderLeft));
+			set => _js.SetObjectProperty(nameof(borderLeft), value);
+		}
+
+		public string? borderLeftColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderLeftColor));
+			set => _js.SetObjectProperty(nameof(borderLeftColor), value);
+		}
+
+		public string? borderLeftStyle
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderLeftStyle));
+			set => _js.SetObjectProperty(nameof(borderLeftStyle), value);
+		}
+
+		public string? borderLeftWidth
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderLeftWidth));
+			set => _js.SetObjectProperty(nameof(borderLeftWidth), value);
+		}
+
+		public string? borderRadius
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderRadius));
+			set => _js.SetObjectProperty(nameof(borderRadius), value);
+		}
+
+		public string? borderRight
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderRight));
+			set => _js.SetObjectProperty(nameof(borderRight), value);
+		}
+
+		public string? borderRightColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderRightColor));
+			set => _js.SetObjectProperty(nameof(borderRightColor), value);
+		}
+
+		public string? borderRightStyle
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderRightStyle));
+			set => _js.SetObjectProperty(nameof(borderRightStyle), value);
+		}
+
+		public string? borderRightWidth
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderRightWidth));
+			set => _js.SetObjectProperty(nameof(borderRightWidth), value);
+		}
+
+		public string? borderSpacing
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderSpacing));
+			set => _js.SetObjectProperty(nameof(borderSpacing), value);
+		}
+
+		public string? borderStyle
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderStyle));
+			set => _js.SetObjectProperty(nameof(borderStyle), value);
+		}
+
+		public string? borderTop
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderTop));
+			set => _js.SetObjectProperty(nameof(borderTop), value);
+		}
+
+		public string? borderTopColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderTopColor));
+			set => _js.SetObjectProperty(nameof(borderTopColor), value);
+		}
+
+		public string? borderTopLeftRadius
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderTopLeftRadius));
+			set => _js.SetObjectProperty(nameof(borderTopLeftRadius), value);
+		}
+
+		public string? borderTopRightRadius
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderTopRightRadius));
+			set => _js.SetObjectProperty(nameof(borderTopRightRadius), value);
+		}
+
+		public string? borderTopStyle
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderTopStyle));
+			set => _js.SetObjectProperty(nameof(borderTopStyle), value);
+		}
+
+		public string? borderTopWidth
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderTopWidth));
+			set => _js.SetObjectProperty(nameof(borderTopWidth), value);
+		}
+
+		public string? borderWidth
+		{
+			get => _js.GetObjectProperty<string?>(nameof(borderWidth));
+			set => _js.SetObjectProperty(nameof(borderWidth), value);
+		}
+
+		public string? bottom
+		{
+			get => _js.GetObjectProperty<string?>(nameof(bottom));
+			set => _js.SetObjectProperty(nameof(bottom), value);
+		}
+
+		public string? boxShadow
+		{
+			get => _js.GetObjectProperty<string?>(nameof(boxShadow));
+			set => _js.SetObjectProperty(nameof(boxShadow), value);
+		}
+
+		public string? boxSizing
+		{
+			get => _js.GetObjectProperty<string?>(nameof(boxSizing));
+			set => _js.SetObjectProperty(nameof(boxSizing), value);
+		}
+
+		public string? breakAfter
+		{
+			get => _js.GetObjectProperty<string?>(nameof(breakAfter));
+			set => _js.SetObjectProperty(nameof(breakAfter), value);
+		}
+
+		public string? breakBefore
+		{
+			get => _js.GetObjectProperty<string?>(nameof(breakBefore));
+			set => _js.SetObjectProperty(nameof(breakBefore), value);
+		}
+
+		public string? breakInside
+		{
+			get => _js.GetObjectProperty<string?>(nameof(breakInside));
+			set => _js.SetObjectProperty(nameof(breakInside), value);
+		}
+
+		public string? captionSide
+		{
+			get => _js.GetObjectProperty<string?>(nameof(captionSide));
+			set => _js.SetObjectProperty(nameof(captionSide), value);
+		}
+
+		public string? caretColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(caretColor));
+			set => _js.SetObjectProperty(nameof(caretColor), value);
+		}
+
+		public string? clear
+		{
+			get => _js.GetObjectProperty<string?>(nameof(clear));
+			set => _js.SetObjectProperty(nameof(clear), value);
+		}
+
+		public string? clip
+		{
+			get => _js.GetObjectProperty<string?>(nameof(clip));
+			set => _js.SetObjectProperty(nameof(clip), value);
+		}
+
+		public string? clipPath
+		{
+			get => _js.GetObjectProperty<string?>(nameof(clipPath));
+			set => _js.SetObjectProperty(nameof(clipPath), value);
+		}
+
+		public string? clipRule
+		{
+			get => _js.GetObjectProperty<string?>(nameof(clipRule));
+			set => _js.SetObjectProperty(nameof(clipRule), value);
+		}
+
+		public string? color
+		{
+			get => _js.GetObjectProperty<string?>(nameof(color));
+			set => _js.SetObjectProperty(nameof(color), value);
+		}
+
+		public string? colorInterpolation
+		{
+			get => _js.GetObjectProperty<string?>(nameof(colorInterpolation));
+			set => _js.SetObjectProperty(nameof(colorInterpolation), value);
+		}
+
+		public string? colorInterpolationFilters
+		{
+			get => _js.GetObjectProperty<string?>(nameof(colorInterpolationFilters));
+			set => _js.SetObjectProperty(nameof(colorInterpolationFilters), value);
+		}
+
+		public string? columnCount
+		{
+			get => _js.GetObjectProperty<string?>(nameof(columnCount));
+			set => _js.SetObjectProperty(nameof(columnCount), value);
+		}
+
+		public string? columnFill
+		{
+			get => _js.GetObjectProperty<string?>(nameof(columnFill));
+			set => _js.SetObjectProperty(nameof(columnFill), value);
+		}
+
+		public string? columnGap
+		{
+			get => _js.GetObjectProperty<string?>(nameof(columnGap));
+			set => _js.SetObjectProperty(nameof(columnGap), value);
+		}
+
+		public string? columnRule
+		{
+			get => _js.GetObjectProperty<string?>(nameof(columnRule));
+			set => _js.SetObjectProperty(nameof(columnRule), value);
+		}
+
+		public string? columnRuleColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(columnRuleColor));
+			set => _js.SetObjectProperty(nameof(columnRuleColor), value);
+		}
+
+		public string? columnRuleStyle
+		{
+			get => _js.GetObjectProperty<string?>(nameof(columnRuleStyle));
+			set => _js.SetObjectProperty(nameof(columnRuleStyle), value);
+		}
+
+		public string? columnRuleWidth
+		{
+			get => _js.GetObjectProperty<string?>(nameof(columnRuleWidth));
+			set => _js.SetObjectProperty(nameof(columnRuleWidth), value);
+		}
+
+		public string? columnSpan
+		{
+			get => _js.GetObjectProperty<string?>(nameof(columnSpan));
+			set => _js.SetObjectProperty(nameof(columnSpan), value);
+		}
+
+		public string? columnWidth
+		{
+			get => _js.GetObjectProperty<string?>(nameof(columnWidth));
+			set => _js.SetObjectProperty(nameof(columnWidth), value);
+		}
+
+		public string? columns
+		{
+			get => _js.GetObjectProperty<string?>(nameof(columns));
+			set => _js.SetObjectProperty(nameof(columns), value);
+		}
+
+		public string? content
+		{
+			get => _js.GetObjectProperty<string?>(nameof(content));
+			set => _js.SetObjectProperty(nameof(content), value);
+		}
+
+		public string? counterIncrement
+		{
+			get => _js.GetObjectProperty<string?>(nameof(counterIncrement));
+			set => _js.SetObjectProperty(nameof(counterIncrement), value);
+		}
+
+		public string? counterReset
+		{
+			get => _js.GetObjectProperty<string?>(nameof(counterReset));
+			set => _js.SetObjectProperty(nameof(counterReset), value);
+		}
+
+		public string? cssFloat
+		{
+			get => _js.GetObjectProperty<string?>(nameof(cssFloat));
+			set => _js.SetObjectProperty(nameof(cssFloat), value);
+		}
+
+		public string? cssText
+		{
+			get => _js.GetObjectProperty<string?>(nameof(cssText));
+			set => _js.SetObjectProperty(nameof(cssText), value);
+		}
+
+		public string? cursor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(cursor));
+			set => _js.SetObjectProperty(nameof(cursor), value);
+		}
+
+		public string? direction
+		{
+			get => _js.GetObjectProperty<string?>(nameof(direction));
+			set => _js.SetObjectProperty(nameof(direction), value);
+		}
+
+		public string? display
+		{
+			get => _js.GetObjectProperty<string?>(nameof(display));
+			set => _js.SetObjectProperty(nameof(display), value);
+		}
+
+		public string? dominantBaseline
+		{
+			get => _js.GetObjectProperty<string?>(nameof(dominantBaseline));
+			set => _js.SetObjectProperty(nameof(dominantBaseline), value);
+		}
+
+		public string? emptyCells
+		{
+			get => _js.GetObjectProperty<string?>(nameof(emptyCells));
+			set => _js.SetObjectProperty(nameof(emptyCells), value);
+		}
+
+		public string? fill
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fill));
+			set => _js.SetObjectProperty(nameof(fill), value);
+		}
+
+		public string? fillOpacity
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fillOpacity));
+			set => _js.SetObjectProperty(nameof(fillOpacity), value);
+		}
+
+		public string? fillRule
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fillRule));
+			set => _js.SetObjectProperty(nameof(fillRule), value);
+		}
+
+		public string? filter
+		{
+			get => _js.GetObjectProperty<string?>(nameof(filter));
+			set => _js.SetObjectProperty(nameof(filter), value);
+		}
+
+		public string? flex
+		{
+			get => _js.GetObjectProperty<string?>(nameof(flex));
+			set => _js.SetObjectProperty(nameof(flex), value);
+		}
+
+		public string? flexBasis
+		{
+			get => _js.GetObjectProperty<string?>(nameof(flexBasis));
+			set => _js.SetObjectProperty(nameof(flexBasis), value);
+		}
+
+		public string? flexDirection
+		{
+			get => _js.GetObjectProperty<string?>(nameof(flexDirection));
+			set => _js.SetObjectProperty(nameof(flexDirection), value);
+		}
+
+		public string? flexFlow
+		{
+			get => _js.GetObjectProperty<string?>(nameof(flexFlow));
+			set => _js.SetObjectProperty(nameof(flexFlow), value);
+		}
+
+		public string? flexGrow
+		{
+			get => _js.GetObjectProperty<string?>(nameof(flexGrow));
+			set => _js.SetObjectProperty(nameof(flexGrow), value);
+		}
+
+		public string? flexShrink
+		{
+			get => _js.GetObjectProperty<string?>(nameof(flexShrink));
+			set => _js.SetObjectProperty(nameof(flexShrink), value);
+		}
+
+		public string? flexWrap
+		{
+			get => _js.GetObjectProperty<string?>(nameof(flexWrap));
+			set => _js.SetObjectProperty(nameof(flexWrap), value);
+		}
+
+		public string? @float
+		{
+			get => _js.GetObjectProperty<string?>(nameof(@float));
+			set => _js.SetObjectProperty(nameof(@float), value);
+		}
+
+		public string? floodColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(floodColor));
+			set => _js.SetObjectProperty(nameof(floodColor), value);
+		}
+
+		public string? floodOpacity
+		{
+			get => _js.GetObjectProperty<string?>(nameof(floodOpacity));
+			set => _js.SetObjectProperty(nameof(floodOpacity), value);
+		}
+
+		public string? font
+		{
+			get => _js.GetObjectProperty<string?>(nameof(font));
+			set => _js.SetObjectProperty(nameof(font), value);
+		}
+
+		public string? fontFamily
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fontFamily));
+			set => _js.SetObjectProperty(nameof(fontFamily), value);
+		}
+
+		public string? fontFeatureSettings
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fontFeatureSettings));
+			set => _js.SetObjectProperty(nameof(fontFeatureSettings), value);
+		}
+
+		public string? fontKerning
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fontKerning));
+			set => _js.SetObjectProperty(nameof(fontKerning), value);
+		}
+
+		public string? fontSize
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fontSize));
+			set => _js.SetObjectProperty(nameof(fontSize), value);
+		}
+
+		public string? fontSizeAdjust
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fontSizeAdjust));
+			set => _js.SetObjectProperty(nameof(fontSizeAdjust), value);
+		}
+
+		public string? fontStretch
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fontStretch));
+			set => _js.SetObjectProperty(nameof(fontStretch), value);
+		}
+
+		public string? fontStyle
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fontStyle));
+			set => _js.SetObjectProperty(nameof(fontStyle), value);
+		}
+
+		public string? fontSynthesis
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fontSynthesis));
+			set => _js.SetObjectProperty(nameof(fontSynthesis), value);
+		}
+
+		public string? fontVariant
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fontVariant));
+			set => _js.SetObjectProperty(nameof(fontVariant), value);
+		}
+
+		public string? fontVariantCaps
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fontVariantCaps));
+			set => _js.SetObjectProperty(nameof(fontVariantCaps), value);
+		}
+
+		public string? fontVariantEastAsian
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fontVariantEastAsian));
+			set => _js.SetObjectProperty(nameof(fontVariantEastAsian), value);
+		}
+
+		public string? fontVariantLigatures
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fontVariantLigatures));
+			set => _js.SetObjectProperty(nameof(fontVariantLigatures), value);
+		}
+
+		public string? fontVariantNumeric
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fontVariantNumeric));
+			set => _js.SetObjectProperty(nameof(fontVariantNumeric), value);
+		}
+
+		public string? fontVariantPosition
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fontVariantPosition));
+			set => _js.SetObjectProperty(nameof(fontVariantPosition), value);
+		}
+
+		public string? fontWeight
+		{
+			get => _js.GetObjectProperty<string?>(nameof(fontWeight));
+			set => _js.SetObjectProperty(nameof(fontWeight), value);
+		}
+
+		public string? gap
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gap));
+			set => _js.SetObjectProperty(nameof(gap), value);
+		}
+
+		public string? glyphOrientationVertical
+		{
+			get => _js.GetObjectProperty<string?>(nameof(glyphOrientationVertical));
+			set => _js.SetObjectProperty(nameof(glyphOrientationVertical), value);
+		}
+
+		public string? grid
+		{
+			get => _js.GetObjectProperty<string?>(nameof(grid));
+			set => _js.SetObjectProperty(nameof(grid), value);
+		}
+
+		public string? gridArea
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gridArea));
+			set => _js.SetObjectProperty(nameof(gridArea), value);
+		}
+
+		public string? gridAutoColumns
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gridAutoColumns));
+			set => _js.SetObjectProperty(nameof(gridAutoColumns), value);
+		}
+
+		public string? gridAutoFlow
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gridAutoFlow));
+			set => _js.SetObjectProperty(nameof(gridAutoFlow), value);
+		}
+
+		public string? gridAutoRows
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gridAutoRows));
+			set => _js.SetObjectProperty(nameof(gridAutoRows), value);
+		}
+
+		public string? gridColumn
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gridColumn));
+			set => _js.SetObjectProperty(nameof(gridColumn), value);
+		}
+
+		public string? gridColumnEnd
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gridColumnEnd));
+			set => _js.SetObjectProperty(nameof(gridColumnEnd), value);
+		}
+
+		public string? gridColumnGap
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gridColumnGap));
+			set => _js.SetObjectProperty(nameof(gridColumnGap), value);
+		}
+
+		public string? gridColumnStart
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gridColumnStart));
+			set => _js.SetObjectProperty(nameof(gridColumnStart), value);
+		}
+
+		public string? gridGap
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gridGap));
+			set => _js.SetObjectProperty(nameof(gridGap), value);
+		}
+
+		public string? gridRow
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gridRow));
+			set => _js.SetObjectProperty(nameof(gridRow), value);
+		}
+
+		public string? gridRowEnd
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gridRowEnd));
+			set => _js.SetObjectProperty(nameof(gridRowEnd), value);
+		}
+
+		public string? gridRowGap
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gridRowGap));
+			set => _js.SetObjectProperty(nameof(gridRowGap), value);
+		}
+
+		public string? gridRowStart
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gridRowStart));
+			set => _js.SetObjectProperty(nameof(gridRowStart), value);
+		}
+
+		public string? gridTemplate
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gridTemplate));
+			set => _js.SetObjectProperty(nameof(gridTemplate), value);
+		}
+
+		public string? gridTemplateAreas
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gridTemplateAreas));
+			set => _js.SetObjectProperty(nameof(gridTemplateAreas), value);
+		}
+
+		public string? gridTemplateColumns
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gridTemplateColumns));
+			set => _js.SetObjectProperty(nameof(gridTemplateColumns), value);
+		}
+
+		public string? gridTemplateRows
+		{
+			get => _js.GetObjectProperty<string?>(nameof(gridTemplateRows));
+			set => _js.SetObjectProperty(nameof(gridTemplateRows), value);
+		}
+
+		public string? height
+		{
+			get => _js.GetObjectProperty<string?>(nameof(height));
+			set => _js.SetObjectProperty(nameof(height), value);
+		}
+
+		public string? hyphens
+		{
+			get => _js.GetObjectProperty<string?>(nameof(hyphens));
+			set => _js.SetObjectProperty(nameof(hyphens), value);
+		}
+
+		public string? imageOrientation
+		{
+			get => _js.GetObjectProperty<string?>(nameof(imageOrientation));
+			set => _js.SetObjectProperty(nameof(imageOrientation), value);
+		}
+
+		public string? imageRendering
+		{
+			get => _js.GetObjectProperty<string?>(nameof(imageRendering));
+			set => _js.SetObjectProperty(nameof(imageRendering), value);
+		}
+
+		public string? inlineSize
+		{
+			get => _js.GetObjectProperty<string?>(nameof(inlineSize));
+			set => _js.SetObjectProperty(nameof(inlineSize), value);
+		}
+
+		public string? justifyContent
+		{
+			get => _js.GetObjectProperty<string?>(nameof(justifyContent));
+			set => _js.SetObjectProperty(nameof(justifyContent), value);
+		}
+
+		public string? justifyItems
+		{
+			get => _js.GetObjectProperty<string?>(nameof(justifyItems));
+			set => _js.SetObjectProperty(nameof(justifyItems), value);
+		}
+
+		public string? justifySelf
+		{
+			get => _js.GetObjectProperty<string?>(nameof(justifySelf));
+			set => _js.SetObjectProperty(nameof(justifySelf), value);
+		}
+
+		public string? left
+		{
+			get => _js.GetObjectProperty<string?>(nameof(left));
+			set => _js.SetObjectProperty(nameof(left), value);
+		}
+
+		public string? letterSpacing
+		{
+			get => _js.GetObjectProperty<string?>(nameof(letterSpacing));
+			set => _js.SetObjectProperty(nameof(letterSpacing), value);
+		}
+
+		public string? lightingColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(lightingColor));
+			set => _js.SetObjectProperty(nameof(lightingColor), value);
+		}
+
+		public string? lineBreak
+		{
+			get => _js.GetObjectProperty<string?>(nameof(lineBreak));
+			set => _js.SetObjectProperty(nameof(lineBreak), value);
+		}
+
+		public string? lineHeight
+		{
+			get => _js.GetObjectProperty<string?>(nameof(lineHeight));
+			set => _js.SetObjectProperty(nameof(lineHeight), value);
+		}
+
+		public string? listStyle
+		{
+			get => _js.GetObjectProperty<string?>(nameof(listStyle));
+			set => _js.SetObjectProperty(nameof(listStyle), value);
+		}
+
+		public string? listStyleImage
+		{
+			get => _js.GetObjectProperty<string?>(nameof(listStyleImage));
+			set => _js.SetObjectProperty(nameof(listStyleImage), value);
+		}
+
+		public string? listStylePosition
+		{
+			get => _js.GetObjectProperty<string?>(nameof(listStylePosition));
+			set => _js.SetObjectProperty(nameof(listStylePosition), value);
+		}
+
+		public string? listStyleType
+		{
+			get => _js.GetObjectProperty<string?>(nameof(listStyleType));
+			set => _js.SetObjectProperty(nameof(listStyleType), value);
+		}
+
+		public string? margin
+		{
+			get => _js.GetObjectProperty<string?>(nameof(margin));
+			set => _js.SetObjectProperty(nameof(margin), value);
+		}
+
+		public string? marginBlockEnd
+		{
+			get => _js.GetObjectProperty<string?>(nameof(marginBlockEnd));
+			set => _js.SetObjectProperty(nameof(marginBlockEnd), value);
+		}
+
+		public string? marginBlockStart
+		{
+			get => _js.GetObjectProperty<string?>(nameof(marginBlockStart));
+			set => _js.SetObjectProperty(nameof(marginBlockStart), value);
+		}
+
+		public string? marginBottom
+		{
+			get => _js.GetObjectProperty<string?>(nameof(marginBottom));
+			set => _js.SetObjectProperty(nameof(marginBottom), value);
+		}
+
+		public string? marginInlineEnd
+		{
+			get => _js.GetObjectProperty<string?>(nameof(marginInlineEnd));
+			set => _js.SetObjectProperty(nameof(marginInlineEnd), value);
+		}
+
+		public string? marginInlineStart
+		{
+			get => _js.GetObjectProperty<string?>(nameof(marginInlineStart));
+			set => _js.SetObjectProperty(nameof(marginInlineStart), value);
+		}
+
+		public string? marginLeft
+		{
+			get => _js.GetObjectProperty<string?>(nameof(marginLeft));
+			set => _js.SetObjectProperty(nameof(marginLeft), value);
+		}
+
+		public string? marginRight
+		{
+			get => _js.GetObjectProperty<string?>(nameof(marginRight));
+			set => _js.SetObjectProperty(nameof(marginRight), value);
+		}
+
+		public string? marginTop
+		{
+			get => _js.GetObjectProperty<string?>(nameof(marginTop));
+			set => _js.SetObjectProperty(nameof(marginTop), value);
+		}
+
+		public string? marker
+		{
+			get => _js.GetObjectProperty<string?>(nameof(marker));
+			set => _js.SetObjectProperty(nameof(marker), value);
+		}
+
+		public string? markerEnd
+		{
+			get => _js.GetObjectProperty<string?>(nameof(markerEnd));
+			set => _js.SetObjectProperty(nameof(markerEnd), value);
+		}
+
+		public string? markerMid
+		{
+			get => _js.GetObjectProperty<string?>(nameof(markerMid));
+			set => _js.SetObjectProperty(nameof(markerMid), value);
+		}
+
+		public string? markerStart
+		{
+			get => _js.GetObjectProperty<string?>(nameof(markerStart));
+			set => _js.SetObjectProperty(nameof(markerStart), value);
+		}
+
+		public string? mask
+		{
+			get => _js.GetObjectProperty<string?>(nameof(mask));
+			set => _js.SetObjectProperty(nameof(mask), value);
+		}
+
+		public string? maskComposite
+		{
+			get => _js.GetObjectProperty<string?>(nameof(maskComposite));
+			set => _js.SetObjectProperty(nameof(maskComposite), value);
+		}
+
+		public string? maskImage
+		{
+			get => _js.GetObjectProperty<string?>(nameof(maskImage));
+			set => _js.SetObjectProperty(nameof(maskImage), value);
+		}
+
+		public string? maskPosition
+		{
+			get => _js.GetObjectProperty<string?>(nameof(maskPosition));
+			set => _js.SetObjectProperty(nameof(maskPosition), value);
+		}
+
+		public string? maskRepeat
+		{
+			get => _js.GetObjectProperty<string?>(nameof(maskRepeat));
+			set => _js.SetObjectProperty(nameof(maskRepeat), value);
+		}
+
+		public string? maskSize
+		{
+			get => _js.GetObjectProperty<string?>(nameof(maskSize));
+			set => _js.SetObjectProperty(nameof(maskSize), value);
+		}
+
+		public string? maskType
+		{
+			get => _js.GetObjectProperty<string?>(nameof(maskType));
+			set => _js.SetObjectProperty(nameof(maskType), value);
+		}
+
+		public string? maxBlockSize
+		{
+			get => _js.GetObjectProperty<string?>(nameof(maxBlockSize));
+			set => _js.SetObjectProperty(nameof(maxBlockSize), value);
+		}
+
+		public string? maxHeight
+		{
+			get => _js.GetObjectProperty<string?>(nameof(maxHeight));
+			set => _js.SetObjectProperty(nameof(maxHeight), value);
+		}
+
+		public string? maxInlineSize
+		{
+			get => _js.GetObjectProperty<string?>(nameof(maxInlineSize));
+			set => _js.SetObjectProperty(nameof(maxInlineSize), value);
+		}
+
+		public string? maxWidth
+		{
+			get => _js.GetObjectProperty<string?>(nameof(maxWidth));
+			set => _js.SetObjectProperty(nameof(maxWidth), value);
+		}
+
+		public string? minBlockSize
+		{
+			get => _js.GetObjectProperty<string?>(nameof(minBlockSize));
+			set => _js.SetObjectProperty(nameof(minBlockSize), value);
+		}
+
+		public string? minHeight
+		{
+			get => _js.GetObjectProperty<string?>(nameof(minHeight));
+			set => _js.SetObjectProperty(nameof(minHeight), value);
+		}
+
+		public string? minInlineSize
+		{
+			get => _js.GetObjectProperty<string?>(nameof(minInlineSize));
+			set => _js.SetObjectProperty(nameof(minInlineSize), value);
+		}
+
+		public string? minWidth
+		{
+			get => _js.GetObjectProperty<string?>(nameof(minWidth));
+			set => _js.SetObjectProperty(nameof(minWidth), value);
+		}
+
+		public string? objectFit
+		{
+			get => _js.GetObjectProperty<string?>(nameof(objectFit));
+			set => _js.SetObjectProperty(nameof(objectFit), value);
+		}
+
+		public string? objectPosition
+		{
+			get => _js.GetObjectProperty<string?>(nameof(objectPosition));
+			set => _js.SetObjectProperty(nameof(objectPosition), value);
+		}
+
+		public string? opacity
+		{
+			get => _js.GetObjectProperty<string?>(nameof(opacity));
+			set => _js.SetObjectProperty(nameof(opacity), value);
+		}
+
+		public string? order
+		{
+			get => _js.GetObjectProperty<string?>(nameof(order));
+			set => _js.SetObjectProperty(nameof(order), value);
+		}
+
+		public string? orphans
+		{
+			get => _js.GetObjectProperty<string?>(nameof(orphans));
+			set => _js.SetObjectProperty(nameof(orphans), value);
+		}
+
+		public string? outline
+		{
+			get => _js.GetObjectProperty<string?>(nameof(outline));
+			set => _js.SetObjectProperty(nameof(outline), value);
+		}
+
+		public string? outlineColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(outlineColor));
+			set => _js.SetObjectProperty(nameof(outlineColor), value);
+		}
+
+		public string? outlineOffset
+		{
+			get => _js.GetObjectProperty<string?>(nameof(outlineOffset));
+			set => _js.SetObjectProperty(nameof(outlineOffset), value);
+		}
+
+		public string? outlineStyle
+		{
+			get => _js.GetObjectProperty<string?>(nameof(outlineStyle));
+			set => _js.SetObjectProperty(nameof(outlineStyle), value);
+		}
+
+		public string? outlineWidth
+		{
+			get => _js.GetObjectProperty<string?>(nameof(outlineWidth));
+			set => _js.SetObjectProperty(nameof(outlineWidth), value);
+		}
+
+		public string? overflow
+		{
+			get => _js.GetObjectProperty<string?>(nameof(overflow));
+			set => _js.SetObjectProperty(nameof(overflow), value);
+		}
+
+		public string? overflowAnchor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(overflowAnchor));
+			set => _js.SetObjectProperty(nameof(overflowAnchor), value);
+		}
+
+		public string? overflowWrap
+		{
+			get => _js.GetObjectProperty<string?>(nameof(overflowWrap));
+			set => _js.SetObjectProperty(nameof(overflowWrap), value);
+		}
+
+		public string? overflowX
+		{
+			get => _js.GetObjectProperty<string?>(nameof(overflowX));
+			set => _js.SetObjectProperty(nameof(overflowX), value);
+		}
+
+		public string? overflowY
+		{
+			get => _js.GetObjectProperty<string?>(nameof(overflowY));
+			set => _js.SetObjectProperty(nameof(overflowY), value);
+		}
+
+		public string? overscrollBehavior
+		{
+			get => _js.GetObjectProperty<string?>(nameof(overscrollBehavior));
+			set => _js.SetObjectProperty(nameof(overscrollBehavior), value);
+		}
+
+		public string? overscrollBehaviorBlock
+		{
+			get => _js.GetObjectProperty<string?>(nameof(overscrollBehaviorBlock));
+			set => _js.SetObjectProperty(nameof(overscrollBehaviorBlock), value);
+		}
+
+		public string? overscrollBehaviorInline
+		{
+			get => _js.GetObjectProperty<string?>(nameof(overscrollBehaviorInline));
+			set => _js.SetObjectProperty(nameof(overscrollBehaviorInline), value);
+		}
+
+		public string? overscrollBehaviorX
+		{
+			get => _js.GetObjectProperty<string?>(nameof(overscrollBehaviorX));
+			set => _js.SetObjectProperty(nameof(overscrollBehaviorX), value);
+		}
+
+		public string? overscrollBehaviorY
+		{
+			get => _js.GetObjectProperty<string?>(nameof(overscrollBehaviorY));
+			set => _js.SetObjectProperty(nameof(overscrollBehaviorY), value);
+		}
+
+		public string? padding
+		{
+			get => _js.GetObjectProperty<string?>(nameof(padding));
+			set => _js.SetObjectProperty(nameof(padding), value);
+		}
+
+		public string? paddingBlockEnd
+		{
+			get => _js.GetObjectProperty<string?>(nameof(paddingBlockEnd));
+			set => _js.SetObjectProperty(nameof(paddingBlockEnd), value);
+		}
+
+		public string? paddingBlockStart
+		{
+			get => _js.GetObjectProperty<string?>(nameof(paddingBlockStart));
+			set => _js.SetObjectProperty(nameof(paddingBlockStart), value);
+		}
+
+		public string? paddingBottom
+		{
+			get => _js.GetObjectProperty<string?>(nameof(paddingBottom));
+			set => _js.SetObjectProperty(nameof(paddingBottom), value);
+		}
+
+		public string? paddingInlineEnd
+		{
+			get => _js.GetObjectProperty<string?>(nameof(paddingInlineEnd));
+			set => _js.SetObjectProperty(nameof(paddingInlineEnd), value);
+		}
+
+		public string? paddingInlineStart
+		{
+			get => _js.GetObjectProperty<string?>(nameof(paddingInlineStart));
+			set => _js.SetObjectProperty(nameof(paddingInlineStart), value);
+		}
+
+		public string? paddingLeft
+		{
+			get => _js.GetObjectProperty<string?>(nameof(paddingLeft));
+			set => _js.SetObjectProperty(nameof(paddingLeft), value);
+		}
+
+		public string? paddingRight
+		{
+			get => _js.GetObjectProperty<string?>(nameof(paddingRight));
+			set => _js.SetObjectProperty(nameof(paddingRight), value);
+		}
+
+		public string? paddingTop
+		{
+			get => _js.GetObjectProperty<string?>(nameof(paddingTop));
+			set => _js.SetObjectProperty(nameof(paddingTop), value);
+		}
+
+		public string? pageBreakAfter
+		{
+			get => _js.GetObjectProperty<string?>(nameof(pageBreakAfter));
+			set => _js.SetObjectProperty(nameof(pageBreakAfter), value);
+		}
+
+		public string? pageBreakBefore
+		{
+			get => _js.GetObjectProperty<string?>(nameof(pageBreakBefore));
+			set => _js.SetObjectProperty(nameof(pageBreakBefore), value);
+		}
+
+		public string? pageBreakInside
+		{
+			get => _js.GetObjectProperty<string?>(nameof(pageBreakInside));
+			set => _js.SetObjectProperty(nameof(pageBreakInside), value);
+		}
+
+		public string? paintOrder
+		{
+			get => _js.GetObjectProperty<string?>(nameof(paintOrder));
+			set => _js.SetObjectProperty(nameof(paintOrder), value);
+		}
+
+		public string? perspective
+		{
+			get => _js.GetObjectProperty<string?>(nameof(perspective));
+			set => _js.SetObjectProperty(nameof(perspective), value);
+		}
+
+		public string? perspectiveOrigin
+		{
+			get => _js.GetObjectProperty<string?>(nameof(perspectiveOrigin));
+			set => _js.SetObjectProperty(nameof(perspectiveOrigin), value);
+		}
+
+		public string? placeContent
+		{
+			get => _js.GetObjectProperty<string?>(nameof(placeContent));
+			set => _js.SetObjectProperty(nameof(placeContent), value);
+		}
+
+		public string? placeItems
+		{
+			get => _js.GetObjectProperty<string?>(nameof(placeItems));
+			set => _js.SetObjectProperty(nameof(placeItems), value);
+		}
+
+		public string? placeSelf
+		{
+			get => _js.GetObjectProperty<string?>(nameof(placeSelf));
+			set => _js.SetObjectProperty(nameof(placeSelf), value);
+		}
+
+		public string? pointerEvents
+		{
+			get => _js.GetObjectProperty<string?>(nameof(pointerEvents));
+			set => _js.SetObjectProperty(nameof(pointerEvents), value);
+		}
+
+		public string? position
+		{
+			get => _js.GetObjectProperty<string?>(nameof(position));
+			set => _js.SetObjectProperty(nameof(position), value);
+		}
+
+		public string? quotes
+		{
+			get => _js.GetObjectProperty<string?>(nameof(quotes));
+			set => _js.SetObjectProperty(nameof(quotes), value);
+		}
+
+		public string? resize
+		{
+			get => _js.GetObjectProperty<string?>(nameof(resize));
+			set => _js.SetObjectProperty(nameof(resize), value);
+		}
+
+		public string? right
+		{
+			get => _js.GetObjectProperty<string?>(nameof(right));
+			set => _js.SetObjectProperty(nameof(right), value);
+		}
+
+		public string? rotate
+		{
+			get => _js.GetObjectProperty<string?>(nameof(rotate));
+			set => _js.SetObjectProperty(nameof(rotate), value);
+		}
+
+		public string? rowGap
+		{
+			get => _js.GetObjectProperty<string?>(nameof(rowGap));
+			set => _js.SetObjectProperty(nameof(rowGap), value);
+		}
+
+		public string? rubyAlign
+		{
+			get => _js.GetObjectProperty<string?>(nameof(rubyAlign));
+			set => _js.SetObjectProperty(nameof(rubyAlign), value);
+		}
+
+		public string? rubyPosition
+		{
+			get => _js.GetObjectProperty<string?>(nameof(rubyPosition));
+			set => _js.SetObjectProperty(nameof(rubyPosition), value);
+		}
+
+		public string? scale
+		{
+			get => _js.GetObjectProperty<string?>(nameof(scale));
+			set => _js.SetObjectProperty(nameof(scale), value);
+		}
+
+		public string? scrollBehavior
+		{
+			get => _js.GetObjectProperty<string?>(nameof(scrollBehavior));
+			set => _js.SetObjectProperty(nameof(scrollBehavior), value);
+		}
+
+		public string? shapeRendering
+		{
+			get => _js.GetObjectProperty<string?>(nameof(shapeRendering));
+			set => _js.SetObjectProperty(nameof(shapeRendering), value);
+		}
+
+		public string? stopColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(stopColor));
+			set => _js.SetObjectProperty(nameof(stopColor), value);
+		}
+
+		public string? stopOpacity
+		{
+			get => _js.GetObjectProperty<string?>(nameof(stopOpacity));
+			set => _js.SetObjectProperty(nameof(stopOpacity), value);
+		}
+
+		public string? stroke
+		{
+			get => _js.GetObjectProperty<string?>(nameof(stroke));
+			set => _js.SetObjectProperty(nameof(stroke), value);
+		}
+
+		public string? strokeDasharray
+		{
+			get => _js.GetObjectProperty<string?>(nameof(strokeDasharray));
+			set => _js.SetObjectProperty(nameof(strokeDasharray), value);
+		}
+
+		public string? strokeDashoffset
+		{
+			get => _js.GetObjectProperty<string?>(nameof(strokeDashoffset));
+			set => _js.SetObjectProperty(nameof(strokeDashoffset), value);
+		}
+
+		public string? strokeLinecap
+		{
+			get => _js.GetObjectProperty<string?>(nameof(strokeLinecap));
+			set => _js.SetObjectProperty(nameof(strokeLinecap), value);
+		}
+
+		public string? strokeLinejoin
+		{
+			get => _js.GetObjectProperty<string?>(nameof(strokeLinejoin));
+			set => _js.SetObjectProperty(nameof(strokeLinejoin), value);
+		}
+
+		public string? strokeMiterlimit
+		{
+			get => _js.GetObjectProperty<string?>(nameof(strokeMiterlimit));
+			set => _js.SetObjectProperty(nameof(strokeMiterlimit), value);
+		}
+
+		public string? strokeOpacity
+		{
+			get => _js.GetObjectProperty<string?>(nameof(strokeOpacity));
+			set => _js.SetObjectProperty(nameof(strokeOpacity), value);
+		}
+
+		public string? strokeWidth
+		{
+			get => _js.GetObjectProperty<string?>(nameof(strokeWidth));
+			set => _js.SetObjectProperty(nameof(strokeWidth), value);
+		}
+
+		public string? tabSize
+		{
+			get => _js.GetObjectProperty<string?>(nameof(tabSize));
+			set => _js.SetObjectProperty(nameof(tabSize), value);
+		}
+
+		public string? tableLayout
+		{
+			get => _js.GetObjectProperty<string?>(nameof(tableLayout));
+			set => _js.SetObjectProperty(nameof(tableLayout), value);
+		}
+
+		public string? textAlign
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textAlign));
+			set => _js.SetObjectProperty(nameof(textAlign), value);
+		}
+
+		public string? textAlignLast
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textAlignLast));
+			set => _js.SetObjectProperty(nameof(textAlignLast), value);
+		}
+
+		public string? textAnchor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textAnchor));
+			set => _js.SetObjectProperty(nameof(textAnchor), value);
+		}
+
+		public string? textCombineUpright
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textCombineUpright));
+			set => _js.SetObjectProperty(nameof(textCombineUpright), value);
+		}
+
+		public string? textDecoration
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textDecoration));
+			set => _js.SetObjectProperty(nameof(textDecoration), value);
+		}
+
+		public string? textDecorationColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textDecorationColor));
+			set => _js.SetObjectProperty(nameof(textDecorationColor), value);
+		}
+
+		public string? textDecorationLine
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textDecorationLine));
+			set => _js.SetObjectProperty(nameof(textDecorationLine), value);
+		}
+
+		public string? textDecorationStyle
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textDecorationStyle));
+			set => _js.SetObjectProperty(nameof(textDecorationStyle), value);
+		}
+
+		public string? textEmphasis
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textEmphasis));
+			set => _js.SetObjectProperty(nameof(textEmphasis), value);
+		}
+
+		public string? textEmphasisColor
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textEmphasisColor));
+			set => _js.SetObjectProperty(nameof(textEmphasisColor), value);
+		}
+
+		public string? textEmphasisPosition
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textEmphasisPosition));
+			set => _js.SetObjectProperty(nameof(textEmphasisPosition), value);
+		}
+
+		public string? textEmphasisStyle
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textEmphasisStyle));
+			set => _js.SetObjectProperty(nameof(textEmphasisStyle), value);
+		}
+
+		public string? textIndent
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textIndent));
+			set => _js.SetObjectProperty(nameof(textIndent), value);
+		}
+
+		public string? textJustify
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textJustify));
+			set => _js.SetObjectProperty(nameof(textJustify), value);
+		}
+
+		public string? textOrientation
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textOrientation));
+			set => _js.SetObjectProperty(nameof(textOrientation), value);
+		}
+
+		public string? textOverflow
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textOverflow));
+			set => _js.SetObjectProperty(nameof(textOverflow), value);
+		}
+
+		public string? textRendering
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textRendering));
+			set => _js.SetObjectProperty(nameof(textRendering), value);
+		}
+
+		public string? textShadow
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textShadow));
+			set => _js.SetObjectProperty(nameof(textShadow), value);
+		}
+
+		public string? textTransform
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textTransform));
+			set => _js.SetObjectProperty(nameof(textTransform), value);
+		}
+
+		public string? textUnderlinePosition
+		{
+			get => _js.GetObjectProperty<string?>(nameof(textUnderlinePosition));
+			set => _js.SetObjectProperty(nameof(textUnderlinePosition), value);
+		}
+
+		public string? top
+		{
+			get => _js.GetObjectProperty<string?>(nameof(top));
+			set => _js.SetObjectProperty(nameof(top), value);
+		}
+
+		public string? touchAction
+		{
+			get => _js.GetObjectProperty<string?>(nameof(touchAction));
+			set => _js.SetObjectProperty(nameof(touchAction), value);
+		}
+
+		public string? transform
+		{
+			get => _js.GetObjectProperty<string?>(nameof(transform));
+			set => _js.SetObjectProperty(nameof(transform), value);
+		}
+
+		public string? transformBox
+		{
+			get => _js.GetObjectProperty<string?>(nameof(transformBox));
+			set => _js.SetObjectProperty(nameof(transformBox), value);
+		}
+
+		public string? transformOrigin
+		{
+			get => _js.GetObjectProperty<string?>(nameof(transformOrigin));
+			set => _js.SetObjectProperty(nameof(transformOrigin), value);
+		}
+
+		public string? transformStyle
+		{
+			get => _js.GetObjectProperty<string?>(nameof(transformStyle));
+			set => _js.SetObjectProperty(nameof(transformStyle), value);
+		}
+
+		public string? transition
+		{
+			get => _js.GetObjectProperty<string?>(nameof(transition));
+			set => _js.SetObjectProperty(nameof(transition), value);
+		}
+
+		public string? transitionDelay
+		{
+			get => _js.GetObjectProperty<string?>(nameof(transitionDelay));
+			set => _js.SetObjectProperty(nameof(transitionDelay), value);
+		}
+
+		public string? transitionDuration
+		{
+			get => _js.GetObjectProperty<string?>(nameof(transitionDuration));
+			set => _js.SetObjectProperty(nameof(transitionDuration), value);
+		}
+
+		public string? transitionProperty
+		{
+			get => _js.GetObjectProperty<string?>(nameof(transitionProperty));
+			set => _js.SetObjectProperty(nameof(transitionProperty), value);
+		}
+
+		public string? transitionTimingFunction
+		{
+			get => _js.GetObjectProperty<string?>(nameof(transitionTimingFunction));
+			set => _js.SetObjectProperty(nameof(transitionTimingFunction), value);
+		}
+
+		public string? translate
+		{
+			get => _js.GetObjectProperty<string?>(nameof(translate));
+			set => _js.SetObjectProperty(nameof(translate), value);
+		}
+
+		public string? unicodeBidi
+		{
+			get => _js.GetObjectProperty<string?>(nameof(unicodeBidi));
+			set => _js.SetObjectProperty(nameof(unicodeBidi), value);
+		}
+
+		public string? userSelect
+		{
+			get => _js.GetObjectProperty<string?>(nameof(userSelect));
+			set => _js.SetObjectProperty(nameof(userSelect), value);
+		}
+
+		public string? verticalAlign
+		{
+			get => _js.GetObjectProperty<string?>(nameof(verticalAlign));
+			set => _js.SetObjectProperty(nameof(verticalAlign), value);
+		}
+
+		public string? visibility
+		{
+			get => _js.GetObjectProperty<string?>(nameof(visibility));
+			set => _js.SetObjectProperty(nameof(visibility), value);
+		}
+
+		public string? whiteSpace
+		{
+			get => _js.GetObjectProperty<string?>(nameof(whiteSpace));
+			set => _js.SetObjectProperty(nameof(whiteSpace), value);
+		}
+
+		public string? widows
+		{
+			get => _js.GetObjectProperty<string?>(nameof(widows));
+			set => _js.SetObjectProperty(nameof(widows), value);
+		}
+
+		public string? width
+		{
+			get => _js.GetObjectProperty<string?>(nameof(width));
+			set => _js.SetObjectProperty(nameof(width), value);
+		}
+
+		public string? willChange
+		{
+			get => _js.GetObjectProperty<string?>(nameof(willChange));
+			set => _js.SetObjectProperty(nameof(willChange), value);
+		}
+
+		public string? wordBreak
+		{
+			get => _js.GetObjectProperty<string?>(nameof(wordBreak));
+			set => _js.SetObjectProperty(nameof(wordBreak), value);
+		}
+
+		public string? wordSpacing
+		{
+			get => _js.GetObjectProperty<string?>(nameof(wordSpacing));
+			set => _js.SetObjectProperty(nameof(wordSpacing), value);
+		}
+
+		public string? wordWrap
+		{
+			get => _js.GetObjectProperty<string?>(nameof(wordWrap));
+			set => _js.SetObjectProperty(nameof(wordWrap), value);
+		}
+
+		public string? writingMode
+		{
+			get => _js.GetObjectProperty<string?>(nameof(writingMode));
+			set => _js.SetObjectProperty(nameof(writingMode), value);
+		}
+
+		public string? zIndex
+		{
+			get => _js.GetObjectProperty<string?>(nameof(zIndex));
+			set => _js.SetObjectProperty(nameof(zIndex), value);
+		}
+
+	}
+
 	public partial class HTMLElement
 	{
 		private readonly JSObject _js;
@@ -20,10 +1918,14 @@ namespace WasmWrangler
 			get => _js.GetObjectProperty<string>(nameof(innerText));
 			set => _js.SetObjectProperty(nameof(innerText), value);
 		}
-		public JSObject style
+
+		private CSSStyleDeclaration? _style;
+
+		public CSSStyleDeclaration style
 		{
-			get => _js.GetObjectProperty<JSObject>(nameof(style));
+			get => _style ?? (_style = new CSSStyleDeclaration(_js.GetObjectProperty<JSObject>(nameof(style))));
 		}
+
 	}
 
 	public static partial class JS
@@ -43,10 +1945,13 @@ namespace WasmWrangler
 				}
 			}
 
+			private static JSObject? _memory;
+
 			public static JSObject memory
 			{
-				get => _js.GetObjectProperty<JSObject>(nameof(memory));
+				get => _memory ?? (_memory = _js.GetObjectProperty<JSObject>(nameof(memory)));
 			}
+
 			public static void assert(bool? condition, params object[] data)
 			{
 				_js.Invoke(nameof(assert), condition, data);

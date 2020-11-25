@@ -12,10 +12,10 @@ namespace HelloWorld
             Console.WriteLine("Hello World from WASM!");
 
             var loading = JS.document.getElementById("loading");
-            loading!.style.SetObjectProperty("display", "none");
+            loading!.style.display = "none";
 
             var app = JS.document.getElementById("app");
-            app!.style.SetObjectProperty("display", "block");
+            app!.style.display = "block";
         }
 
         public static void IncrementClickCount()
