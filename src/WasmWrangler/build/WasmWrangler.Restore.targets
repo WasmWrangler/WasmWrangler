@@ -1,12 +1,5 @@
 ﻿<Project>
   <Target Name="WasmRestore" AfterTargets="Restore" DependsOnTargets="
     WasmEnsureSDKAvailable;
-    WasmRestoreLibman;
     WasmInjectScripts" />
-
-  <Target Name="WasmRestoreLibman">
-    <Exec
-      Condition="Exists('libman.json')"
-      Command="libman restore" />
-  </Target>
 </Project>
