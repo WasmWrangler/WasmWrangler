@@ -1,20 +1,18 @@
 <Project DefaultTargets="Build">
-  <PropertyGroup>
-    <UseGitVersion>true</UseGitVersion>
-  </PropertyGroup>
-
   <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
-  <Import Project="$(MSBuildThisFileDirectory)Build.props" />
-
+  
   <ItemGroup>
-    <ProjectSolutions Include="$(RepositoryRootDirectory)/*.sln" />
-    <ProjectProjects Include="$(RepositoryRootDirectory)/**/*.csproj" Exclude="$(ProjectProjectsExcludePattern)" />
-    <ProjectSources Include="$(RepositoryRootDirectory)/src/**/*.csproj" />
-    <ProjectTests Include="$(RepositoryRootDirectory)/tests/**/*.csproj" />
+    <Solutions Include="$(RepositoryRootDirectory)/*.sln" />
+    
+    <Projects
+      Include="$(RepositoryRootDirectory)/**/*.csproj"
+      Exclude="$(RepositoryRootDirectory)src/WasmWrangler/mono-wasm/**/*.csproj" />
+
+    <ProjectsToPack Include="$(RepositoryRootDirectory)/src/WasmWrangler/WasmWrangler.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
-    <BuildArgs>-nologo -v:n -c Release -p:UseGitVersion=true</BuildArgs>
+    <BuildArgs>-nologo -v:n -c Release</BuildArgs>
   </PropertyGroup>
   
   <!--
@@ -22,10 +20,10 @@
   -->
   
   <Target Name="Clean">
-    <RemoveDir Directories="$(RepositoryRootDirectory)bin" />
+    <RemoveDir Directories="$(BinDirectory)" />
     
     <Exec
-      Command="dotnet clean %(ProjectSolutions.Identity) -nologo"
+      Command="dotnet clean %(Solutions.Identity) -nologo"
       WorkingDirectory="$(RepositoryRootDirectory)" />
   </Target>
   
@@ -35,7 +33,7 @@
 
   <Target Name="Restore">    
     <Exec
-      Command="dotnet restore %(ProjectProjects.Identity)"
+      Command="dotnet restore %(Projects.Identity)"
       WorkingDirectory="$(RepositoryRootDirectory)" />
   </Target>
   
@@ -45,7 +43,7 @@
   
   <Target Name="Build">
     <Exec
-      Command="dotnet build %(ProjectSolutions.Identity) $(BuildArgs)"
+      Command="dotnet build %(Solutions.Identity) $(BuildArgs)"
       WorkingDirectory="$(RepositoryRootDirectory)" />
   </Target>
 
@@ -55,7 +53,7 @@
 
   <Target Name="Pack">
     <Exec
-      Command="dotnet pack %(ProjectSources.Identity) $(BuildArgs)"
+      Command="dotnet pack %(ProjectsToPack.Identity) $(BuildArgs)"
       WorkingDirectory="$(RepositoryRootDirectory)" />
   </Target>
 
@@ -65,7 +63,7 @@
 
   <Target Name="Test">
     <Exec
-      Command="dotnet test %(ProjectSolutions.Identity) $(BuildArgs)"
+      Command="dotnet test %(Solutions.Identity) $(BuildArgs)"
       WorkingDirectory="$(RepositoryRootDirectory)" />
   </Target>
   
@@ -73,7 +71,14 @@
   Release
   -->
   
-  <Target Name="Release" DependsOnTargets="Clean;Build;Test;EnsureNoChanges;Pack;PushNuGet;CalculateGitVersions;TagRepository" />
+  <Target Name="Release" DependsOnTargets="
+    Clean;
+    Build;
+    Test;
+    EnsureNoChanges;
+    Pack;
+    PushNuGet;
+    TagRepository" />
 
   <Target Name="EnsureNoChanges">
     <Exec Command="git status -s" ConsoleToMSBuild="true" StandardOutputImportance="Low" ContinueOnError="true">
@@ -87,7 +92,7 @@
   
   <Target Name="PushNuGet">
     <ItemGroup>
-      <Packages Include="$(RepositoryRootDirectory)bin/Release/**/*.nupkg" />
+      <Packages Include="$(BinDirectory)Release/**/*.nupkg" />
     </ItemGroup>
 
     <Exec
@@ -97,7 +102,7 @@
   
   <Target Name="TagRepository">
     <Exec
-      Command="git tag -a v$(GitVersion) -m &quot;Version $(GitVersion)&quot;"
+      Command="git tag -a v$(Version) -m &quot;Version $(Version)&quot;"
       WorkingDirectory="$(RepositoryRootDirectory)" />
 
     <Exec

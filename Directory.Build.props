@@ -1,22 +1,36 @@
 <Project>
   <PropertyGroup>
+    <!-- Tells Visual Studio to always run MSBuild. -->
+    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
+
+    <!-- C# settings -->
+    <LangVersion>9.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+
+    <!-- Build settings -->
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <RepositoryRootDirectory>$(MSBuildThisFileDirectory)</RepositoryRootDirectory>
     <BinDirectory>$(RepositoryRootDirectory)bin/</BinDirectory>
     <OutputPath>$([System.IO.Path]::GetFullPath('$(BinDirectory)'))/$(Configuration)/$(MSBuildProjectName)</OutputPath>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-
+    
+    <!-- NuGet package settings -->
     <Authors>smack0007</Authors>
     <Copyright>Copyright © Zachary Snow $([System.DateTime]::Now.ToString(yyyy))</Copyright>
-
-    <VersionPrefix>0.0.1</VersionPrefix>
-
     <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/WasmWrangler/WasmWrangler.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/WasmWrangler/WasmWrangler/</PackageProjectUrl>
+    <PackageTags>wasm</PackageTags>
 
-    <!-- Tells Visual Studio to always run MSBuild. -->
-    <DisableFastUpToDateCheck>true</DisableFastUpToDateCheck>
-  </PropertyGroup>
+    <!-- Version -->
+    <VersionMajor>0</VersionMajor>
+    <VersionMinor>0</VersionMinor>
+    <VersionPatch>1</VersionPatch>
 
-  <Import Project="$(MSBuildThisFileDirectory)/build/Project.props" />
-  <Import Project="$(MSBuildThisFileDirectory)/build/GitVersion.targets" />
+    <Version>$(VersionMajor).$(VersionMinor).$(VersionPatch)</Version>
+    <VersionPrefix>$(Version)</VersionPrefix>
+    <PackageVersion>$(Version)</PackageVersion>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <FileVersion>$(Version)</FileVersion>
+  </PropertyGroup>  
 </Project>
