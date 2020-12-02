@@ -1,4 +1,9 @@
 ﻿<Project>
+  <PropertyGroup>
+    <!-- Need all DLLs to be available -->
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+  </PropertyGroup>
+  
   <!-- Configuration properties -->
   <PropertyGroup>
     <WasmJsDirectory Condition="'$(WasmJsDirectory)' == ''">js</WasmJsDirectory>

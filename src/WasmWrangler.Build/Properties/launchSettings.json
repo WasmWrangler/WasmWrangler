@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WasmWrangler.Build": {
+      "commandName": "Project",
+      "commandLineArgs": "PackageAssembly \"E:\\Code\\WasmWrangler\\WasmWrangler\\src\\WasmWrangler\\mono-wasm\" \"E:\\Code\\WasmWrangler\\WasmWrangler\\bin\\Debug\\HelloWorld\\netstandard2.0\\HelloWorld.dll\" \"E:\\Code\\WasmWrangler\\WasmWrangler\\bin\\Debug\\HelloWorld\\netstandard2.0\\dist\\managed\" true"
+    }
+  }
+}

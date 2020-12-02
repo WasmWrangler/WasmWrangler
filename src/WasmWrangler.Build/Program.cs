@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
 
-namespace WasmWrangler
+namespace WasmWrangler.Build
 {
     public static class Program
     {
@@ -28,6 +30,15 @@ namespace WasmWrangler
                         return 1;
 
                     break;
+
+                case nameof(PackageAssembly):
+                    if (args.Length < 5)
+                    {
+                        Console.Error.WriteLine($"Please provide 4 arguments for {nameof(PackageAssembly)}.");
+                        return 1;
+                    }
+
+                    return PackageAssembly(args[1], args[2], args[3], args[4].Equals("true", StringComparison.InvariantCultureIgnoreCase));
             }
 
             return 0;
@@ -66,6 +77,62 @@ namespace WasmWrangler
             {
                 Console.Error.WriteLine(ex);
                 return false;
+            }
+        }
+
+        private static int PackageAssembly(string sdkPath, string assemblyPath, string outputDirectory, bool debug)
+        {
+            List<string> referencedAssemblies;
+
+            try
+            {
+                referencedAssemblies = Utils.GetReferencedAssemblies(assemblyPath);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Failed while determining referenced assemblies:");
+                Console.Error.WriteLine(ex);
+                return 1;
+            }
+
+            var assemblyDirectory = Path.GetDirectoryName(assemblyPath);
+
+            if (assemblyDirectory == null)
+            {
+                // Not sure how we would get here.
+                Console.Error.WriteLine($"Assembly directory is null.");
+                return 1;
+            }
+
+            foreach (var assembly in Enumerable.Repeat(Path.GetFileNameWithoutExtension(assemblyPath), 1).Concat(referencedAssemblies))
+            {
+                if (!CopyAssembly(sdkPath, assemblyDirectory, assembly, outputDirectory, debug))
+                {
+                    Console.Error.WriteLine($"Failed to copy assembly \"{assembly}\".");
+                    return 2;
+                }
+            }
+
+            return 0;
+
+            static bool CopyAssembly(string sdkPath, string assemblyDirectory, string assemblyName, string outputDirectroy, bool debug)
+            {
+                var assemblyPath = Path.Combine(assemblyDirectory, assemblyName + ".dll");
+
+                if (!File.Exists(assemblyPath))
+                {
+                }
+
+                if (File.Exists(assemblyPath))
+                {
+                    File.Copy(assemblyPath, Path.Combine(outputDirectroy, Path.GetFileName(assemblyPath)));
+                }
+                else
+                {
+                    return false;
+                }
+
+                return true;
             }
         }
     }

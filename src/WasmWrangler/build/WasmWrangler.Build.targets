@@ -1,9 +1,14 @@
 ﻿<Project>
-  <Target Name="WasmBuild" AfterTargets="AfterBuild" DependsOnTargets="
+  <!--<Target Name="WasmBuild" AfterTargets="AfterBuild" DependsOnTargets="
     WasmInjectScripts;
     CalculateWasmOutputPath;
     WasmCallSDKPackager;
-    WasmCopyAssets" />
+    WasmCopyAssets" />-->
+
+  <Target Name="WasmBuild" AfterTargets="AfterBuild" DependsOnTargets="
+    WasmInjectScripts;
+    CalculateWasmOutputPath;
+    WasmCallSDKPackager" />
   
   <Target Name="WasmCopyAssets">
     <ItemGroup>

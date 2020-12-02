@@ -1,7 +1,7 @@
 ﻿<Project>
   <Target Name="WasmCalculateFilesToPackage">
     <ItemGroup>
-      <WasmFilesToPackage Include="$(OutputPath)/**/*.dll" Exclude="$(WasmOutputPath)/**/*" />
+      <WasmFilesToPackage Include="$(OutputPath)/**/*.dll;$(OutputPath)/**/*.pdb" Exclude="$(WasmOutputPath)/**/*" />
 
       <WasmFilesToPackage Update="*">
         <WasmOutputPath>$(WasmOutputPath)/managed/%(WasmFilesToPackage.RecursiveDir)%(WasmFilesToPackage.Filename)%(WasmFilesToPackage.Extension)</WasmOutputPath>
@@ -43,7 +43,11 @@
       <_WasmPackagerArgs>$(_WasmPackagerArgs) &quot;$(OutputPath)$(AssemblyName).dll&quot;</_WasmPackagerArgs>
     </PropertyGroup>
 
-    <Message Importance="high" Text="WasmPackagerArgs = $(_WasmPackagerArgs)" />
+    <MakeDir Directories="$(WasmOutputPath);$(WasmOutputPath)/managed" />
+
+    <Copy SourceFiles="@(WasmFilesToPackage)" DestinationFolder="$(WasmOutputPath)/managed" />
+    
+    <!--<Message Importance="high" Text="WasmPackagerArgs = $(_WasmPackagerArgs)" />
 
     <Exec Command="$(WasmSDKPath)/packager.exe $(_WasmPackagerArgs)" />
 
@@ -54,13 +58,13 @@
         $(WasmOutputPath)/dotnet.js" />
     </ItemGroup>
 
-    <!-- NOTE: Codition is required for incremental builds. -->
+    --><!-- NOTE: Codition is required for incremental builds. --><!--
     <ItemGroup Condition="Exists('$(WasmOutputPath)/mono-config.js')">
       <_WasmBootstrapperJsFilesContents Include="$([System.IO.File]::ReadAllText(&quot;%(_WasmBootstrapperJsFiles.Identity)&quot;))" />
     </ItemGroup>
 
     <WriteLinesToFile File="$(WasmOutputPath)/wasm.bootstrapper.js" Lines="$(_WasmAppInitSource);@(_WasmBootstrapperJsFilesContents)" Overwrite="true" />
 
-    <Delete Files="@(_WasmBootstrapperJsFiles)" />
+    <Delete Files="@(_WasmBootstrapperJsFiles)" />-->
   </Target>
 </Project>
