@@ -8,7 +8,45 @@
   <Target Name="WasmBuild" AfterTargets="AfterBuild" DependsOnTargets="
     WasmInjectScripts;
     CalculateWasmOutputPath;
-    WasmCallSDKPackager" />
+    WasmCopyRuntime;
+    WasmPackageAssembly;
+    WasmCopyAssets" />
+
+  <Target Name="WasmCopyRuntime">
+    <MakeDir Directories="$(WasmOutputPath)" />
+  
+    <PropertyGroup>
+      <_WasmRuntimeDir>$(WasmSDKPath)/builds</_WasmRuntimeDir>
+    
+      <_WasmRuntimeDir Condition="'$(Configuration)' == 'Debug'">$(_WasmRuntimeDir)/debug</_WasmRuntimeDir>
+      <_WasmRuntimeDir Condition="'$(Configuration)' != 'Debug'">$(_WasmRuntimeDir)/release</_WasmRuntimeDir>
+    </PropertyGroup>
+  
+    <Copy
+      SourceFiles="$(_WasmRuntimeDir)/dotnet.js;$(_WasmRuntimeDir)/dotnet.wasm"
+      DestinationFolder="$(WasmOutputPath)" />
+  </Target>
+  
+  <Target Name="WasmPackageAssembly">
+    <MakeDir Directories="$(WasmOutputPath)/managed" />
+
+    <PropertyGroup>
+      <!-- sdkPath -->
+      <_WasmPackageAssemblyArgs>&quot;$(WasmSDKPath)&quot;</_WasmPackageAssemblyArgs>
+      <!-- assemblyPath -->
+      <_WasmPackageAssemblyArgs>$(_WasmPackageAssemblyArgs) &quot;$(OutputPath)$(AssemblyName).dll&quot;</_WasmPackageAssemblyArgs>
+      <!-- outputDirectory -->
+      <_WasmPackageAssemblyArgs>$(_WasmPackageAssemblyArgs) &quot;$(WasmOutputPath)/managed&quot;</_WasmPackageAssemblyArgs>
+      <!-- debug -->
+      <_WasmPackageAssemblyArgs Condition="'$(Configuration)' == 'Debug'">$(_WasmPackageAssemblyArgs) true</_WasmPackageAssemblyArgs>
+      <_WasmPackageAssemblyArgs Condition="'$(Configuration)' != 'Debug'">$(_WasmPackageAssemblyArgs) false</_WasmPackageAssemblyArgs>
+    </PropertyGroup>
+
+    <Message Importance="high" Text="WasmPackageAssemblyArgs = $(_WasmPackageAssemblyArgs)" />
+    
+    <Exec
+      Command="$(WasmWranglerBuildCommand) PackageAssembly $(_WasmPackageAssemblyArgs)" />
+  </Target>
   
   <Target Name="WasmCopyAssets">
     <ItemGroup>

@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WasmWrangler.Build
 {
     public static class Utils
     {
-        public static List<string> GetReferencedAssemblies(string assemblyPath)
+        public static List<string> GetReferencedAssemblies(string sdkPath, string assemblyPath)
         {
             Assembly assembly;
 
@@ -30,34 +27,62 @@ namespace WasmWrangler.Build
 
             var referencedAssemblies = new List<string>();
 
-            ItereateReferenceAssemblies(assembly, assemblyDirectory, referencedAssemblies);
+            ItereateReferenceAssemblies(sdkPath, assembly, assemblyDirectory, referencedAssemblies);
 
             return referencedAssemblies;
 
-            static void ItereateReferenceAssemblies(Assembly assembly, string assemblyDirectory, List<string> referencedAssemblies)
-            {
+            static void ItereateReferenceAssemblies(string sdkPath, Assembly assembly, string assemblyDirectory, List<string> referencedAssemblies)
+            { 
                 foreach (var referencedAssemblyName in assembly.GetReferencedAssemblies())
                 {
-                    if (referencedAssemblyName.Name == null || referencedAssemblies.Contains(referencedAssemblyName.Name))
+                    if (referencedAssemblyName.Name == null)
                         break;
 
-                    Assembly referencedAssembly;
+                    var referencedAssemblyFileName = referencedAssemblyName.Name + ".dll";
 
-                    var localAssemblyPath = Path.Combine(assemblyDirectory, referencedAssemblyName.Name + ".dll");
+                    if (referencedAssemblies.Contains(referencedAssemblyFileName))
+                        break;
+
+                    Assembly? referencedAssembly = null;
+
+                    var localAssemblyPath = Path.Combine(assemblyDirectory, referencedAssemblyFileName);
                     if (File.Exists(localAssemblyPath))
                     {
                         referencedAssembly = Assembly.LoadFile(localAssemblyPath);
                     }
                     else
                     {
-                        referencedAssembly = Assembly.Load(referencedAssemblyName);
+                        var wasmBclPath = Path.Combine(sdkPath, "wasm-bcl", "wasm");
+
+                        var wasmAssemblyPath = Path.Combine(wasmBclPath, referencedAssemblyFileName);
+                        if (File.Exists(wasmAssemblyPath))
+                        {
+                            referencedAssembly = Assembly.LoadFile(wasmAssemblyPath);
+                        }
+                        else
+                        {
+                            var wasmFacadePath = Path.Combine(wasmBclPath, "Facades", referencedAssemblyFileName);
+                            if (File.Exists(wasmFacadePath))
+                            {
+                                referencedAssembly = Assembly.LoadFile(wasmFacadePath);
+                            }
+                        }
                     }
 
-                    referencedAssemblies.Add(referencedAssemblyName.Name);
+                    if (referencedAssembly == null)
+                        throw new InvalidOperationException($"Unable to load assembly \"{referencedAssemblyName.Name}\".");
 
-                    ItereateReferenceAssemblies(referencedAssembly, assemblyDirectory, referencedAssemblies);
+                    referencedAssemblies.Add(referencedAssemblyFileName);
+
+                    ItereateReferenceAssemblies(sdkPath, referencedAssembly, assemblyDirectory, referencedAssemblies);
                 }
             }
+        }
+
+        public static void CopyFileIfNewer(string source, string destination)
+        {
+            // TODO(zac): Really implement CopyFileIfNewer
+            File.Copy(source, destination, true);
         }
     }
 }

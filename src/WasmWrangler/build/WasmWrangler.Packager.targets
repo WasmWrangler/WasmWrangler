@@ -43,9 +43,9 @@
       <_WasmPackagerArgs>$(_WasmPackagerArgs) &quot;$(OutputPath)$(AssemblyName).dll&quot;</_WasmPackagerArgs>
     </PropertyGroup>
 
-    <MakeDir Directories="$(WasmOutputPath);$(WasmOutputPath)/managed" />
+    <!--
 
-    <Copy SourceFiles="@(WasmFilesToPackage)" DestinationFolder="$(WasmOutputPath)/managed" />
+    <Copy SourceFiles="@(WasmFilesToPackage)" DestinationFolder="$(WasmOutputPath)/managed" />-->
     
     <!--<Message Importance="high" Text="WasmPackagerArgs = $(_WasmPackagerArgs)" />
 

@@ -86,7 +86,7 @@ namespace WasmWrangler.Build
 
             try
             {
-                referencedAssemblies = Utils.GetReferencedAssemblies(assemblyPath);
+                referencedAssemblies = Utils.GetReferencedAssemblies(sdkPath, assemblyPath);
             }
             catch (Exception ex)
             {
@@ -104,28 +104,50 @@ namespace WasmWrangler.Build
                 return 1;
             }
 
-            foreach (var assembly in Enumerable.Repeat(Path.GetFileNameWithoutExtension(assemblyPath), 1).Concat(referencedAssemblies))
+            var assembliesToPackage = Enumerable.Repeat(Path.GetFileName(assemblyPath), 1)
+                .Concat(referencedAssemblies)
+                .ToArray();
+
+            foreach (var assembly in assembliesToPackage)
             {
                 if (!CopyAssembly(sdkPath, assemblyDirectory, assembly, outputDirectory, debug))
                 {
                     Console.Error.WriteLine($"Failed to copy assembly \"{assembly}\".");
-                    return 2;
+                    //return 2;
                 }
             }
 
+            var assembliesJs = string.Join(", ", assembliesToPackage.Select(x => $"'{x}'"));
+            File.WriteAllText(Path.Combine(outputDirectory, "package.js"), assembliesJs);
+
             return 0;
 
-            static bool CopyAssembly(string sdkPath, string assemblyDirectory, string assemblyName, string outputDirectroy, bool debug)
+            static bool CopyAssembly(string sdkPath, string assemblyDirectory, string assemblyFileName, string outputDirectroy, bool debug)
             {
-                var assemblyPath = Path.Combine(assemblyDirectory, assemblyName + ".dll");
+                var assemblyPath = Path.Combine(assemblyDirectory, assemblyFileName);
 
                 if (!File.Exists(assemblyPath))
                 {
+                    var wasmBclPath = Path.Combine(sdkPath, "wasm-bcl", "wasm");
+
+                    var wasmAssemblyPath = Path.Combine(wasmBclPath, assemblyFileName);
+                    if (File.Exists(wasmAssemblyPath))
+                    {
+                        assemblyPath = wasmAssemblyPath;
+                    }
+                    else
+                    {
+                        var wasmFacadePath = Path.Combine(wasmBclPath, "Facades", assemblyFileName);
+                        if (File.Exists(wasmFacadePath))
+                        {
+                            assemblyPath = wasmFacadePath;
+                        }
+                    }
                 }
 
                 if (File.Exists(assemblyPath))
                 {
-                    File.Copy(assemblyPath, Path.Combine(outputDirectroy, Path.GetFileName(assemblyPath)));
+                    Utils.CopyFileIfNewer(assemblyPath, Path.Combine(outputDirectroy, Path.GetFileName(assemblyPath)));
                 }
                 else
                 {
