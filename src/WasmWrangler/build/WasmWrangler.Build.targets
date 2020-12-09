@@ -75,8 +75,8 @@
       console.info("Fetching " + asset)%3B
       return fetch (asset, { credentials: 'same-origin' })%3B
     }
-   )
-}};]]>
+   )%3B
+}}%3B]]>
       </_WasmAppInitSource>
     </PropertyGroup>
 
@@ -94,6 +94,9 @@
     <WriteLinesToFile File="$(WasmOutputPath)/wasm.bootstrapper.js" Lines="$(_WasmAppInitSource);@(_WasmBootstrapperJsFilesContents)" Overwrite="true" />
 
     <Delete Files="@(_WasmBootstrapperJsFiles)" />
+
+    <Exec
+      Command="$(WasmWranglerBuildCommand) UglifyJs &quot;$(WasmOutputPath)/wasm.bootstrapper.js&quot; &quot;$(WasmOutputPath)/wasm.bootstrapper.js&quot;" />
   </Target>
   
   <Target Name="WasmCopyAssets">

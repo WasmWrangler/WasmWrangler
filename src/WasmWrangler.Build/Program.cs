@@ -4,6 +4,8 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using NUglify;
+using NUglify.JavaScript;
 
 namespace WasmWrangler.Build
 {
@@ -39,6 +41,15 @@ namespace WasmWrangler.Build
                     }
 
                     return PackageAssembly(args[1], args[2], args[3], args[4].Equals("true", StringComparison.InvariantCultureIgnoreCase));
+
+                case nameof(UglifyJs):
+                    if (args.Length < 3)
+                    {
+                        Console.Error.WriteLine($"Please provide 2 arguments for {nameof(UglifyJs)}.");
+                        return 1;
+                    }
+
+                    return UglifyJs(args[1], args[2]);
             }
 
             return 0;
@@ -166,6 +177,31 @@ namespace WasmWrangler.Build
 
                 return true;
             }
+        }
+
+        private static int UglifyJs(string inputFileName, string outputFileName)
+        {
+            try
+            {
+                string input = File.ReadAllText(inputFileName);
+                string output = Uglify.Js(input, new CodeSettings()
+                {
+                    MinifyCode = true,
+                    PreserveFunctionNames = true,
+                    RemoveFunctionExpressionNames = false,
+                    ReorderScopeDeclarations = false,
+                    RemoveUnneededCode = false,
+                }).Code;
+                File.WriteAllText(outputFileName, output);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error while uglifying \"{inputFileName}\":");
+                Console.Error.WriteLine(ex);
+                return 1;
+            }
+
+            return 0;
         }
     }
 }
