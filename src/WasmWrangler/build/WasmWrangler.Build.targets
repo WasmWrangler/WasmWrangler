@@ -10,6 +10,7 @@
     CalculateWasmOutputPath;
     WasmCopyRuntime;
     WasmPackageAssembly;
+    WasmWriteBootstrapper;
     WasmCopyAssets" />
 
   <Target Name="WasmCopyRuntime">
@@ -46,6 +47,43 @@
     
     <Exec
       Command="$(WasmWranglerBuildCommand) PackageAssembly $(_WasmPackageAssemblyArgs)" />
+  </Target>
+
+  <Target Name="WasmWriteBootstrapper">
+    <PropertyGroup>
+      <WasmEntryAssembly Condition="'$(WasmEntryAssembly)' == ''">$(AssemblyName)</WasmEntryAssembly>
+      <WasmMainEntryPoint Condition="'$(WasmMainEntryPoint)' == ''">$(AssemblyName).Program:Main</WasmMainEntryPoint>
+    </PropertyGroup>
+
+    <Message Importance="high" Text="WasmEntryAssembly = $(WasmEntryAssembly)" />
+    <Message Importance="high" Text="WasmMainEntryPoint = $(WasmMainEntryPoint)" />
+
+    <PropertyGroup>
+      <_WasmAppInitSource>
+<![CDATA[var Module={onRuntimeInitialized:function(){
+  MONO.mono_load_runtime_and_bcl (
+    config.vfs_prefix,
+    config.deploy_prefix,
+    config.enable_debugging,
+    config.file_list,
+    function(){BINDING.call_static_method("[$(WasmEntryAssembly)] $(WasmMainEntryPoint)")%3B}
+   )
+}};]]>
+      </_WasmAppInitSource>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <_WasmBootstrapperJsFiles Include="
+        $(WasmOutputPath)/managed/package.js;
+        $(WasmOutputPath)/dotnet.js" />
+    </ItemGroup>
+
+    <!-- NOTE: Codition is required for incremental builds. -->
+    <ItemGroup Condition="Exists('$(WasmOutputPath)/dotnet.js')">
+      <_WasmBootstrapperJsFilesContents Include="$([System.IO.File]::ReadAllText(&quot;%(_WasmBootstrapperJsFiles.Identity)&quot;))" />
+    </ItemGroup>
+
+    <WriteLinesToFile File="$(WasmOutputPath)/wasm.bootstrapper.js" Lines="$(_WasmAppInitSource);@(_WasmBootstrapperJsFilesContents)" Overwrite="true" />
   </Target>
   
   <Target Name="WasmCopyAssets">

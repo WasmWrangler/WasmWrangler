@@ -29,6 +29,9 @@ namespace WasmWrangler.Build
 
             ItereateReferenceAssemblies(sdkPath, assembly, assemblyDirectory, referencedAssemblies);
 
+            if (!referencedAssemblies.Contains("WebAssembly.Bindings.dll"))
+                referencedAssemblies.Add("WebAssembly.Bindings.dll");
+
             return referencedAssemblies;
 
             static void ItereateReferenceAssemblies(string sdkPath, Assembly assembly, string assemblyDirectory, List<string> referencedAssemblies)

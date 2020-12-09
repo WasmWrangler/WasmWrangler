@@ -95,6 +95,8 @@ namespace WasmWrangler.Build
                 return 1;
             }
 
+            // NOTE: After this point no debugging information is available due to loading of assemblies.
+
             var assemblyDirectory = Path.GetDirectoryName(assemblyPath);
 
             if (assemblyDirectory == null)
@@ -117,8 +119,16 @@ namespace WasmWrangler.Build
                 }
             }
 
-            var assembliesJs = string.Join(", ", assembliesToPackage.Select(x => $"'{x}'"));
-            File.WriteAllText(Path.Combine(outputDirectory, "package.js"), assembliesJs);
+            // Path.GetFileName will give us the last directory, usually "managed"
+            var packageDirectory = Path.GetFileName(outputDirectory);
+
+            var enableDebugging = debug ? "1" : "0";
+            
+            var packageJs = $"var config={{vfs_prefix:\"{packageDirectory}\",deploy_prefix:\"{packageDirectory}\",enable_debugging:{enableDebugging},file_list:[";
+            packageJs += string.Join(",", assembliesToPackage.Select(x => $"'{x}'"));
+            packageJs += "]};";
+
+            File.WriteAllText(Path.Combine(outputDirectory, "package.js"), packageJs);
 
             return 0;
 
