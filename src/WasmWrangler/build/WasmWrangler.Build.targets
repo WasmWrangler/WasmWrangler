@@ -1,10 +1,4 @@
 ﻿<Project>
-  <!--<Target Name="WasmBuild" AfterTargets="AfterBuild" DependsOnTargets="
-    WasmInjectScripts;
-    CalculateWasmOutputPath;
-    WasmCallSDKPackager;
-    WasmCopyAssets" />-->
-
   <Target Name="WasmBuild" AfterTargets="AfterBuild" DependsOnTargets="
     WasmInjectScripts;
     CalculateWasmOutputPath;
@@ -12,7 +6,7 @@
     WasmPackageAssembly;
     WasmWriteBootstrapper;
     WasmCopyAssets" />
-
+  
   <Target Name="WasmCopyRuntime">
     <MakeDir Directories="$(WasmOutputPath)" />
   
@@ -26,6 +20,16 @@
     <Copy
       SourceFiles="$(_WasmRuntimeDir)/dotnet.js;$(_WasmRuntimeDir)/dotnet.wasm"
       DestinationFolder="$(WasmOutputPath)" />
+  </Target>
+
+  <Target Name="WasmCalculateFilesToPackage">
+    <ItemGroup>
+      <WasmFilesToPackage Include="$(OutputPath)/**/*.dll;$(OutputPath)/**/*.pdb" Exclude="$(WasmOutputPath)/**/*" />
+
+      <WasmFilesToPackage Update="*">
+        <WasmOutputPath>$(WasmOutputPath)/managed/%(WasmFilesToPackage.RecursiveDir)%(WasmFilesToPackage.Filename)%(WasmFilesToPackage.Extension)</WasmOutputPath>
+      </WasmFilesToPackage>
+    </ItemGroup>
   </Target>
   
   <Target Name="WasmPackageAssembly">
@@ -84,6 +88,8 @@
     </ItemGroup>
 
     <WriteLinesToFile File="$(WasmOutputPath)/wasm.bootstrapper.js" Lines="$(_WasmAppInitSource);@(_WasmBootstrapperJsFilesContents)" Overwrite="true" />
+
+    <Delete Files="@(_WasmBootstrapperJsFiles)" />
   </Target>
   
   <Target Name="WasmCopyAssets">
