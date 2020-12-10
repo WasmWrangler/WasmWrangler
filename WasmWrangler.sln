@@ -1,50 +1,60 @@
-﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WasmWrangler", "WasmWrangler", "{C9A5FC8A-6F64-4AB9-8269-A9ACEB8BF432}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WasmWrangler", "WasmWrangler", "{EEA339DA-6B5E-0D4B-3255-BFEF95601890}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 		.gitignore = .gitignore
+		build.cmd = build.cmd
+		clean.cmd = clean.cmd
 		Directory.Build.props = Directory.Build.props
-		nuget.config = nuget.config
+		License.txt = License.txt
+		pack.cmd = pack.cmd
 		Readme.md = Readme.md
+		release.cmd = release.cmd
+		test.cmd = test.cmd
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{80D41EA8-8769-4D09-93CD-5FFA4860EE0F}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{B0EA404C-240F-4C30-A400-313319C58D46}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{1A8617F3-099E-4372-AF71-5133F810D4B1}"
-	ProjectSection(SolutionItems) = preProject
-		samples\Directory.Build.props = samples\Directory.Build.props
-	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorld", "samples\HelloWorld\HelloWorld.csproj", "{F22C86A6-0257-43D1-84EC-C8B7B42AB4E6}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWrangler", "src\WasmWrangler\WasmWrangler.csproj", "{6FC0C401-956C-4FEC-A8E7-FF0BE5D3A16E}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{1F2D69ED-D587-4842-AAE5-511B08F2426F}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{1B672D7A-9F28-4EF3-A425-AACB8FC95905}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{94D1FE27-D101-0416-AD4A-616D259F5335}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\ci.yml = .github\workflows\ci.yml
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{E7C8BD18-9DD2-454F-919F-136EDFDD1B51}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{30E38536-52EC-A977-DD56-61C61F2BC558}"
+	ProjectSection(SolutionItems) = preProject
+		assets\Logo.pdn = assets\Logo.pdn
+		assets\Logo.png = assets\Logo.png
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{F94A7580-FB1B-106D-7358-5B046FE0A474}"
 	ProjectSection(SolutionItems) = preProject
 		build\Build.proj = build\Build.proj
 		build\WasmEnsureSDKAvailable.proj = build\WasmEnsureSDKAvailable.proj
 		build\WasmEnsureSDKAvailable.targets = build\WasmEnsureSDKAvailable.targets
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWrangler.Build", "src\WasmWrangler.Build\WasmWrangler.Build.csproj", "{F222D437-A4C7-4CBC-8B8D-83EE9372EABA}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{E2214A25-F5B5-4BA1-AB68-AF1257F7642C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{6A8BAB71-1BFB-3DAE-F247-E0286DA35E0D}"
 	ProjectSection(SolutionItems) = preProject
 		docs\MSBuildProps.md = docs\MSBuildProps.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWrangler.BindingGenerator", "src\WasmWrangler.BindingGenerator\WasmWrangler.BindingGenerator.csproj", "{46A1534F-0EB4-4749-8A7B-20C0DEB779C2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{ECDF3C43-C5FB-1B71-E2EE-148BAA19038D}"
+	ProjectSection(SolutionItems) = preProject
+		samples\Directory.Build.props = samples\Directory.Build.props
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorld.csproj", "samples\HelloWorld\HelloWorld.csproj", "{0B1A8398-5EA2-783F-E262-78C3935EB14F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E2ED7FF2-0B22-32CD-6AEE-3E86DDFD4EBD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWrangler.csproj", "src\WasmWrangler\WasmWrangler.csproj", "{D1BE628E-9F4B-AF09-2653-140968EB7242}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWrangler.BindingGenerator.csproj", "src\WasmWrangler.BindingGenerator\WasmWrangler.BindingGenerator.csproj", "{D5E8D5FD-3C85-2841-42D5-0C8939AB3A06}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWrangler.Build.csproj", "src\WasmWrangler.Build\WasmWrangler.Build.csproj", "{45AB7B61-77EA-4109-FE4C-51024B1A250F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,39 +62,40 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F22C86A6-0257-43D1-84EC-C8B7B42AB4E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F22C86A6-0257-43D1-84EC-C8B7B42AB4E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F22C86A6-0257-43D1-84EC-C8B7B42AB4E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F22C86A6-0257-43D1-84EC-C8B7B42AB4E6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6FC0C401-956C-4FEC-A8E7-FF0BE5D3A16E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6FC0C401-956C-4FEC-A8E7-FF0BE5D3A16E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6FC0C401-956C-4FEC-A8E7-FF0BE5D3A16E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6FC0C401-956C-4FEC-A8E7-FF0BE5D3A16E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F222D437-A4C7-4CBC-8B8D-83EE9372EABA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F222D437-A4C7-4CBC-8B8D-83EE9372EABA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F222D437-A4C7-4CBC-8B8D-83EE9372EABA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F222D437-A4C7-4CBC-8B8D-83EE9372EABA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{46A1534F-0EB4-4749-8A7B-20C0DEB779C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{46A1534F-0EB4-4749-8A7B-20C0DEB779C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{46A1534F-0EB4-4749-8A7B-20C0DEB779C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{46A1534F-0EB4-4749-8A7B-20C0DEB779C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B1A8398-5EA2-783F-E262-78C3935EB14F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B1A8398-5EA2-783F-E262-78C3935EB14F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B1A8398-5EA2-783F-E262-78C3935EB14F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B1A8398-5EA2-783F-E262-78C3935EB14F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1BE628E-9F4B-AF09-2653-140968EB7242}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1BE628E-9F4B-AF09-2653-140968EB7242}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1BE628E-9F4B-AF09-2653-140968EB7242}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1BE628E-9F4B-AF09-2653-140968EB7242}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5E8D5FD-3C85-2841-42D5-0C8939AB3A06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5E8D5FD-3C85-2841-42D5-0C8939AB3A06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5E8D5FD-3C85-2841-42D5-0C8939AB3A06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5E8D5FD-3C85-2841-42D5-0C8939AB3A06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45AB7B61-77EA-4109-FE4C-51024B1A250F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45AB7B61-77EA-4109-FE4C-51024B1A250F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45AB7B61-77EA-4109-FE4C-51024B1A250F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45AB7B61-77EA-4109-FE4C-51024B1A250F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{80D41EA8-8769-4D09-93CD-5FFA4860EE0F} = {C9A5FC8A-6F64-4AB9-8269-A9ACEB8BF432}
-		{1A8617F3-099E-4372-AF71-5133F810D4B1} = {C9A5FC8A-6F64-4AB9-8269-A9ACEB8BF432}
-		{F22C86A6-0257-43D1-84EC-C8B7B42AB4E6} = {1A8617F3-099E-4372-AF71-5133F810D4B1}
-		{6FC0C401-956C-4FEC-A8E7-FF0BE5D3A16E} = {80D41EA8-8769-4D09-93CD-5FFA4860EE0F}
-		{1F2D69ED-D587-4842-AAE5-511B08F2426F} = {C9A5FC8A-6F64-4AB9-8269-A9ACEB8BF432}
-		{1B672D7A-9F28-4EF3-A425-AACB8FC95905} = {1F2D69ED-D587-4842-AAE5-511B08F2426F}
-		{E7C8BD18-9DD2-454F-919F-136EDFDD1B51} = {C9A5FC8A-6F64-4AB9-8269-A9ACEB8BF432}
-		{F222D437-A4C7-4CBC-8B8D-83EE9372EABA} = {80D41EA8-8769-4D09-93CD-5FFA4860EE0F}
-		{E2214A25-F5B5-4BA1-AB68-AF1257F7642C} = {C9A5FC8A-6F64-4AB9-8269-A9ACEB8BF432}
-		{46A1534F-0EB4-4749-8A7B-20C0DEB779C2} = {80D41EA8-8769-4D09-93CD-5FFA4860EE0F}
+		{B0EA404C-240F-4C30-A400-313319C58D46} = {EEA339DA-6B5E-0D4B-3255-BFEF95601890}
+		{94D1FE27-D101-0416-AD4A-616D259F5335} = {B0EA404C-240F-4C30-A400-313319C58D46}
+		{30E38536-52EC-A977-DD56-61C61F2BC558} = {EEA339DA-6B5E-0D4B-3255-BFEF95601890}
+		{F94A7580-FB1B-106D-7358-5B046FE0A474} = {EEA339DA-6B5E-0D4B-3255-BFEF95601890}
+		{6A8BAB71-1BFB-3DAE-F247-E0286DA35E0D} = {EEA339DA-6B5E-0D4B-3255-BFEF95601890}
+		{ECDF3C43-C5FB-1B71-E2EE-148BAA19038D} = {EEA339DA-6B5E-0D4B-3255-BFEF95601890}
+		{0B1A8398-5EA2-783F-E262-78C3935EB14F} = {ECDF3C43-C5FB-1B71-E2EE-148BAA19038D}
+		{E2ED7FF2-0B22-32CD-6AEE-3E86DDFD4EBD} = {EEA339DA-6B5E-0D4B-3255-BFEF95601890}
+		{D1BE628E-9F4B-AF09-2653-140968EB7242} = {E2ED7FF2-0B22-32CD-6AEE-3E86DDFD4EBD}
+		{D5E8D5FD-3C85-2841-42D5-0C8939AB3A06} = {E2ED7FF2-0B22-32CD-6AEE-3E86DDFD4EBD}
+		{45AB7B61-77EA-4109-FE4C-51024B1A250F} = {E2ED7FF2-0B22-32CD-6AEE-3E86DDFD4EBD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {03562B31-F934-4FB1-B65F-2160026E7C33}
+		SolutionGuid = {02704689-1EA9-503C-E92B-891D8F146DAE}
 	EndGlobalSection
 EndGlobal
