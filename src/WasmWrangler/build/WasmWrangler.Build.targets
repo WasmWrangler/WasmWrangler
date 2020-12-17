@@ -70,7 +70,11 @@
     config.deploy_prefix,
     config.enable_debugging,
     config.file_list,
-    function(){BINDING.call_static_method("[$(WasmEntryAssembly)] $(WasmMainEntryPoint)")%3B}
+    function() { BINDING.call_static_method("[$(WasmEntryAssembly)] $(WasmMainEntryPoint)")%3B },
+    function(asset) {
+      console.info("Fetching " + asset)%3B
+      return fetch (asset, { credentials: 'same-origin' })%3B
+    }
    )
 }};]]>
       </_WasmAppInitSource>
