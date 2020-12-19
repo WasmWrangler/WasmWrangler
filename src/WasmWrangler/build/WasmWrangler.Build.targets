@@ -96,7 +96,7 @@
     <Delete Files="@(_WasmBootstrapperJsFiles)" />
 
     <Exec
-      Command="$(WasmWranglerBuildCommand) UglifyJs &quot;$(WasmOutputPath)/wasm.bootstrapper.js&quot; &quot;$(WasmOutputPath)/wasm.bootstrapper.js&quot;" />
+      Command="$(WasmWranglerBuildCommand) MinifyJs &quot;$(WasmOutputPath)/wasm.bootstrapper.js&quot; &quot;$(WasmOutputPath)/wasm.bootstrapper.js&quot;" />
   </Target>
   
   <Target Name="WasmCopyAssets">

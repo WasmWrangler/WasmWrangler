@@ -42,14 +42,14 @@ namespace WasmWrangler.Build
 
                     return PackageAssembly(args[1], args[2], args[3], args[4].Equals("true", StringComparison.InvariantCultureIgnoreCase));
 
-                case nameof(UglifyJs):
+                case nameof(MinifyJs):
                     if (args.Length < 3)
                     {
-                        Console.Error.WriteLine($"Please provide 2 arguments for {nameof(UglifyJs)}.");
+                        Console.Error.WriteLine($"Please provide 2 arguments for {nameof(MinifyJs)}.");
                         return 1;
                     }
 
-                    return UglifyJs(args[1], args[2]);
+                    return MinifyJs(args[1], args[2]);
             }
 
             return 0;
@@ -179,19 +179,12 @@ namespace WasmWrangler.Build
             }
         }
 
-        private static int UglifyJs(string inputFileName, string outputFileName)
+        private static int MinifyJs(string inputFileName, string outputFileName)
         {
             try
             {
                 string input = File.ReadAllText(inputFileName);
-                string output = Uglify.Js(input, new CodeSettings()
-                {
-                    MinifyCode = true,
-                    PreserveFunctionNames = true,
-                    RemoveFunctionExpressionNames = false,
-                    ReorderScopeDeclarations = false,
-                    RemoveUnneededCode = false,
-                }).Code;
+                string output = JsMin.Minify(input);
                 File.WriteAllText(outputFileName, output);
             }
             catch (Exception ex)
