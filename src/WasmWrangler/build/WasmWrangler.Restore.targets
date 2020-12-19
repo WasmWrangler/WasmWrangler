@@ -1,5 +1,4 @@
 ﻿<Project>
   <Target Name="WasmRestore" AfterTargets="Restore" DependsOnTargets="
-    WasmEnsureSDKAvailable;
-    WasmInjectScripts" />
+    WasmEnsureSDKAvailable" />
 </Project>

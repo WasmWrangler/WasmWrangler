@@ -17,14 +17,11 @@
         <button id="button" class="btn btn-primary" onclick="Program.invokeMethod('IncrementClickCount')">Click me!</button>
     </div>
 
-    <!-- You need to include WasmWrangler.js first -->
-    <script type="text/javascript" src="js/WasmWrangler.js"></script>
+    <!-- You need to include wasmwrangler.js first -->
+    <script type="text/javascript" src="wasmwrangler.js"></script>
     
     <script type="text/javascript">
-        const Program = Wasm.createStaticClassContext("HelloWorld", "HelloWorld.Program");
+        const Program = WasmWrangler.createStaticClassContext("HelloWorld", "HelloWorld.Program");
     </script>
-    
-    <!-- wasm.boostrapper.js will call the Main() from .NET -->
-    <script type="text/javascript" src="wasm.bootstrapper.js"></script>
 </body>
 </html>

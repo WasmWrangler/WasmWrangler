@@ -14,5 +14,4 @@
   <Import Project="$(MSBuildThisFileDirectory)WasmWrangler.Build.targets" />
   <Import Project="$(MSBuildThisFileDirectory)WasmWrangler.EnsureSDKAvailable.targets" />
   <Import Project="$(MSBuildThisFileDirectory)WasmWrangler.Restore.targets" />
-  <Import Project="$(MSBuildThisFileDirectory)WasmWrangler.Scripts.targets" />
 </Project>

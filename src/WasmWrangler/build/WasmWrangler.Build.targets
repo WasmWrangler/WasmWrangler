@@ -1,10 +1,9 @@
 ﻿<Project>
   <Target Name="WasmBuild" AfterTargets="AfterBuild" DependsOnTargets="
-    WasmInjectScripts;
     CalculateWasmOutputPath;
     WasmCopyRuntime;
     WasmPackageAssembly;
-    WasmWriteBootstrapper;
+    WasmWriteJs;
     WasmCopyAssets" />
   
   <Target Name="WasmCopyRuntime">
@@ -53,50 +52,27 @@
       Command="$(WasmWranglerBuildCommand) PackageAssembly $(_WasmPackageAssemblyArgs)" />
   </Target>
 
-  <Target Name="WasmWriteBootstrapper">
-    <PropertyGroup>
-      <WasmEntryAssembly Condition="'$(WasmEntryAssembly)' == ''">$(AssemblyName)</WasmEntryAssembly>
-      <WasmMainEntryPoint Condition="'$(WasmMainEntryPoint)' == ''">$(AssemblyName).Program:Main</WasmMainEntryPoint>
+  <Target Name="WasmWriteJs">
+    <PropertyGroup>      
+      <_WasmWranglerJs>
+$([System.IO.File]::ReadAllText(&quot;$(MSBuildThisFileDirectory)/js/WasmWrangler.js&quot;))
+$([System.IO.File]::ReadAllText(&quot;$(WasmOutputPath)/managed/package.js&quot;))
+$([System.IO.File]::ReadAllText(&quot;$(WasmOutputPath)/dotnet.js&quot;))
+      </_WasmWranglerJs>
     </PropertyGroup>
+    
+    <WriteLinesToFile
+      File="$(WasmOutputPath)/wasmwrangler.js"
+      Lines="$(_WasmWranglerJs)"
+      Overwrite="true" />
 
-    <Message Importance="high" Text="WasmEntryAssembly = $(WasmEntryAssembly)" />
-    <Message Importance="high" Text="WasmMainEntryPoint = $(WasmMainEntryPoint)" />
-
-    <PropertyGroup>
-      <_WasmAppInitSource>
-<![CDATA[var Module={onRuntimeInitialized:function(){
-  MONO.mono_load_runtime_and_bcl (
-    config.vfs_prefix,
-    config.deploy_prefix,
-    config.enable_debugging,
-    config.file_list,
-    function() { BINDING.call_static_method("[$(WasmEntryAssembly)] $(WasmMainEntryPoint)")%3B },
-    function(asset) {
-      console.info("Fetching " + asset)%3B
-      return fetch (asset, { credentials: 'same-origin' })%3B
-    }
-   )%3B
-}}%3B]]>
-      </_WasmAppInitSource>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <_WasmBootstrapperJsFiles Include="
-        $(WasmOutputPath)/managed/package.js;
-        $(WasmOutputPath)/dotnet.js" />
-    </ItemGroup>
-
-    <!-- NOTE: Codition is required for incremental builds. -->
-    <ItemGroup Condition="Exists('$(WasmOutputPath)/dotnet.js')">
-      <_WasmBootstrapperJsFilesContents Include="$([System.IO.File]::ReadAllText(&quot;%(_WasmBootstrapperJsFiles.Identity)&quot;))" />
-    </ItemGroup>
-
-    <WriteLinesToFile File="$(WasmOutputPath)/wasm.bootstrapper.js" Lines="$(_WasmAppInitSource);@(_WasmBootstrapperJsFilesContents)" Overwrite="true" />
-
-    <Delete Files="@(_WasmBootstrapperJsFiles)" />
+    <!-- Cleanup the js files we folded in. -->
+    <Delete Files="
+      $(WasmOutputPath)/managed/package.js;
+      $(WasmOutputPath)/dotnet.js" />
 
     <Exec
-      Command="$(WasmWranglerBuildCommand) MinifyJs &quot;$(WasmOutputPath)/wasm.bootstrapper.js&quot; &quot;$(WasmOutputPath)/wasm.bootstrapper.js&quot;" />
+      Command="$(WasmWranglerBuildCommand) MinifyJs &quot;$(WasmOutputPath)/wasmwrangler.js&quot; &quot;$(WasmOutputPath)/wasmwrangler.js&quot;" />
   </Target>
   
   <Target Name="WasmCopyAssets">
