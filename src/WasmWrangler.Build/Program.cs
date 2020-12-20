@@ -135,7 +135,7 @@ namespace WasmWrangler.Build
 
             var enableDebugging = debug ? "1" : "0";
             
-            var packageJs = $"WasmWrangler.config={{vfs_prefix:\"{packageDirectory}\",deploy_prefix:\"{packageDirectory}\",enable_debugging:{enableDebugging},file_list:[";
+            var packageJs = $"WasmWrangler._config={{vfs_prefix:\"{packageDirectory}\",deploy_prefix:\"{packageDirectory}\",enable_debugging:{enableDebugging},file_list:[";
             packageJs += string.Join(",", assembliesToPackage.Select(x => $"'{x}'"));
             packageJs += "]};";
 

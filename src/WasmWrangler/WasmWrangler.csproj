@@ -22,8 +22,6 @@
 
     <None Include="$(MSBuildThisFileDirectory)../WasmWrangler.Build/*.*" Visible="false" Pack="true" PackagePath="build/$(TargetFramework)/WasmWrangler.Build/%(None.Filename)%(None.Extension)" /> 
 
-    <None Remove="build\js\WasmWrangler.ts~RFbb28cfb.TMP" />
-
     <None Include="$(RepositoryRootDirectory)License.txt" Visible="false" Pack="true" PackagePath="$(PackageLicenseFile)" />
   </ItemGroup>
 
@@ -31,7 +29,7 @@
     <Exec Command="tsc" />
 
     <ItemGroup>
-      <_TsOutput Include="build/js/*.d.ts;build/js/*.js;build/js/*.js.map" />
+      <_TsOutput Include="build/js/*.js" />
       
       <None Include="%(_TsOutput.Identity)" Pack="true" PackagePath="build/$(TargetFramework)/js/%(_TsOutput.RecursiveDir)%(_TsOutput.Filename)%(_TsOutput.Extension)" />
     </ItemGroup>

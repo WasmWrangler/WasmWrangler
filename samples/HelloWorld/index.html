@@ -22,6 +22,10 @@
     
     <script type="text/javascript">
         const Program = WasmWrangler.createStaticClassContext("HelloWorld", "HelloWorld.Program");
+
+        WasmWrangler.onReady(() => {
+            Program.invokeMethod("Main");
+        });
     </script>
 </body>
 </html>

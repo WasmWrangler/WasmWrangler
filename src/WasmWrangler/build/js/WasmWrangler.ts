@@ -3,21 +3,7 @@ declare var MONO: any;
 
 var Module = {
     onRuntimeInitialized: function () {
-        console.info("Module initialized", WasmWrangler.config);
-        MONO.mono_load_runtime_and_bcl(
-            WasmWrangler.config.vfs_prefix,
-            WasmWrangler.config.deploy_prefix,
-            WasmWrangler.config.enable_debugging,
-            WasmWrangler.config.file_list,
-            function () {
-                console.info("WasmWrangler initialized");
-                BINDING.call_static_method("[HelloWorld] HelloWorld.Program:Main");
-            },
-            function (asset: string) {
-                console.info("Fetching " + asset);
-                return fetch(asset, { credentials: 'same-origin' });
-            }
-        );
+        WasmWrangler._onRuntimeInitialized();
     }
 };
 
@@ -34,28 +20,40 @@ class WasmStaticClassContext {
 }
 
 var WasmWrangler = {
-    config: {
+    _ready: false,
+    _onReadyCallbacks: [] as (() => void)[],
+
+    _config: {
         vfs_prefix: "managed",
         deploy_prefix: "managed",
         enable_debugging: 0,
         file_list: [] as string[],
     },
 
-    onRuntimeInitialized: function (): void {
+    _onRuntimeInitialized: function (): void {
         MONO.mono_load_runtime_and_bcl(
-            WasmWrangler.config.vfs_prefix,
-            WasmWrangler.config.deploy_prefix,
-            WasmWrangler.config.enable_debugging,
-            WasmWrangler.config.file_list,
-            function () {
-                console.info("WasmWrangler initialized");
-                // BINDING.call_static_method("[HelloWorld] HelloWorld.Program:Main");
+            this._config.vfs_prefix,
+            this._config.deploy_prefix,
+            this._config.enable_debugging,
+            this._config.file_list,
+            () => {
+                this._ready = true;
+
+                for (const callback of this._onReadyCallbacks) {
+                    callback();
+                }
+
+                this._onReadyCallbacks = [];
             },
             function (asset: string) {
                 console.info("Fetching " + asset);
                 return fetch(asset, { credentials: 'same-origin' });
             }
         );
+    },
+
+    createStaticClassContext: function (assmeblyName: string, type: string): WasmStaticClassContext {
+        return new WasmStaticClassContext(assmeblyName, type);
     },
 
     invokeStaticMethod: function (
@@ -66,8 +64,13 @@ var WasmWrangler = {
         return BINDING.call_static_method(`[${assemblyName}]${type}:${methodName}`, args);
     },
 
-    createStaticClassContext: function (assmeblyName: string, type: string): WasmStaticClassContext {
-        return new WasmStaticClassContext(assmeblyName, type);
+    onReady: function (callback: () => void) {
+        if (!this._ready) {
+            this._onReadyCallbacks.push(callback);
+            return;
+        }
+
+        callback();
     }
 };
 
