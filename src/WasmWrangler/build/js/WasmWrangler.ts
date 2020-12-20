@@ -34,12 +34,13 @@ class WasmWrangler {
     private static _onReady: (() => void) | undefined = undefined; 
 
     public static _onRuntimeInitialized(): void {
+        const config = WasmWrangler._config;
 
         MONO.mono_load_runtime_and_bcl(
-            this._config.vfs_prefix,
-            this._config.deploy_prefix,
-            this._config.enable_debugging,
-            this._config.file_list,
+            config.vfs_prefix,
+            config.deploy_prefix,
+            config.enable_debugging,
+            config.file_list,
             () => {
                 WasmWrangler._ready = true;
                 if (WasmWrangler._onReady !== undefined) {
