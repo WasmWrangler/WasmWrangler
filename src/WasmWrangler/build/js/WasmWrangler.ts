@@ -19,58 +19,61 @@ class WasmStaticClassContext {
     }
 }
 
-var WasmWrangler = {
-    _ready: false,
-    _onReadyCallbacks: [] as (() => void)[],
+interface WasmWranglerConfig {
+    vfs_prefix: string;
+    deploy_prefix: string;
+    enable_debugging: number;
+    file_list: string[];
+}
 
-    _config: {
-        vfs_prefix: "managed",
-        deploy_prefix: "managed",
-        enable_debugging: 0,
-        file_list: [] as string[],
-    },
+class WasmWrangler {
+    // This will be filled in the final output for a project.
+    private static _config: WasmWranglerConfig;
 
-    _onRuntimeInitialized: function (): void {
+    private static _ready: boolean = false;
+    private static _onReady: (() => void) | undefined = undefined; 
+
+    public static _onRuntimeInitialized(): void {
+
         MONO.mono_load_runtime_and_bcl(
             this._config.vfs_prefix,
             this._config.deploy_prefix,
             this._config.enable_debugging,
             this._config.file_list,
             () => {
-                this._ready = true;
-
-                for (const callback of this._onReadyCallbacks) {
-                    callback();
+                WasmWrangler._ready = true;
+                if (WasmWrangler._onReady !== undefined) {
+                    WasmWrangler._onReady();
                 }
-
-                this._onReadyCallbacks = [];
             },
-            function (asset: string) {
+            (asset: string) => {
                 console.info("Fetching " + asset);
                 return fetch(asset, { credentials: 'same-origin' });
             }
         );
-    },
+    }
 
-    createStaticClassContext: function (assmeblyName: string, type: string): WasmStaticClassContext {
+    public static createStaticClassContext(assmeblyName: string, type: string): WasmStaticClassContext {
         return new WasmStaticClassContext(assmeblyName, type);
-    },
+    }
 
-    invokeStaticMethod: function (
+    public static invokeStaticMethod(
         assemblyName: string,
         type: string,
         methodName: string,
         ...args: any[]): any {
         return BINDING.call_static_method(`[${assemblyName}]${type}:${methodName}`, args);
-    },
+    }
 
-    onReady: function (callback: () => void) {
-        if (!this._ready) {
-            this._onReadyCallbacks.push(callback);
-            return;
+    public static get onReady(): (() => void) | undefined {
+        return WasmWrangler._onReady;
+    }
+
+    public static set onReady(callback: (() => void) | undefined) {
+        WasmWrangler._onReady = callback;
+        if (WasmWrangler._ready && callback !== undefined) {
+            callback();
         }
-
-        callback();
     }
 };
 
