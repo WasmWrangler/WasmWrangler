@@ -7,6 +7,31 @@ var Module = {
     }
 };
 
+class WasmWranglerAssemblyReference {
+    private _loaded: boolean = false;
+
+    constructor(private _fileName: string) {
+    }
+
+    public get loaded(): boolean {
+        return this._loaded;
+    }
+
+    public get fileName(): string {
+        return this._fileName;
+    }
+
+    public get name(): string {
+        let name = this._fileName;
+
+        if (name.endsWith(".dll")) {
+            name = name.substring(0, name.length - ".dll".length);
+        }
+
+        return name;
+    }
+}
+
 class WasmStaticClassContext {
     private _invokePrefix: string;
 
@@ -26,15 +51,45 @@ interface WasmWranglerConfig {
     file_list: string[];
 }
 
+interface WasmWranglerCallbacks {
+    onLoaded: () => void;
+
+    onAssemblyLoaded?: (assembly: string) => void;
+}
+
 class WasmWrangler {
     // This will be filled in the final output for a project.
     private static _config: WasmWranglerConfig;
 
-    private static _ready: boolean = false;
-    private static _onReady: (() => void) | undefined = undefined; 
+    private static _runtimeInitialized: boolean = false;
+    private static _initialized: boolean = false;
+    private static _callbacks: WasmWranglerCallbacks | undefined = undefined; 
+
+    public static assemblies: { [key: string]: WasmWranglerAssemblyReference } = {};
 
     public static _onRuntimeInitialized(): void {
+        WasmWrangler._runtimeInitialized = true;
+        if (!WasmWrangler._initialized && WasmWrangler._callbacks !== undefined) {
+            WasmWrangler._doInitialize();
+        }
+    }
+
+    private static _doInitialize() {
+        if (!WasmWrangler._runtimeInitialized) {
+            return;
+        }
+
         const config = WasmWrangler._config;
+
+        if (config === undefined) {
+            throw new Error("WasmWrangler._config was undefined.");
+        }
+
+        WasmWrangler.assemblies = {};
+
+        for (const fileName of config.file_list) {
+            this.assemblies[fileName] = new WasmWranglerAssemblyReference(fileName);
+        }
 
         MONO.mono_load_runtime_and_bcl(
             config.vfs_prefix,
@@ -42,16 +97,41 @@ class WasmWrangler {
             config.enable_debugging,
             config.file_list,
             () => {
-                WasmWrangler._ready = true;
-                if (WasmWrangler._onReady !== undefined) {
-                    WasmWrangler._onReady();
+                WasmWrangler._initialized = true;
+                if (WasmWrangler._callbacks !== undefined) {
+                    WasmWrangler._callbacks.onLoaded();
                 }
             },
             (asset: string) => {
-                console.info("Fetching " + asset);
-                return fetch(asset, { credentials: 'same-origin' });
+                return fetch(asset, { credentials: 'same-origin' })
+                    .then((value) => {
+                        const fileName = WasmWrangler.getFileName(asset);
+
+                        (WasmWrangler.assemblies[fileName] as any)["_loaded"] = true;
+
+                        if (WasmWrangler._callbacks !== undefined && WasmWrangler._callbacks.onAssemblyLoaded !== undefined) {
+                            WasmWrangler._callbacks.onAssemblyLoaded(fileName);
+                        }
+
+                        return value;
+                    });
             }
         );
+    }
+
+    public static initialize(callbacks: (() => void) | WasmWranglerCallbacks): void {
+        if (WasmWrangler._initialized || WasmWrangler._callbacks !== undefined) {
+            throw new Error("WasmWrangler.initialize() has already been called.");
+        }
+
+        if (typeof callbacks === "function") {
+            callbacks = {
+                onLoaded: callbacks
+            };
+        }
+
+        WasmWrangler._callbacks = callbacks;
+        WasmWrangler._doInitialize();
     }
 
     public static createStaticClassContext(assmeblyName: string, type: string): WasmStaticClassContext {
@@ -66,15 +146,14 @@ class WasmWrangler {
         return BINDING.call_static_method(`[${assemblyName}]${type}:${methodName}`, args);
     }
 
-    public static get onReady(): (() => void) | undefined {
-        return WasmWrangler._onReady;
-    }
+    public static getFileName(url: string): string {
+        const parts = url.split("/");
 
-    public static set onReady(callback: (() => void) | undefined) {
-        WasmWrangler._onReady = callback;
-        if (WasmWrangler._ready && callback !== undefined) {
-            callback();
+        if (parts.length > 0) {
+            return parts[parts.length - 1];
         }
+
+        return "";
     }
 };
 

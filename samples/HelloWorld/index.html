@@ -10,6 +10,9 @@
     <div id="loading" class="jumbotron">
         <h1><span class="fas fa-spinner fa-spin"></span></h1>
         <h1>Please wait while the application is loaded...</h1>
+        <div class="progress">
+            <div id="loading-progress" class="progress-bar" role="progressbar"></div>
+        </div>
     </div>
 
     <div id="app" style="display:none;" class="jumbotron">
@@ -23,9 +26,26 @@
     <script type="text/javascript">
         const Program = WasmWrangler.createStaticClassContext("HelloWorld", "HelloWorld.Program");
 
-        WasmWrangler.onReady = function () {
-            Program.invokeMethod("Main");
-        };
+        WasmWrangler.initialize({
+            onAssemblyLoaded: (assembly) => {
+                const progress = document.getElementById("loading-progress");
+
+                const assemblyCount = Object.keys(WasmWrangler.assemblies).length;
+                let loadedAssemblyCount = 0;
+
+                for (const assembly of Object.values(WasmWrangler.assemblies)) {
+                    if (assembly.loaded) {
+                        loadedAssemblyCount++;
+                    }
+                }
+
+                const loadedPercent = loadedAssemblyCount / assemblyCount * 100.0;
+                progress.style.width = loadedPercent + "%";
+            },
+            onLoaded: () => {
+                Program.invokeMethod("Main");
+            },
+        });
     </script>
 </body>
 </html>

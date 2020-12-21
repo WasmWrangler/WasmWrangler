@@ -13,3 +13,7 @@ body {
     grid-template-columns: auto 1fr;
     grid-column-gap: 15px;
 }
+
+#loading .progress {
+    grid-column: 1 / span 2;
+}
