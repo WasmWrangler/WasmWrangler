@@ -1,5 +1,31 @@
-﻿declare var BINDING: any;
-declare var MONO: any;
+﻿interface BINDING {
+    bindings_lazy_init(): void;
+
+    assembly_load(name: string): number;
+
+    call_method(method: number, thisArg: number | null, signature: any, args?: any[]): any;
+
+    call_static_method(fqn: string, args?: any[]): any;
+
+    find_class(assemblyHandle: number, namespace: string, name: string): number;
+
+    find_method(classHandle: number, name: string, _: number): number;
+}
+
+declare var BINDING: BINDING;
+
+interface MONO {
+    mono_load_runtime_and_bcl(
+        vfs_prefix: string,
+        deploy_prefix: string,
+        enable_debugging: number,
+        file_list: string[],
+        loadedCallback: () => void,
+        fetchCallback: (asset: string) => Promise<any>,
+    ): void;
+}
+
+declare var MONO: MONO;
 
 var Module = {
     onRuntimeInitialized: function () {
@@ -9,12 +35,17 @@ var Module = {
 
 class WasmWranglerAssemblyReference {
     private _loaded: boolean = false;
+    private _handle: number = 0;
 
     constructor(private _fileName: string) {
     }
 
     public get loaded(): boolean {
         return this._loaded;
+    }
+
+    public get handle(): number {
+        return this._handle;
     }
 
     public get fileName(): string {
@@ -30,17 +61,57 @@ class WasmWranglerAssemblyReference {
 
         return name;
     }
+
+    public getClass(namespace: string, name: string) {
+        if (this._handle === 0) {
+            throw new Error("Assembly reference not yet fully initialized.");
+        }
+
+        const classHandle = BINDING.find_class(this._handle, namespace, name);
+
+        if (classHandle === 0) {
+            throw new Error(`Unable to find class ${namespace}.${name} in assembly ${this.name}`);
+        }
+
+        return new WasmWranglerClassReference(this, classHandle, namespace, name);
+    }
 }
 
-class WasmStaticClassContext {
-    private _invokePrefix: string;
-
-    constructor(assemblyName: string, type: string) {
-        this._invokePrefix = `[${assemblyName}]${type}:`;
+class WasmWranglerClassReference {
+    constructor(
+        private _assembly: WasmWranglerAssemblyReference,
+        private _handle: number,
+        private _namespace: string,
+        private _name: string,
+    ) {
     }
 
-    public invokeMethod(methodName: string, ...args: any[]) {
-        BINDING.call_static_method(`${this._invokePrefix}${methodName}`, args);
+    public get assembly(): WasmWranglerAssemblyReference {
+        return this._assembly;
+    }
+
+    public get namespace(): string {
+        return this._namespace;
+    }
+
+    public get name(): string {
+        return this._name;
+    }
+
+    public get fullName(): string {
+        return this._namespace + "." + this._name;
+    }
+
+    public invokeStaticMethod(methodName: string, ...args: any[]) {
+        const methodHandle = BINDING.find_method(this._handle, methodName, - 1);
+
+        if (methodHandle === 0) {
+            throw new Error(`Unable to find method ${methodName} in class ${this.fullName}`);
+        }
+
+        const signature = (Module as any).mono_method_get_call_signature(methodHandle);
+
+        return BINDING.call_method(methodHandle, null, signature, args);
     }
 }
 
@@ -54,7 +125,7 @@ interface WasmWranglerConfig {
 interface WasmWranglerCallbacks {
     onLoaded: () => void;
 
-    onAssemblyLoaded?: (assembly: string) => void;
+    onLoadProgress?: (loadedAssembliesCount: number, totalAssembliesCount: number) => void;
 }
 
 class WasmWrangler {
@@ -65,7 +136,11 @@ class WasmWrangler {
     private static _initialized: boolean = false;
     private static _callbacks: WasmWranglerCallbacks | undefined = undefined; 
 
-    public static assemblies: { [key: string]: WasmWranglerAssemblyReference } = {};
+    public static _assemblies: WasmWranglerAssemblyReference[] = [];
+
+    public static get assemblies(): WasmWranglerAssemblyReference[] {
+        return [...WasmWrangler._assemblies];
+    }
 
     public static _onRuntimeInitialized(): void {
         WasmWrangler._runtimeInitialized = true;
@@ -85,10 +160,10 @@ class WasmWrangler {
             throw new Error("WasmWrangler._config was undefined.");
         }
 
-        WasmWrangler.assemblies = {};
+        WasmWrangler._assemblies = [];
 
         for (const fileName of config.file_list) {
-            this.assemblies[fileName] = new WasmWranglerAssemblyReference(fileName);
+            this._assemblies.push(new WasmWranglerAssemblyReference(fileName));
         }
 
         MONO.mono_load_runtime_and_bcl(
@@ -97,6 +172,12 @@ class WasmWrangler {
             config.enable_debugging,
             config.file_list,
             () => {
+                BINDING.bindings_lazy_init();
+
+                for (const assembly of this._assemblies) {
+                    (assembly as any)["_handle"] = BINDING.assembly_load(assembly.name);
+                }
+
                 WasmWrangler._initialized = true;
                 if (WasmWrangler._callbacks !== undefined) {
                     WasmWrangler._callbacks.onLoaded();
@@ -107,10 +188,11 @@ class WasmWrangler {
                     .then((value) => {
                         const fileName = WasmWrangler.getFileName(asset);
 
-                        (WasmWrangler.assemblies[fileName] as any)["_loaded"] = true;
+                        const assembly = WasmWrangler._assemblies.find((x => x.fileName === fileName));
+                        (assembly as any)["_loaded"] = true;
 
-                        if (WasmWrangler._callbacks !== undefined && WasmWrangler._callbacks.onAssemblyLoaded !== undefined) {
-                            WasmWrangler._callbacks.onAssemblyLoaded(fileName);
+                        if (WasmWrangler._callbacks !== undefined && WasmWrangler._callbacks.onLoadProgress !== undefined) {
+                            WasmWrangler._callbacks.onLoadProgress(WasmWrangler._assemblies.filter(x => x.loaded).length, WasmWrangler._assemblies.length);
                         }
 
                         return value;
@@ -134,8 +216,8 @@ class WasmWrangler {
         WasmWrangler._doInitialize();
     }
 
-    public static createStaticClassContext(assmeblyName: string, type: string): WasmStaticClassContext {
-        return new WasmStaticClassContext(assmeblyName, type);
+    public static getAssembly(name: string): WasmWranglerAssemblyReference | undefined {
+        return WasmWrangler._assemblies.find(x => x.name === name);
     }
 
     public static invokeStaticMethod(

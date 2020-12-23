@@ -17,33 +17,23 @@
 
     <div id="app" style="display:none;" class="jumbotron">
         <h1>Please look in the console of the broswer in order to see the output.</h1>
-        <button id="button" class="btn btn-primary" onclick="Program.invokeMethod('IncrementClickCount')">Click me!</button>
+        <button id="button" class="btn btn-primary" onclick="Program.invokeStaticMethod('IncrementClickCount')">Click me!</button>
     </div>
 
     <!-- You need to include wasmwrangler.js first -->
     <script type="text/javascript" src="wasmwrangler.js"></script>
     
     <script type="text/javascript">
-        const Program = WasmWrangler.createStaticClassContext("HelloWorld", "HelloWorld.Program");
-
         WasmWrangler.initialize({
-            onAssemblyLoaded: (assembly) => {
+            onLoadProgress: (loaded, total) => {
                 const progress = document.getElementById("loading-progress");
 
-                const assemblyCount = Object.keys(WasmWrangler.assemblies).length;
-                let loadedAssemblyCount = 0;
-
-                for (const assembly of Object.values(WasmWrangler.assemblies)) {
-                    if (assembly.loaded) {
-                        loadedAssemblyCount++;
-                    }
-                }
-
-                const loadedPercent = loadedAssemblyCount / assemblyCount * 100.0;
+                const loadedPercent = loaded / total * 100.0;
                 progress.style.width = loadedPercent + "%";
             },
             onLoaded: () => {
-                Program.invokeMethod("Main");
+                window["Program"] = WasmWrangler.getAssembly("HelloWorld").getClass("HelloWorld", "Program");
+                Program.invokeStaticMethod("Main");
             },
         });
     </script>
