@@ -8,7 +8,9 @@
       Include="$(RepositoryRootDirectory)/**/*.csproj"
       Exclude="$(RepositoryRootDirectory)src/WasmWrangler/mono-wasm/**/*.csproj" />
 
-    <ProjectsToPack Include="$(RepositoryRootDirectory)/src/WasmWrangler/WasmWrangler.csproj" />
+    <ProjectsToPack Include="
+      $(RepositoryRootDirectory)/src/WasmWrangler/WasmWrangler.csproj;
+      $(RepositoryRootDirectory)/src/WasmWrangler.Interop.Browser/WasmWrangler.Interop.Browser.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
