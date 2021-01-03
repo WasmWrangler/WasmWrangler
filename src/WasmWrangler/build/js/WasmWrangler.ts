@@ -27,11 +27,16 @@ interface MONO {
 
 declare var MONO: MONO;
 
+interface ModuleRuntime {
+    mono_method_get_call_signature(methodHandle: number): any;
+}
+
 var Module = {
+    // This function will be called by dotnet.js when the runtime is ready.
     onRuntimeInitialized: function () {
         WasmWrangler._onRuntimeInitialized();
     }
-};
+} as any as ModuleRuntime; // dotnet.js will also add functions to the Module object which we want to call later.
 
 class WasmWranglerAssemblyReference {
     private _loaded: boolean = false;
@@ -109,7 +114,7 @@ class WasmWranglerClassReference {
             throw new Error(`Unable to find method ${methodName} in class ${this.fullName}`);
         }
 
-        const signature = (Module as any).mono_method_get_call_signature(methodHandle);
+        const signature = Module.mono_method_get_call_signature(methodHandle);
 
         return BINDING.call_method(methodHandle, null, signature, args);
     }
