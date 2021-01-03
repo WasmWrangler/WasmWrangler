@@ -3,14 +3,14 @@
 
 # WasmWrangler
 
-<img align="right" width="170px" height="170px" src="https://github.com/WasmWrangler/WasmWrangler/raw/master/assets/Logo.png">
+<img align="right" width="170px" height="170px" src="https://github.com/WasmWrangler/WasmWrangler/raw/main/assets/Logo.png">
 
 WasmWrangler is a NuGet package that enables your C# application to be run in a browser. Think of it as the
 [Vanilla JS](http://vanilla-js.com/) for C#.
 
 ## Building
 
-If the version of [Mono Wasm SDK](https://github.com/mono/mono/tree/master/sdks/wasm) isn't available
+If the version of [Mono Wasm SDK](https://github.com/mono/mono/tree/main/sdks/wasm) isn't available
 before you start building you'll likely receive an error about "Unable to resolve WebAssembly.Bindings.dll".
 
 Rebuilding might solve the problem but there is a build script provided that will ensure the Mono Wasm SDK
