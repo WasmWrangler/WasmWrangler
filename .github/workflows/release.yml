@@ -25,4 +25,7 @@ jobs:
     - name: Release
       run: |
         nuget setApiKey ${{ secrets.NUGET_API_KEY }}
+        git config --global user.name "smack0007"
+        git config --global user.email "zachary.snow@gmail.com"
+        git remote set-url origin https://smack0007:${{ secrets.GH_API_KEY }}@github.com/WasmWrangler/WasmWrangler.git
         dotnet msbuild build\Build.proj -nologo -v:n -t:Release
