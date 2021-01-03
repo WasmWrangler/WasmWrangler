@@ -20,12 +20,12 @@
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/WasmWrangler/WasmWrangler.git</RepositoryUrl>
     <PackageProjectUrl>https://github.com/WasmWrangler/WasmWrangler/</PackageProjectUrl>
-    <PackageTags>wasm</PackageTags>
+    <PackageTags>wasm;mono-wasm;msbuild</PackageTags>
 
     <!-- Version -->
     <VersionMajor>0</VersionMajor>
-    <VersionMinor>0</VersionMinor>
-    <VersionPatch>2</VersionPatch>
+    <VersionMinor>1</VersionMinor>
+    <VersionPatch>0</VersionPatch>
 
     <Version>$(VersionMajor).$(VersionMinor).$(VersionPatch)</Version>
     <VersionPrefix>$(Version)</VersionPrefix>
