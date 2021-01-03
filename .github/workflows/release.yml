@@ -23,6 +23,6 @@ jobs:
       run: dotnet msbuild build\Build.proj -nologo -v:n -t:Restore
 
     - name: Release
-      run: -
+      run: |
         nuget setApiKey ${{ secrets.NUGET_API_KEY }}
         dotnet msbuild build\Build.proj -nologo -v:n -t:Release
