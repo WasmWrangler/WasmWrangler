@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using WebAssembly;
+﻿using WebAssembly;
 
 namespace WasmWrangler
 {
@@ -9,6 +6,5 @@ namespace WasmWrangler
     {
         public static T GetObjectProperty<T>(this JSObject obj, string name) =>
             (T)obj.GetObjectProperty(name);
-        
     }
 }

@@ -46,15 +46,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{ECDF
 		samples\Directory.Build.props = samples\Directory.Build.props
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorld.csproj", "samples\HelloWorld\HelloWorld.csproj", "{0B1A8398-5EA2-783F-E262-78C3935EB14F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HelloWorld", "samples\HelloWorld\HelloWorld.csproj", "{0B1A8398-5EA2-783F-E262-78C3935EB14F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E2ED7FF2-0B22-32CD-6AEE-3E86DDFD4EBD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWrangler.csproj", "src\WasmWrangler\WasmWrangler.csproj", "{D1BE628E-9F4B-AF09-2653-140968EB7242}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWrangler", "src\WasmWrangler\WasmWrangler.csproj", "{D1BE628E-9F4B-AF09-2653-140968EB7242}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWrangler.BindingGenerator.csproj", "src\WasmWrangler.BindingGenerator\WasmWrangler.BindingGenerator.csproj", "{D5E8D5FD-3C85-2841-42D5-0C8939AB3A06}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWrangler.BindingGenerator", "src\WasmWrangler.BindingGenerator\WasmWrangler.BindingGenerator.csproj", "{D5E8D5FD-3C85-2841-42D5-0C8939AB3A06}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWrangler.Build.csproj", "src\WasmWrangler.Build\WasmWrangler.Build.csproj", "{45AB7B61-77EA-4109-FE4C-51024B1A250F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWrangler.Build", "src\WasmWrangler.Build\WasmWrangler.Build.csproj", "{45AB7B61-77EA-4109-FE4C-51024B1A250F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WasmWrangler.Interop.Browser", "src\WasmWrangler.Interop.Browser\WasmWrangler.Interop.Browser.csproj", "{8568E9E6-DC9D-4CC0-8980-7C18130C039B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -78,6 +80,10 @@ Global
 		{45AB7B61-77EA-4109-FE4C-51024B1A250F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45AB7B61-77EA-4109-FE4C-51024B1A250F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45AB7B61-77EA-4109-FE4C-51024B1A250F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8568E9E6-DC9D-4CC0-8980-7C18130C039B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8568E9E6-DC9D-4CC0-8980-7C18130C039B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8568E9E6-DC9D-4CC0-8980-7C18130C039B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8568E9E6-DC9D-4CC0-8980-7C18130C039B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -94,6 +100,7 @@ Global
 		{D1BE628E-9F4B-AF09-2653-140968EB7242} = {E2ED7FF2-0B22-32CD-6AEE-3E86DDFD4EBD}
 		{D5E8D5FD-3C85-2841-42D5-0C8939AB3A06} = {E2ED7FF2-0B22-32CD-6AEE-3E86DDFD4EBD}
 		{45AB7B61-77EA-4109-FE4C-51024B1A250F} = {E2ED7FF2-0B22-32CD-6AEE-3E86DDFD4EBD}
+		{8568E9E6-DC9D-4CC0-8980-7C18130C039B} = {E2ED7FF2-0B22-32CD-6AEE-3E86DDFD4EBD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {02704689-1EA9-503C-E92B-891D8F146DAE}

@@ -5,6 +5,7 @@
   <Import Project="$(RepositoryRootDirectory)build/WasmEnsureSDKAvailable.targets" />
   
   <ItemGroup>
-    <ProjectReference Include="$(RepositoryRootDirectory)/src/WasmWrangler/WasmWrangler.csproj" />    
+    <ProjectReference Include="$(RepositoryRootDirectory)/src/WasmWrangler/WasmWrangler.csproj" />
+    <ProjectReference Include="$(RepositoryRootDirectory)/src/WasmWrangler.Interop.Browser/WasmWrangler.Interop.Browser.csproj" />
   </ItemGroup>
 </Project>

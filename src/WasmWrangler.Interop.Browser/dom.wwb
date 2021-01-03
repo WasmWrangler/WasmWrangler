@@ -1,6 +1,6 @@
 ﻿using WebAssembly;
 
-namespace WasmWrangler
+namespace WasmWrangler.Interop.Browser
 {
     interface CSSStyleDeclaration : JSObjectWrapper {
         string? alignContent { get; set; }
