@@ -128,10 +128,6 @@ namespace WasmWrangler.BindingGenerator
 
         private static void GenerateJSGlobalObject(OutputBuffer output, InterfaceDeclarationSyntax @interface)
         {
-            output.AppendLine("public static partial class JS");
-            output.AppendLine("{");
-            output.IncreaseIndent();
-
             output.AppendLine($"public static partial class {@interface.Identifier}");
             output.AppendLine("{");
             output.AppendLine("\tprivate static JSObject? __js;");
@@ -154,10 +150,7 @@ namespace WasmWrangler.BindingGenerator
                 GenerateInterfaceMember(output, member, true);
 
             output.DecreaseIndent();
-
-            output.AppendLine("}");
-            output.DecreaseIndent();
-
+            
             output.AppendLine("}");
             output.AppendLine();
         }

@@ -11,10 +11,10 @@ namespace HelloWorld
         {
             Console.WriteLine("Hello World from WASM!");
 
-            var loading = JS.document.getElementById("loading");
+            var loading = document.getElementById("loading");
             loading!.style.display = "none";
 
-            var app = JS.document.getElementById("app");
+            var app = document.getElementById("app");
             app!.style.display = "block";
         }
 
@@ -22,7 +22,7 @@ namespace HelloWorld
         {
             _clickCount++;
 
-            var button = JS.document.getElementById("button");
+            var button = document.getElementById("button");
             button!.innerText = $"Clicked {_clickCount} times";
         }
     }
