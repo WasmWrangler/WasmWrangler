@@ -5,7 +5,7 @@ namespace WasmWrangler.Interop.Browser
 {
 	public partial class CSSStyleDeclaration
 	{
-		private readonly JSObject _js;
+		protected readonly JSObject _js;
 
 		internal CSSStyleDeclaration(object obj)
 		{
@@ -1903,7 +1903,7 @@ namespace WasmWrangler.Interop.Browser
 
 	public partial class HTMLElement
 	{
-		private readonly JSObject _js;
+		protected readonly JSObject _js;
 
 		internal HTMLElement(object obj)
 		{
@@ -1925,6 +1925,18 @@ namespace WasmWrangler.Interop.Browser
 		{
 			get => _style ?? (_style = new CSSStyleDeclaration(_js.GetObjectProperty<JSObject>(nameof(style))));
 		}
+
+	}
+
+	public partial class HTMLCanvas : HTMLElement
+	{
+        static HTMLCanvas()
+        {
+            console.info("HTMLCanvas initialize");
+            JSObjectWrapperFactory.RegisterFactory(typeof(HTMLCanvas), x => new HTMLCanvas(x));
+        }
+
+		internal HTMLCanvas(object obj) : base(obj) { }
 
 	}
 
@@ -2080,6 +2092,19 @@ namespace WasmWrangler.Interop.Browser
 				return null;
 
 			return new HTMLElement(result);
+		}
+
+		public static T? getElementById<T>(string element)
+			where T: HTMLElement
+		{
+            JSObjectWrapperFactory.RegisterFactory(typeof(HTMLCanvas), x => new HTMLCanvas(x));
+
+            var result = _js.Invoke(nameof(getElementById), element);
+
+			if (result == null)
+				return null;
+
+			return JSObjectWrapperFactory.Create<T>(result);
 		}
 
 	}

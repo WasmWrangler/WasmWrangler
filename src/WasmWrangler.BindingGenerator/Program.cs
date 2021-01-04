@@ -35,24 +35,6 @@ namespace WasmWrangler.BindingGenerator
 
                 GenerateSyntaxNodes(output, syntaxTree.GetRoot().ChildNodes());
 
-                //output.AppendLine("namespace WasmWrangler");
-                //output.AppendLine("{");
-                //output.IncreaseIndent();
-
-                //switch (binding.Type)
-                //{
-                //    case "GlobalObject":
-                //        GenerateGlobalObject(output, binding);
-                //        break;
-
-                //    case "JSObjectWrapper":
-                //        GenerateJSObjectWrapper(output, binding);
-                //        break;
-                //}
-
-                //output.DecreaseIndent();
-                //output.AppendLine("}");
-
                 File.WriteAllText(outputFile, output.ToString());
             }
 
@@ -110,15 +92,23 @@ namespace WasmWrangler.BindingGenerator
                 throw new InvalidOperationException(CreateErrorMessage(@interface, $"Expected interface {@interface.Identifier} to have only 1 base interface."));
 
             var baseClass = ((SimpleBaseTypeSyntax)baseClasses.Single()).ToString();
+            var genericType = "";
+
+            int genericTypeStart = baseClass.IndexOf("<");
+            if (genericTypeStart != -1 && baseClass.EndsWith(">"))
+            {
+                genericType = baseClass.Substring(genericTypeStart + 1, baseClass.Length - genericTypeStart - 2);
+                baseClass = baseClass.Substring(0, genericTypeStart);
+            }
 
             switch (baseClass)
             {
-                case "JSGlobalObject":
+                case "Global":
                     GenerateJSGlobalObject(output, @interface);
                     break;
 
-                case "JSObjectWrapper":
-                    GenerateJSObjectWrapper(output, @interface);
+                case "Wrapper":
+                    GenerateJSObjectWrapper(output, @interface, genericType);
                     break;
 
                 default:
@@ -155,21 +145,34 @@ namespace WasmWrangler.BindingGenerator
             output.AppendLine();
         }
 
-        private static void GenerateJSObjectWrapper(OutputBuffer output, InterfaceDeclarationSyntax @interface)
+        private static void GenerateJSObjectWrapper(OutputBuffer output, InterfaceDeclarationSyntax @interface, string baseType)
         {
-            output.AppendLine($"public partial class {@interface.Identifier}");
-            output.AppendLine("{");
-            output.AppendLine("\tprivate readonly JSObject _js;");
-            output.AppendLine();
-            output.AppendLine($"\tinternal {@interface.Identifier}(object obj)");
-            output.AppendLine("\t{");
-            output.AppendLine("\t\tif (!(obj is JSObject))");
-            output.AppendLine("\t\t\tthrow new WasmWranglerException($\"Expected {nameof(obj)} to be an instance of JSObject.\");");
-            output.AppendLine();
-            output.AppendLine("\t\t_js = (JSObject)obj;");
-            output.AppendLine("\t}");
-            output.AppendLine();
+            output.Append($"public partial class {@interface.Identifier}");
 
+            if (baseType != "")
+                output.Append($" : {baseType}");
+
+            output.AppendLine();
+            output.AppendLine("{");
+
+            if (baseType == "")
+            {
+                output.AppendLine("\tprotected readonly JSObject _js;");
+                output.AppendLine();
+                output.AppendLine($"\tinternal {@interface.Identifier}(object obj)");
+                output.AppendLine("\t{");
+                output.AppendLine("\t\tif (!(obj is JSObject))");
+                output.AppendLine("\t\t\tthrow new WasmWranglerException($\"Expected {nameof(obj)} to be an instance of JSObject.\");");
+                output.AppendLine();
+                output.AppendLine("\t\t_js = (JSObject)obj;");
+                output.AppendLine("\t}");
+            }
+            else
+            {
+                output.AppendLine($"\tinternal {@interface.Identifier}(object obj) : base(obj) {{ }}");
+            }
+
+            output.AppendLine();
             output.IncreaseIndent();
 
             foreach (var member in @interface.Members)
@@ -206,9 +209,19 @@ namespace WasmWrangler.BindingGenerator
                 output.Append("static ");
 
             output.Append($"{method.ReturnType} {method.Identifier}");
+
+            if (method.TypeParameterList != null)
+                output.Append(method.TypeParameterList.ToString());
+
             output.AppendLine(method.ParameterList.ToString());
+            
+            if (method.ConstraintClauses.Any())
+                output.AppendLine("\t" + method.ConstraintClauses.ToString());
 
             output.AppendLine("{");
+
+            //bool isGeneric = false;
+            
 
             if (method.ReturnType.ToString() != "void")
             {

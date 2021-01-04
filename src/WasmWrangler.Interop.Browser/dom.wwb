@@ -2,7 +2,7 @@
 
 namespace WasmWrangler.Interop.Browser
 {
-    interface CSSStyleDeclaration : JSObjectWrapper {
+    interface CSSStyleDeclaration : Wrapper {
         string? alignContent { get; set; }
         string? alignItems { get; set; }
         string? alignSelf { get; set; }
@@ -319,14 +319,18 @@ namespace WasmWrangler.Interop.Browser
         string? zIndex { get; set; }
     }
 
-    interface HTMLElement : JSObjectWrapper {
+    interface HTMLElement : Wrapper {
         string innerText { get; set; }
 
         [Wrap(JSObject)]
         CSSStyleDeclaration style { get; }
     }
 
-    interface console : JSGlobalObject {
+    interface HTMLCanvas : Wrapper<HTMLElement> {
+        
+    }
+
+    interface console : Global {
         JSObject memory { get; }
         
         void assert(bool? condition, params object[] data);
@@ -372,7 +376,9 @@ namespace WasmWrangler.Interop.Browser
         void warn(params object[] data);
     }
 
-    interface document : JSGlobalObject {
+    interface document : Global {
         HTMLElement? getElementById(string element);
+
+        T? getElementById<T>(string element) where T: HTMLElement;
     }
 }

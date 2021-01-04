@@ -16,6 +16,10 @@ namespace HelloWorld
 
             var app = document.getElementById("app");
             app!.style.display = "block";
+
+            var canvas = document.getElementById<HTMLCanvas>("canvas");
+            if (canvas != null)
+                console.info(canvas);
         }
 
         public static void IncrementClickCount()
