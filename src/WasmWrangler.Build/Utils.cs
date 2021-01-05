@@ -29,12 +29,7 @@ namespace WasmWrangler.Build
 
             ItereateReferenceAssemblies(sdkPath, assembly, assemblyDirectory, referencedAssemblies);
 
-            // Not sure why this isn't showing up in the referenced assemblies but we need it to be included.
-            if (!referencedAssemblies.Contains("WasmWrangler.dll"))
-                referencedAssemblies.Add("WasmWrangler.dll");
-
-            if (!referencedAssemblies.Contains("WebAssembly.Bindings.dll"))
-                referencedAssemblies.Add("WebAssembly.Bindings.dll");
+            referencedAssemblies.Sort();
 
             return referencedAssemblies;
 
@@ -43,12 +38,12 @@ namespace WasmWrangler.Build
                 foreach (var referencedAssemblyName in assembly.GetReferencedAssemblies())
                 {
                     if (referencedAssemblyName.Name == null)
-                        break;
+                        continue;
 
                     var referencedAssemblyFileName = referencedAssemblyName.Name + ".dll";
 
                     if (referencedAssemblies.Contains(referencedAssemblyFileName))
-                        break;
+                        continue;
 
                     Assembly? referencedAssembly = null;
 
@@ -88,7 +83,7 @@ namespace WasmWrangler.Build
 
         public static void CopyFileIfNewer(string source, string destination)
         {
-            // TODO(zac): Really implement CopyFileIfNewer
+            // TODO: Really implement CopyFileIfNewer
             File.Copy(source, destination, true);
         }
     }
