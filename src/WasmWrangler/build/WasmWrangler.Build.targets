@@ -72,6 +72,7 @@ $([System.IO.File]::ReadAllText(&quot;$(WasmOutputPath)/dotnet.js&quot;))
       $(WasmOutputPath)/dotnet.js" />
 
     <Exec
+      Condition="'$(Configuration)' != 'Debug'"
       Command="$(WasmWranglerBuildCommand) MinifyJs &quot;$(WasmOutputPath)/wasmwrangler.js&quot; &quot;$(WasmOutputPath)/wasmwrangler.js&quot;" />
   </Target>
   

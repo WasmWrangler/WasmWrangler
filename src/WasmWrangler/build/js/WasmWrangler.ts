@@ -15,6 +15,8 @@
 declare var BINDING: BINDING;
 
 interface MONO {
+    _load_assets_and_runtime: (args: any) => any;
+
     mono_load_runtime_and_bcl(
         vfs_prefix: string,
         deploy_prefix: string,
@@ -148,6 +150,13 @@ class WasmWrangler {
     }
 
     public static _onRuntimeInitialized(): void {
+        // TODO: We should hide this behind some configuration flag.
+        //const _load_assets_and_runtime = MONO._load_assets_and_runtime;
+        //MONO._load_assets_and_runtime = (args: any) => {
+        //    args.diagnostic_tracing = true;
+        //    _load_assets_and_runtime.apply(MONO, [args]);
+        //};
+
         WasmWrangler._runtimeInitialized = true;
         if (!WasmWrangler._initialized && WasmWrangler._callbacks !== undefined) {
             WasmWrangler._doInitialize();
