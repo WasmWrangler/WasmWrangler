@@ -190,6 +190,14 @@ class WasmWrangler {
 
                 for (const assembly of this._assemblies) {
                     (assembly as any)["_handle"] = BINDING.assembly_load(assembly.name);
+
+                    const initializerClass = BINDING.find_class(assembly.handle, assembly.name, "WasmWranglerAssemblyInitializer");
+                    if (initializerClass !== 0) {
+                        const initializeMethod = BINDING.find_method(initializerClass, "Initialize", 0);
+                        if (initializeMethod !== 0) {
+                            BINDING.call_method(initializeMethod, null, null);
+                        }
+                    }
                 }
 
                 WasmWrangler._initialized = true;
