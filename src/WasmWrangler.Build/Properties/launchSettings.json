@@ -2,7 +2,7 @@
   "profiles": {
     "WasmWrangler.Build": {
       "commandName": "Project",
-      "commandLineArgs": "PackageAssembly \"E:\\Code\\WasmWrangler\\WasmWrangler\\src\\WasmWrangler\\mono-wasm\" \"E:\\Code\\WasmWrangler\\WasmWrangler\\bin\\Debug\\HelloWorld\\netstandard2.0\\HelloWorld.dll\" \"E:\\Code\\WasmWrangler\\WasmWrangler\\bin\\Debug\\HelloWorld\\netstandard2.0\\/dist/managed\" true"
+      "commandLineArgs": "PackageAssembly \"D:\\Code\\WasmWrangler\\WasmWrangler\\src\\WasmWrangler\\mono-wasm\" \"D:\\Code\\WasmWrangler\\WasmWrangler\\bin\\Debug\\HelloWorld\\net5.0\\HelloWorld.dll\" \"D:\\Code\\WasmWrangler\\WasmWrangler\\bin\\Debug\\HelloWorld\\net5.0\\/dist/managed\" true"
     }
   }
 }
