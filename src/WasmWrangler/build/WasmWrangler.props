@@ -13,7 +13,7 @@
   <!-- Static properties -->
   <PropertyGroup>
     <!-- The URL of the mono wasm sdk used by WasmWrangler. -->
-    <WasmSDKUrl>https://xamjenkinsartifact.blob.core.windows.net/test-mono-mainline-wasm/5485/ubuntu-1804-amd64/sdks/wasm/mono-wasm-646d877d006.zip</WasmSDKUrl>
+    <WasmSDKUrl>https://jenkins.mono-project.com/job/test-mono-mainline-wasm/label=ubuntu-1804-amd64/5543/Azure/processDownloadRequest/5543/ubuntu-1804-amd64/sdks/wasm/mono-wasm-08fdaf07e68.zip</WasmSDKUrl>
 
     <WasmSDKName>$([System.IO.Path]::GetFileNameWithoutExtension('$(WasmSDKUrl)'))</WasmSDKName>
     <WasmSDKPath>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)/../mono-wasm'))</WasmSDKPath>
