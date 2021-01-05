@@ -5,7 +5,7 @@ namespace WasmWrangler
 {
     public static class JSObjectWrapperFactory
     {
-        public static Dictionary<Type, Func<object, object>> _factories = new Dictionary<Type, Func<object, object>>();
+        private static Dictionary<Type, Func<object, object>> _factories = new Dictionary<Type, Func<object, object>>();
 
         public static void RegisterFactory(Type type, Func<object, object> factory)
         {

@@ -11,6 +11,10 @@ namespace HelloWorld
         {
             Console.WriteLine("Hello World from WASM!");
 
+            // TODO: Find a better way to do this.
+            HTMLElement.Initialize();
+            HTMLCanvas.Initialize();
+
             var loading = document.getElementById("loading");
             loading!.style.display = "none";
 

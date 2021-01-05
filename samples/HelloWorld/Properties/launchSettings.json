@@ -3,7 +3,7 @@
     "dotnet-serve": {
       "commandName": "Executable",
       "executablePath": "dotnet",
-      "commandLineArgs": "serve -d \"dist\" -p 8081 -o -z"
+      "commandLineArgs": "serve -d \"dist\" -p 8080 -o -z"
     }
   }
 }

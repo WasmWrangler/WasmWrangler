@@ -155,6 +155,14 @@ namespace WasmWrangler.BindingGenerator
             output.AppendLine();
             output.AppendLine("{");
 
+            output.Append("\tpublic static ");
+
+            if (baseType != "")
+                output.Append("new ");
+
+            output.AppendLine($"void Initialize() {{ JSObjectWrapperFactory.RegisterFactory(typeof({@interface.Identifier}), x => new {@interface.Identifier}(x)); }}");
+            output.AppendLine();
+
             if (baseType == "")
             {
                 output.AppendLine("\tprotected readonly JSObject _js;");
@@ -220,9 +228,6 @@ namespace WasmWrangler.BindingGenerator
 
             output.AppendLine("{");
 
-            //bool isGeneric = false;
-            
-
             if (method.ReturnType.ToString() != "void")
             {
                 output.Append($"\tvar result = _js.Invoke(nameof({method.Identifier})");
@@ -241,7 +246,7 @@ namespace WasmWrangler.BindingGenerator
                 if (returnType.EndsWith("?"))
                     returnType = returnType.TrimEnd('?');
 
-                output.AppendLine($"\treturn new {returnType}(result);");
+                output.AppendLine($"\treturn JSObjectWrapperFactory.Create<{returnType}>(result);");
             }
             else
             {
