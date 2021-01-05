@@ -29,13 +29,17 @@ namespace WasmWrangler.Build
 
             ItereateReferenceAssemblies(sdkPath, assembly, assemblyDirectory, referencedAssemblies);
 
+            // Not sure why this isn't showing up in the referenced assemblies but we need it to be included.
+            if (!referencedAssemblies.Contains("WasmWrangler.dll"))
+                referencedAssemblies.Add("WasmWrangler.dll");
+
             if (!referencedAssemblies.Contains("WebAssembly.Bindings.dll"))
                 referencedAssemblies.Add("WebAssembly.Bindings.dll");
 
             return referencedAssemblies;
 
             static void ItereateReferenceAssemblies(string sdkPath, Assembly assembly, string assemblyDirectory, List<string> referencedAssemblies)
-            { 
+            {
                 foreach (var referencedAssemblyName in assembly.GetReferencedAssemblies())
                 {
                     if (referencedAssemblyName.Name == null)

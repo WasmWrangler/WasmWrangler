@@ -9,6 +9,7 @@
   <ItemGroup>
     <None Include="$(RepositoryRootDirectory)License.txt" Visible="false" Pack="true" PackagePath="$(PackageLicenseFile)" />
   </ItemGroup>
+  
   <ItemGroup>
     <ProjectReference Include="..\WasmWrangler\WasmWrangler.csproj" />
   </ItemGroup>
