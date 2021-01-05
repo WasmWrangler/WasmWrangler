@@ -10,6 +10,7 @@ namespace WasmWrangler.Interop.Browser
     {
         public static void Initialize()
         {
+            // TODO: This needs to be generated.
             HTMLCanvas.Initialize();
             HTMLElement.Initialize();
         }
