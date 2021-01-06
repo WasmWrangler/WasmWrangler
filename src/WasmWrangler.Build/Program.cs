@@ -4,8 +4,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
-using NUglify;
-using NUglify.JavaScript;
 
 namespace WasmWrangler.Build
 {

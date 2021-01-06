@@ -4,9 +4,5 @@
     <OutputType>exe</OutputType>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="NUglify" Version="1.11.4" />
-  </ItemGroup>
 </Project>
 
