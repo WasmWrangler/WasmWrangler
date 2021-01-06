@@ -10,7 +10,6 @@ namespace WasmWrangler.Interop.Browser
 			WasmWrangler.Interop.Browser.CSSStyleDeclaration.Initialize();
 			WasmWrangler.Interop.Browser.HTMLCanvasElement.Initialize();
 			WasmWrangler.Interop.Browser.HTMLElement.Initialize();
-			WasmWrangler.Interop.Browser.RenderingContext.Initialize();
 		}
 	}
 }

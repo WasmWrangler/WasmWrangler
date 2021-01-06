@@ -71,6 +71,10 @@ namespace WasmWrangler.BindingGenerator
             {
                 switch (node)
                 {
+                    case ClassDeclarationSyntax classDeclarationSyntax:
+                        GenerateClass(context, output, classDeclarationSyntax);
+                        break;
+
                     case NamespaceDeclarationSyntax namespaceDeclarationSyntax:
                         output.AppendLine();
                         output.AppendLine($"namespace {namespaceDeclarationSyntax.Name}");
@@ -87,9 +91,9 @@ namespace WasmWrangler.BindingGenerator
                         output.AppendLine("}");
                         break;
 
-                    case InterfaceDeclarationSyntax interfaceDeclarationSyntax:
-                        GenerateInterface(context, output, interfaceDeclarationSyntax);
-                        break;
+                    //case InterfaceDeclarationSyntax interfaceDeclarationSyntax:
+                    //    GenerateInterface(context, output, interfaceDeclarationSyntax);
+                    //    break;
 
                     case UsingDirectiveSyntax usingDirectiveSyntax:
                         output.AppendLine(usingDirectiveSyntax.ToString());
@@ -101,44 +105,53 @@ namespace WasmWrangler.BindingGenerator
             }
         }
 
-        private static void GenerateInterface(Context context, OutputBuffer output, InterfaceDeclarationSyntax @interface)
+        private static void GenerateClass(Context context, OutputBuffer output, ClassDeclarationSyntax @class)
         {
-            if (@interface.BaseList == null)
-                throw new InvalidOperationException(CreateErrorMessage(@interface, $"Expected interface {@interface.Identifier} to have base interface."));
+            var classType = "";
+            var implements = new List<string>();
 
-            var baseClasses = @interface.BaseList.ChildNodes();
-
-            if (baseClasses.Count() > 1)
-                throw new InvalidOperationException(CreateErrorMessage(@interface, $"Expected interface {@interface.Identifier} to have only 1 base interface."));
-
-            var baseClass = ((SimpleBaseTypeSyntax)baseClasses.Single()).ToString();
-            var genericType = "";
-
-            int genericTypeStart = baseClass.IndexOf("<");
-            if (genericTypeStart != -1 && baseClass.EndsWith(">"))
+            foreach (var attribute in @class.AttributeLists.Select(x => x.ToString().Trim('[', ']')))
             {
-                genericType = baseClass.Substring(genericTypeStart + 1, baseClass.Length - genericTypeStart - 2);
-                baseClass = baseClass.Substring(0, genericTypeStart);
+                switch (attribute)
+                {
+                    case "Global":
+                        classType = "Global";
+                        break;
+
+                    case "Wrapper":
+                        classType = "Wrapper";
+                        break;
+                }
+
+                if (attribute.StartsWith("Implements(") && attribute.EndsWith(")"))
+                {
+                    var implement = attribute.Substring("Implements(".Length, attribute.Length - "Implements(".Length - ")".Length);
+                    implements.Add(implement);
+                }
             }
 
-            switch (baseClass)
+            switch (classType)
             {
                 case "Global":
-                    GenerateGlobal(context, output, @interface);
+                    GenerateGlobal(context, output, @class);
                     break;
 
                 case "Wrapper":
-                    GenerateWrapper(context, output, @interface, genericType);
+                    GenerateWrapper(context, output, @class, implements);
                     break;
 
                 default:
-                    throw new InvalidOperationException(CreateErrorMessage(@interface, $"Unexpected base interface: {baseClass}"));
+                    throw new InvalidOperationException(CreateErrorMessage(@class, $"Unknown class type: {classType}"));
             }
         }
 
-        private static void GenerateGlobal(Context context, OutputBuffer output, InterfaceDeclarationSyntax @interface)
+        private static void GenerateInterface(Context context, OutputBuffer output, InterfaceDeclarationSyntax @interface)
+        {    
+        }
+
+        private static void GenerateGlobal(Context context, OutputBuffer output, ClassDeclarationSyntax @class)
         {
-            output.AppendLine($"public static partial class {@interface.Identifier}");
+            output.AppendLine($"public static partial class {@class.Identifier}");
             output.AppendLine("{");
             output.AppendLine("\tprivate static JSObject? __js;");
             output.AppendLine();
@@ -147,7 +160,7 @@ namespace WasmWrangler.BindingGenerator
             output.AppendLine("\t\tget");
             output.AppendLine("\t\t{");
             output.AppendLine("\t\t\tif (__js == null)");
-            output.AppendLine($"\t\t\t\t__js = (JSObject)Runtime.GetGlobalObject(nameof({@interface.Identifier}));");
+            output.AppendLine($"\t\t\t\t__js = (JSObject)Runtime.GetGlobalObject(nameof({@class.Identifier}));");
             output.AppendLine();
             output.AppendLine("\t\t\treturn __js;");
             output.AppendLine("\t\t}");
@@ -156,7 +169,7 @@ namespace WasmWrangler.BindingGenerator
 
             output.IncreaseIndent();
 
-            foreach (var member in @interface.Members)
+            foreach (var member in @class.Members)
                 GenerateInterfaceMember(context, output, member, true);
 
             output.DecreaseIndent();
@@ -165,31 +178,45 @@ namespace WasmWrangler.BindingGenerator
             output.AppendLine();
         }
 
-        private static void GenerateWrapper(Context context, OutputBuffer output, InterfaceDeclarationSyntax @interface, string baseType)
+        private static void GenerateWrapper(Context context, OutputBuffer output, ClassDeclarationSyntax @class, List<string> implements)
         {
-            context.Wrappers.Add(context.CurrentNamespace + "." + @interface.Identifier.ToString());
+            context.Wrappers.Add(context.CurrentNamespace + "." + @class.Identifier.ToString());
 
-            output.Append($"public partial class {@interface.Identifier}");
+            output.Append($"public partial class {@class.Identifier}");
 
-            if (baseType != "")
-                output.Append($" : {baseType}");
+            if (@class.BaseList != null || implements.Any())
+            {
+                output.Append(" : ");
+
+                if (@class.BaseList != null)
+                    output.Append(string.Join(", ", @class.BaseList.Types.Select(x => x.ToString())));
+
+                if (implements.Any())
+                {
+                    // If we already output the BaseList we need to add a ,
+                    if (@class.BaseList != null)
+                        output.Append(", ");
+
+                    output.Append(string.Join(", ", implements));
+                }    
+            }
 
             output.AppendLine();
             output.AppendLine("{");
 
             output.Append("\tinternal static ");
 
-            if (baseType != "")
+            if (@class.BaseList != null)
                 output.Append("new ");
 
-            output.AppendLine($"void Initialize() {{ JSObjectWrapperFactory.RegisterFactory(typeof({@interface.Identifier}), x => new {@interface.Identifier}(x)); }}");
+            output.AppendLine($"void Initialize() {{ JSObjectWrapperFactory.RegisterFactory(typeof({@class.Identifier}), x => new {@class.Identifier}(x)); }}");
             output.AppendLine();
 
-            if (baseType == "")
+            if (@class.BaseList == null)
             {
                 output.AppendLine("\tprotected readonly JSObject _js;");
                 output.AppendLine();
-                output.AppendLine($"\tinternal {@interface.Identifier}(object obj)");
+                output.AppendLine($"\tinternal {@class.Identifier}(object obj)");
                 output.AppendLine("\t{");
                 output.AppendLine("\t\tif (!(obj is JSObject))");
                 output.AppendLine("\t\t\tthrow new WasmWranglerException($\"Expected {nameof(obj)} to be an instance of JSObject.\");");
@@ -199,13 +226,13 @@ namespace WasmWrangler.BindingGenerator
             }
             else
             {
-                output.AppendLine($"\tinternal {@interface.Identifier}(object obj) : base(obj) {{ }}");
+                output.AppendLine($"\tinternal {@class.Identifier}(object obj) : base(obj) {{ }}");
             }
 
             output.AppendLine();
             output.IncreaseIndent();
 
-            foreach (var member in @interface.Members)
+            foreach (var member in @class.Members)
                 GenerateInterfaceMember(context, output, member, false);
 
             output.DecreaseIndent();

@@ -2,7 +2,9 @@
 
 namespace WasmWrangler.Interop.Browser
 {
-    interface CanvasRenderingContext2D : Wrapper<RenderingContext>
+    [Wrapper]
+    [Implements(RenderingContext)]
+    class CanvasRenderingContext2D
     {
         string fillStyle { get; set; }
 

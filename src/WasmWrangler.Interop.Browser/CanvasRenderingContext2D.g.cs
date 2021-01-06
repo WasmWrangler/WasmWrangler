@@ -6,9 +6,17 @@ namespace WasmWrangler.Interop.Browser
 {
 	public partial class CanvasRenderingContext2D : RenderingContext
 	{
-		internal static new void Initialize() { JSObjectWrapperFactory.RegisterFactory(typeof(CanvasRenderingContext2D), x => new CanvasRenderingContext2D(x)); }
+		internal static void Initialize() { JSObjectWrapperFactory.RegisterFactory(typeof(CanvasRenderingContext2D), x => new CanvasRenderingContext2D(x)); }
 
-		internal CanvasRenderingContext2D(object obj) : base(obj) { }
+		protected readonly JSObject _js;
+
+		internal CanvasRenderingContext2D(object obj)
+		{
+			if (!(obj is JSObject))
+				throw new WasmWranglerException($"Expected {nameof(obj)} to be an instance of JSObject.");
+
+			_js = (JSObject)obj;
+		}
 
 		public string fillStyle
 		{

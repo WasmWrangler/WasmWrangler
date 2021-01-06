@@ -23,7 +23,7 @@ namespace WasmWrangler.Interop.Browser
 		}
 
 		public T? getContext<T>(string contextId, object? options = null)
-			where T: RenderingContext
+			where T: class, RenderingContext
 		{
 			var result = _js.Invoke(nameof(getContext), contextId, options);
 

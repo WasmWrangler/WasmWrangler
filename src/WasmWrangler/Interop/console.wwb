@@ -2,7 +2,8 @@
 
 namespace WasmWrangler.Interop
 {
-    interface console : Global
+    [Global]
+    class console
     {
         JSObject memory { get; }
         

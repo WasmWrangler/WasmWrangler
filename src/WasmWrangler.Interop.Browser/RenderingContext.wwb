@@ -1,8 +1,0 @@
-﻿using WebAssembly;
-
-namespace WasmWrangler.Interop.Browser
-{
-    interface RenderingContext : Wrapper
-    {
-    }
-}

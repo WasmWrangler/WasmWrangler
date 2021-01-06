@@ -2,7 +2,8 @@
 
 namespace WasmWrangler.Interop.Browser
 {
-    interface HTMLElement : Wrapper
+    [Wrapper]
+    class HTMLElement
     {
         string innerText { get; set; }
 

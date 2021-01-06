@@ -2,7 +2,8 @@
 
 namespace WasmWrangler.Interop.Browser
 {
-    interface document : Global
+    [Global]
+    class document
     {
         HTMLElement? getElementById(string element);
 

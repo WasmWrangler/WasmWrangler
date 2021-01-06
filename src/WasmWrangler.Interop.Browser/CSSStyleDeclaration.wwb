@@ -2,7 +2,8 @@
 
 namespace WasmWrangler.Interop.Browser
 {
-    interface CSSStyleDeclaration : Wrapper
+    [Wrapper]
+    class CSSStyleDeclaration
     {
         string? alignContent { get; set; }
         string? alignItems { get; set; }
