@@ -16,10 +16,11 @@
     </div>
 
     <div id="app" style="display:none;" class="jumbotron">
-        <h1>Please look in the console of the broswer in order to see the output.</h1>
-        <button id="button" class="btn btn-primary" onclick="Program.invokeStaticMethod('IncrementClickCount')">Click me!</button>
-
-        <canvas id="canvas"></canvas>
+        <div class="grid">
+            <h1>Please look in the console of the broswer in order to see the output.</h1>
+            <button id="button" class="btn btn-primary" onclick="Program.invokeStaticMethod('IncrementClickCount')">Click me!</button>
+            <canvas id="canvas"></canvas>
+        </div>
     </div>
 
     <!-- You need to include wasmwrangler.js first -->

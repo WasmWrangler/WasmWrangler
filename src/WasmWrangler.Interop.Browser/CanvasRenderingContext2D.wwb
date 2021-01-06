@@ -1,0 +1,15 @@
+﻿using WebAssembly;
+
+namespace WasmWrangler.Interop.Browser
+{
+    interface CanvasRenderingContext2D : Wrapper<RenderingContext>
+    {
+        string fillStyle { get; set; }
+
+        void clearRect(int x, int y, int w, int h);
+
+        void fillRect(int x, int y, int w, int h);
+        
+        void strokeRect(int x, int y, int w, int h);
+    }
+}

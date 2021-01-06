@@ -6,9 +6,11 @@ namespace WasmWrangler.Interop.Browser
 	{
 		public static void Initialize()
 		{
+			WasmWrangler.Interop.Browser.CanvasRenderingContext2D.Initialize();
 			WasmWrangler.Interop.Browser.CSSStyleDeclaration.Initialize();
-			WasmWrangler.Interop.Browser.HTMLCanvas.Initialize();
+			WasmWrangler.Interop.Browser.HTMLCanvasElement.Initialize();
 			WasmWrangler.Interop.Browser.HTMLElement.Initialize();
+			WasmWrangler.Interop.Browser.RenderingContext.Initialize();
 		}
 	}
 }

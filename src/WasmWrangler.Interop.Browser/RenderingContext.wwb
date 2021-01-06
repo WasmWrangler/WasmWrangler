@@ -2,7 +2,7 @@
 
 namespace WasmWrangler.Interop.Browser
 {
-    interface HTMLCanvas : Wrapper<HTMLElement>
-    {        
+    interface RenderingContext : Wrapper
+    {
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using WasmWrangler.Interop;
 using WasmWrangler.Interop.Browser;
 
 namespace HelloWorld
@@ -18,9 +17,13 @@ namespace HelloWorld
             var app = document.getElementById("app");
             app!.style.display = "block";
 
-            var canvas = document.getElementById<HTMLCanvas>("canvas");
-            if (canvas != null)
-                console.info(canvas);
+            var canvas = document.getElementById<HTMLCanvasElement>("canvas");
+            canvas!.width = 400;
+            canvas!.height = 300;
+
+            var context = canvas!.getContext<CanvasRenderingContext2D>("2d");
+            context!.fillStyle = "black";
+            context!.fillRect(0, 0, 400, 300);
         }
 
         public static void IncrementClickCount()

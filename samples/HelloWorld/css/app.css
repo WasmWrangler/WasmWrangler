@@ -17,3 +17,12 @@ body {
 #loading .progress {
     grid-column: 1 / span 2;
 }
+
+#app .grid {
+    display: grid;
+    justify-items: center;
+}
+
+#app .grid button {
+    margin-bottom: 20px;
+}
