@@ -1,0 +1,51 @@
+﻿using WebAssembly;
+
+namespace WasmWrangler.Interop
+{
+    interface console : Global
+    {
+        JSObject memory { get; }
+        
+        void assert(bool? condition, params object[] data);
+        
+        void clear();
+        
+        void count(string? label = null);
+        
+        void countReset(string? label = null);
+        
+        void debug(params object[] data);
+        
+        void dir(object? item = null, object? options = null);
+
+        void dirxml(params object[] data);
+
+        void error(params object[] data);
+
+        void exception(string? message = null, params object[] optionalParams);
+
+        void group(params object[] data);
+
+        void groupCollapsed(params object[] data);
+
+        void groupEnd();
+
+        void info(params object[] data);
+
+        void log(params object[] data);
+        
+        void table(object? tabularData = null, string[]? properties = null);
+              
+        void time(string? label = null);
+        
+        void timeEnd(string? label = null);
+        
+        void timeLog(string? label = null, params object[] data);
+        
+        void timeStamp(string? label = null);
+        
+        void trace(params object[] data);
+        
+        void warn(params object[] data);
+    }
+}

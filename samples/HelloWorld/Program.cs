@@ -1,4 +1,5 @@
 ﻿using System;
+using WasmWrangler.Interop;
 using WasmWrangler.Interop.Browser;
 
 namespace HelloWorld

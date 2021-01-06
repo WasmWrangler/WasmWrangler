@@ -1,0 +1,12 @@
+﻿using WebAssembly;
+
+namespace WasmWrangler.Interop.Browser
+{
+    interface HTMLElement : Wrapper
+    {
+        string innerText { get; set; }
+
+        [Wrap(JSObject)]
+        CSSStyleDeclaration style { get; }
+    }
+}

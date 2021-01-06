@@ -1,0 +1,8 @@
+﻿using WebAssembly;
+
+namespace WasmWrangler.Interop.Browser
+{
+    interface HTMLCanvas : Wrapper<HTMLElement>
+    {        
+    }
+}

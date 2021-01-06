@@ -1,0 +1,11 @@
+﻿using WebAssembly;
+
+namespace WasmWrangler.Interop.Browser
+{
+    interface document : Global
+    {
+        HTMLElement? getElementById(string element);
+
+        T? getElementById<T>(string element) where T: HTMLElement;
+    }
+}
