@@ -19,6 +19,8 @@ namespace WasmWrangler.BindingGenerator
 
         public void DecreaseIndent() => _indentLevel--;
 
+        public string GetIndent() => new string('\t', _indentLevel);
+
         public void Append(string value)
         {
             EnsureIndent();
@@ -41,7 +43,7 @@ namespace WasmWrangler.BindingGenerator
         private void EnsureIndent()
         {
             if (_isNewLine && _indentLevel > 0)
-                _sb.Append(new string('\t', _indentLevel));
+                _sb.Append(GetIndent());
 
             _isNewLine = false;
         }

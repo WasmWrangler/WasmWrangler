@@ -260,6 +260,9 @@ namespace WasmWrangler.BindingGenerator
 
         private static void GenerateMethod(Context context, OutputBuffer output, MethodDeclarationSyntax method, bool asStatic)
         {
+            if (method.HasDocumentation())
+                output.AppendLine(method.GetDocumentation(output.GetIndent()));
+
             output.Append($"public ");
 
             if (asStatic)
@@ -313,6 +316,9 @@ namespace WasmWrangler.BindingGenerator
 
         private static void GenerateProperty(Context context, OutputBuffer output, PropertyDeclarationSyntax property, bool asStatic)
         {
+            if (property.HasDocumentation())
+                output.AppendLine(property.GetDocumentation(output.GetIndent()));
+
             if (property.AccessorList == null)
                 throw new InvalidOperationException(CreateErrorMessage(property, $"AccessorList was expected."));
 

@@ -10,18 +10,28 @@ namespace WasmWrangler.Interop.Browser
 
 		internal HTMLCanvasElement(object obj) : base(obj) { }
 
+		/// <summary>
+		/// Gets or sets the height of a canvas element on a document.
+		/// </summary>
 		public int height
 		{
 			get => _js.GetObjectProperty<int>(nameof(height));
 			set => _js.SetObjectProperty(nameof(height), value);
 		}
 
+		/// <summary>
+		/// Gets or sets the width of a canvas element on a document.
+		/// </summary>
 		public int width
 		{
 			get => _js.GetObjectProperty<int>(nameof(width));
 			set => _js.SetObjectProperty(nameof(width), value);
 		}
 
+		/// <summary>
+		/// Returns an object that provides methods and properties for drawing and manipulating images and graphics on a canvas element in a document. A context object includes information about colors, line widths, fonts, and other graphic parameters that can be drawn on a canvas.
+		/// </summary>
+		/// <param name="contextId">The identifier (ID) of the type of canvas to create. Internet Explorer 9 and Internet Explorer 10 support only a 2-D context using canvas.getContext("2d"); IE11 Preview also supports 3-D or WebGL context using canvas.getContext("experimental-webgl");</param>
 		public T? getContext<T>(string contextId, object? options = null)
 			where T: class, RenderingContext
 		{
