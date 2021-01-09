@@ -55,3 +55,9 @@ src/WasmWrangler/mono-wasm.zip
 src/WasmWrangler/build/js/**/*.d.ts
 src/WasmWrangler/build/js/**/*.js
 src/WasmWrangler/build/js/**/*.js.map
+
+# typescript.js is big
+ext/typescript/typescript.js
+
+# td-dts-to-json output
+ext/types/**/*.json
