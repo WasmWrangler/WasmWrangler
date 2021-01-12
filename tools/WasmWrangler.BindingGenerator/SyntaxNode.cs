@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace WasmWrangler.BindingGenerator
 {
@@ -16,11 +12,17 @@ namespace WasmWrangler.BindingGenerator
 
         public string escapedText { get; set; } = "";
 
+        public List<SyntaxNode>? heritageClauses { get; set; } = null;
+
+        public List<SyntaxNode>? jsDoc { get; set; } = null;
+
+        public List<SyntaxNode>? members { get; set; } = null;
+        
         public SyntaxNode? name { get; set; } = null;
 
         public List<SyntaxNode>? statements { get; set; } = null;
 
-        public List<SyntaxNode>? members { get; set; } = null;
+        public SyntaxNode? questionToken { get; set; } = null;
 
         public override string ToString()
         {
