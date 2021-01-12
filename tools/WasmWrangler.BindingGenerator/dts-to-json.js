@@ -1,8 +1,8 @@
 // Example Usage:
-// node .\tools\ts-dts-to-json.js .\ext\types\lib.dom.d.ts > .\ext\types\lib.dom.d.ts.json
+// node .\tools\WasmWrangler.BindingGenerator\dts-to-json.js .\ext\types\lib.dom.d.ts > .\ext\types\lib.dom.json
 
 const fs = require('fs');
-const ts = require(__dirname + '/../ext/typescript/typescript.min');
+const ts = require(__dirname + '/../../ext/typescript/typescript.min');
 const process = require('process');
 
 const source = fs.readFileSync(process.argv[2], 'utf-8');
