@@ -2,7 +2,7 @@
   "profiles": {
     "WasmWrangler.BindingGenerator": {
       "commandName": "Project",
-      "commandLineArgs": "..\\..\\..\\..\\ext\\types\\lib.dom.json"
+      "commandLineArgs": "..\\..\\..\\..\\ext\\types\\lib.dom.d.ts"
     }
   }
 }

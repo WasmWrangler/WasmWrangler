@@ -1,13 +1,21 @@
-// Example Usage:
-// node .\tools\WasmWrangler.BindingGenerator\dts-to-json.js .\ext\types\lib.dom.d.ts > .\ext\types\lib.dom.json
+// This node script is called from the WasmWrangler.BindingGenerator program.
+// Inspiration for this script taken from StackOverflow: https://stackoverflow.com/a/20197641/26566
 
 const fs = require('fs');
-const ts = require(__dirname + '/../../ext/typescript/typescript.min');
+const ts = require(__dirname + '/typescript.min');
 const process = require('process');
 
 const source = fs.readFileSync(process.argv[2], 'utf-8');
 
 const sourceFile = ts.createSourceFile(process.argv[2], source, ts.ScriptTarget.Latest, true);
+
+let nextId = 0;
+function addId(node) {
+    nextId++;
+    node.id = nextId;
+    ts.forEachChild(node, addId);
+}
+addId(sourceFile);
 
 // No need to save the source again.
 delete sourceFile.text;

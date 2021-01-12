@@ -4,6 +4,8 @@ namespace WasmWrangler.BindingGenerator
 {
     public class SyntaxNode
     {
+        public int id { get; set; }
+
         public int pos { get; set; }
         
         public int end { get; set; }
@@ -12,6 +14,8 @@ namespace WasmWrangler.BindingGenerator
 
         public string escapedText { get; set; } = "";
 
+        public SyntaxNode? expression { get; set; } = null;
+
         public List<SyntaxNode>? heritageClauses { get; set; } = null;
 
         public List<SyntaxNode>? jsDoc { get; set; } = null;
@@ -19,14 +23,16 @@ namespace WasmWrangler.BindingGenerator
         public List<SyntaxNode>? members { get; set; } = null;
         
         public SyntaxNode? name { get; set; } = null;
+        
+        public SyntaxNode? questionToken { get; set; } = null;
 
         public List<SyntaxNode>? statements { get; set; } = null;
 
-        public SyntaxNode? questionToken { get; set; } = null;
+        public List<SyntaxNode>? types { get; set; } = null;
 
         public override string ToString()
         {
-            return $"[{kind}:{pos}:{end}] {escapedText}";
+            return $"[{id}:{kind}:{pos}-{end}] {escapedText}";
         }
     }
 }
