@@ -28,6 +28,8 @@ namespace WasmWrangler.BindingGenerator
 
         public List<SyntaxNode>? statements { get; set; } = null;
 
+        public SyntaxNode? type { get; set; } = null;
+
         public List<SyntaxNode>? types { get; set; } = null;
 
         public override string ToString()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,6 +15,12 @@ namespace WasmWrangler.BindingGenerator
         {
             if (!kinds.Contains(node.kind))
                 throw new InvalidOperationException($"Expected {string.Join(" | ", kinds)} at node {GetLocation(node)}.");
+        }
+
+        private static void EnsureNotNull(SyntaxNode parent, [NotNull] SyntaxNode? node, string name)
+        {
+            if (node == null)
+                throw new InvalidOperationException($"Expected {name} not to be null at node {GetLocation(parent)}.");
         }
 
         public static void Parse(Context context, SyntaxNode node)
@@ -38,6 +45,8 @@ namespace WasmWrangler.BindingGenerator
 
         private static void ParseInterfaceDeclaration(Context context, SyntaxNode node)
         {
+            EnsureNotNull(node, node.name, nameof(node.name));
+
             var @interface = new InterfaceInfo()
             {
                 Name = node.name!.escapedText,
@@ -47,15 +56,66 @@ namespace WasmWrangler.BindingGenerator
             {
                 foreach (var heritageClause in node.heritageClauses)
                 {
-                    foreach (var type in heritageClause.types!)
+                    if (heritageClause.types == null)
+                        continue;
+
+                    foreach (var type in heritageClause.types)
                     {
                         EnsureKind(type, SyntaxNodeKind.ExpressionWithTypeArguments);
-                        @interface.Extends.Add(type.expression!.escapedText);
+                        EnsureNotNull(type, type.expression, nameof(type.expression));
+                        @interface.Extends.Add(type.expression.escapedText);
+                    }
+                }
+            }
+
+            if (node.members != null)
+            {
+                foreach (var member in node.members)
+                {
+                    switch (member.kind)
+                    {
+                        case SyntaxNodeKind.PropertySignature:
+                            @interface.Properties.Add(ParsePropertySignature(context, member));
+                            break;
+
+                        //case SyntaxNodeKind.Me:
+                        //    @interface.Properties.Add(ParsePropertySignature(context, member));
+                        //    break;
                     }
                 }
             }
 
             context.Interfaces.Add(@interface);
+        }
+
+        private static PropertyInfo ParsePropertySignature(Context context, SyntaxNode node)
+        {
+            EnsureNotNull(node, node.name, nameof(node.name));
+            EnsureNotNull(node, node.type, nameof(node.type));
+
+            return new PropertyInfo()
+            {
+                Name = node.name.escapedText,
+                Type = ParseType(context, node.type)
+            };
+        }
+
+        private static string ParseType(Context context, SyntaxNode node)
+        {
+            switch (node.kind)
+            {
+                case SyntaxNodeKind.BooleanKeyword:
+                    return "bool";
+
+                case SyntaxNodeKind.NumberKeyword:
+                    return "int";
+
+                case SyntaxNodeKind.StringKeyword:
+                    return "string";
+
+                default:
+                    return "?";
+            }
         }
     }
 }

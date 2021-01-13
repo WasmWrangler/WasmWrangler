@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace WasmWrangler.BindingGenerator
 {
@@ -10,7 +6,11 @@ namespace WasmWrangler.BindingGenerator
     {
         public string Name { get; init; } = "";
 
-        public List<string> Extends { get; } = new List<string>();
+        public List<string> Extends { get; } = new();
+
+        public List<PropertyInfo> Properties { get; } = new();
+
+        public List<MethodInfo> Methods { get; } = new();
 
         public override string ToString() => Name;
     }
