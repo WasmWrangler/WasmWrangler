@@ -23,11 +23,18 @@ namespace WasmWrangler.BindingGenerator
                 throw new InvalidOperationException($"Expected {name} not to be null at node {GetLocation(parent)}.");
         }
 
+        private static void EnsureNotNull(SyntaxNode parent, [NotNull] List<SyntaxNode>? node, string name)
+        {
+            if (node == null)
+                throw new InvalidOperationException($"Expected {name} not to be null at node {GetLocation(parent)}.");
+        }
+
         public static void Parse(Context context, SyntaxNode node)
         {
             EnsureKind(node, SyntaxNodeKind.SourceFile);
+            EnsureNotNull(node, node.statements, nameof(node.statements));
 
-            foreach (var statement in node.statements!)
+            foreach (var statement in node.statements)
             {
                 ParseStatement(context, statement);
             }
@@ -49,7 +56,7 @@ namespace WasmWrangler.BindingGenerator
 
             var @interface = new InterfaceInfo()
             {
-                Name = node.name!.escapedText,
+                Name = node.name.escapedText,
             };
 
             if (node.heritageClauses != null)
