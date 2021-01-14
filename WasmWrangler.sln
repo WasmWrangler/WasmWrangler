@@ -61,7 +61,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWrangler.Interop.Browse
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{ACC68402-CB58-BB47-52E4-27007BEEE58E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WasmWrangler.BindingGenerator.csproj", "tools\WasmWrangler.BindingGenerator\WasmWrangler.BindingGenerator.csproj", "{5003E810-CA7E-B4B2-43FB-2A678E88ACEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TypeScriptGenerator", "tools\TypeScriptGenerator\TypeScriptGenerator.csproj", "{5003E810-CA7E-B4B2-43FB-2A678E88ACEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

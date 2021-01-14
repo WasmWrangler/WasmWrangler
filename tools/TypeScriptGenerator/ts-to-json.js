@@ -1,4 +1,4 @@
-// This node script is called from the WasmWrangler.BindingGenerator program.
+// This node script is called from the TypeScriptGenerator program.
 // Inspiration for this script taken from StackOverflow: https://stackoverflow.com/a/20197641/26566
 
 const fs = require('fs');

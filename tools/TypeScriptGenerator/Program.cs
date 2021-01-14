@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
-using System.Text.Json;
 
-namespace WasmWrangler.BindingGenerator
+namespace TypeScriptGenerator
 {
     class Program
     {
@@ -12,7 +9,7 @@ namespace WasmWrangler.BindingGenerator
         {
             var inputFileName = args[0];
 
-            var root = DTSToJson.Convert(Path.GetFullPath(inputFileName));
+            var root = TSToJson.Convert(Path.GetFullPath(inputFileName));
 
             var context = new Context()
             {

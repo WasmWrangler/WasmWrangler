@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace WasmWrangler.BindingGenerator
+namespace TypeScriptGenerator
 {
     public static class SyntaxTreeParser
     {

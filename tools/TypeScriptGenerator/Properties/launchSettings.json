@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "WasmWrangler.BindingGenerator": {
+    "TypeScriptGenerator": {
       "commandName": "Project",
       "commandLineArgs": "..\\..\\..\\..\\ext\\types\\lib.dom.d.ts"
     }

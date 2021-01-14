@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 
-namespace WasmWrangler.BindingGenerator
+namespace TypeScriptGenerator
 {
-    public static class DTSToJson
+    public static class TSToJson
     {
         public static SyntaxNode Convert(string inputFile)
         {
@@ -16,7 +16,7 @@ namespace WasmWrangler.BindingGenerator
             {
                 using var process = new Process();
                 process.StartInfo.FileName = "node";
-                process.StartInfo.Arguments = $"dts-to-json.js {inputFile}";
+                process.StartInfo.Arguments = $"ts-to-json.js {inputFile}";
                 process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.UseShellExecute = false;
 

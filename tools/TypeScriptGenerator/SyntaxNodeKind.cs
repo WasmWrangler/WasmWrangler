@@ -1,4 +1,4 @@
-﻿namespace WasmWrangler.BindingGenerator
+﻿namespace TypeScriptGenerator
 {
     public static class SyntaxNodeKind
     {
