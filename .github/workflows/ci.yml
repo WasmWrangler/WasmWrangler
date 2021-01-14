@@ -26,7 +26,12 @@ jobs:
       run: dotnet msbuild build\WasmEnsureSDKAvailable.proj -nologo
 
     - name: Restore
-      run: dotnet msbuild build\Build.proj -nologo -v:n -t:Restore
+      run: |
+        dotnet msbuild build\Build.proj -nologo -v:n -t:Restore
+        dotnet tool install -g libman
+        cd ext
+        libman restore
+        cd ..
 
     - name: Build
       run: dotnet msbuild build\Build.proj -nologo -v:n -t:Build
