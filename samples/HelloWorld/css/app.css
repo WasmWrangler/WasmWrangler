@@ -8,7 +8,7 @@ body {
     align-items: center;
 }
 
-#loading {
+#loading .content {
     display: grid;
     grid-template-columns: auto 1fr;
     grid-column-gap: 15px;

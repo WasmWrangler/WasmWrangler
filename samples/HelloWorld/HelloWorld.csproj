@@ -11,7 +11,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
 
-    <None Include="$(RepositoryRootDirectory)/ext/twitter-bootstrap/css/bootstrap.min.css" Link="css/bootstrap.min.css" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="$(RepositoryRootDirectory)/ext/halfmoon/css/halfmoon.min.css" Link="css/halfmoon.min.css" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="$(RepositoryRootDirectory)/ext/halfmoon/js/halfmoon.min.js" Link="js/halfmoon.min.js" CopyToOutputDirectory="PreserveNewest" />
 
     <None Include="$(RepositoryRootDirectory)/ext/font-awesome/css/fontawesome.min.css" Link="css/fontawesome.min.css" CopyToOutputDirectory="PreserveNewest" />
     <None Include="$(RepositoryRootDirectory)/ext/font-awesome/css/solid.min.css" Link="css/fontawesome.solid.min.css" CopyToOutputDirectory="PreserveNewest" />

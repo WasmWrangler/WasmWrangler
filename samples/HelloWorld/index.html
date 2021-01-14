@@ -1,31 +1,37 @@
 <!doctype html>
 <html lang="en-us">
 <head>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/halfmoon.min.css">
     <link rel="stylesheet" href="css/fontawesome.min.css">
     <link rel="stylesheet" href="css/fontawesome.solid.min.css">
     <link rel="stylesheet" href="css/app.css" />
 </head>
 <body>
-    <div id="loading" class="jumbotron">
-        <h1><span class="fas fa-spinner fa-spin"></span></h1>
-        <h1>Please wait while the application is loaded...</h1>
-        <div class="progress">
-            <div id="loading-progress" class="progress-bar" role="progressbar"></div>
+    <div id="loading" class="card p-0">
+        <div class="content">
+            <h1><span class="fas fa-spinner fa-spin"></span></h1>
+            <h1>Please wait while the application is loaded...</h1>
+            <div class="progress">
+                <div id="loading-progress" class="progress-bar" role="progressbar"></div>
+            </div>
         </div>
     </div>
 
-    <div id="app" style="display:none;" class="jumbotron">
-        <div class="grid">
-            <h1>Please look in the console of the broswer in order to see the output.</h1>
-            <button id="button" class="btn btn-primary" onclick="Program.invokeStaticMethod('IncrementClickCount')">Click me!</button>
-            <canvas id="canvas"></canvas>
+    <div id="app" style="display:none;" class="card p-0">
+        <div class="content">
+            <div class="grid">
+                <h1>Please look in the console of the broswer in order to see the output.</h1>
+                <button id="button" class="btn btn-primary" onclick="Program.invokeStaticMethod('IncrementClickCount')">Click me!</button>
+                <canvas id="canvas"></canvas>
+            </div>
         </div>
     </div>
+
+    <script type="text/javascript" src="js/halfmoon.min.js"></script>
 
     <!-- You need to include wasmwrangler.js first -->
     <script type="text/javascript" src="wasmwrangler.js"></script>
-    
+
     <script type="text/javascript">
         WasmWrangler.initialize({
             onLoadProgress: (loaded, total) => {
