@@ -4,7 +4,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
-namespace WasmWrangler.BindingGenerator
+namespace BindingGenerator
 {
     public static class SyntaxNodeExtensions
     {

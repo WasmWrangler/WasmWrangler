@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace WasmWrangler.BindingGenerator
+namespace BindingGenerator
 {
     public class OutputBuffer
     {
