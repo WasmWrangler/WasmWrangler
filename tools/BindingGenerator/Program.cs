@@ -30,7 +30,7 @@ namespace BindingGenerator
                 Console.WriteLine($"=== {directory} ===");
                 var context = new Context();
 
-                foreach (var inputFile in Directory.EnumerateFiles(directory, "*.wwb", SearchOption.AllDirectories))
+                foreach (var inputFile in Directory.EnumerateFiles(directory, "*.bind", SearchOption.AllDirectories))
                     WriteBinding(context, inputFile);
 
                 WriteAssemblyInitializer(context, directory);
