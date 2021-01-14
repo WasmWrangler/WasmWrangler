@@ -28,7 +28,7 @@ jobs:
     - name: Restore
       run: |
         dotnet msbuild build\Build.proj -nologo -v:n -t:Restore
-        dotnet tool install -g libman
+        dotnet tool install -g Microsoft.Web.LibraryManager.Cli
         cd ext
         libman restore
         cd ..
