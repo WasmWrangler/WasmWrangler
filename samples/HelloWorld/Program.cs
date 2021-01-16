@@ -24,6 +24,11 @@ namespace HelloWorld
             var context = canvas!.getContext<CanvasRenderingContext2D>("2d");
             context!.fillStyle = "black";
             context!.fillRect(0, 0, 400, 300);
+            context!.beginPath();
+            context!.moveTo(0, 0);
+            context!.lineTo(400, 300);
+            context!.strokeStyle = "red";
+            context!.stroke();
         }
 
         public static void IncrementClickCount()

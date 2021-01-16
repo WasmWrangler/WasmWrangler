@@ -24,6 +24,22 @@ namespace WasmWrangler.Interop.Browser
 			set => _js.SetObjectProperty(nameof(fillStyle), value);
 		}
 
+		public string strokeStyle
+		{
+			get => _js.GetObjectProperty<string>(nameof(strokeStyle));
+			set => _js.SetObjectProperty(nameof(strokeStyle), value);
+		}
+
+		public void beginPath()
+		{
+			_js.Invoke(nameof(beginPath));
+		}
+
+		public void clip(string? fillRule)
+		{
+			_js.Invoke(nameof(clip), fillRule);
+		}
+
 		public void clearRect(int x, int y, int w, int h)
 		{
 			_js.Invoke(nameof(clearRect), x, y, w, h);
@@ -32,6 +48,31 @@ namespace WasmWrangler.Interop.Browser
 		public void fillRect(int x, int y, int w, int h)
 		{
 			_js.Invoke(nameof(fillRect), x, y, w, h);
+		}
+
+		public void lineTo(int x, int y)
+		{
+			_js.Invoke(nameof(lineTo), x, y);
+		}
+
+		public void lineTo(float x, float y)
+		{
+			_js.Invoke(nameof(lineTo), x, y);
+		}
+
+		public void moveTo(int x, int y)
+		{
+			_js.Invoke(nameof(moveTo), x, y);
+		}
+
+		public void moveTo(float x, float y)
+		{
+			_js.Invoke(nameof(moveTo), x, y);
+		}
+
+		public void stroke()
+		{
+			_js.Invoke(nameof(stroke));
 		}
 
 		public void strokeRect(int x, int y, int w, int h)

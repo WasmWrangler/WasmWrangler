@@ -8,10 +8,26 @@ namespace WasmWrangler.Interop.Browser
     {
         string fillStyle { get; set; }
 
+        string strokeStyle { get; set; }
+
+        void beginPath();
+
+        void clip(string? fillRule);
+
         void clearRect(int x, int y, int w, int h);
 
         void fillRect(int x, int y, int w, int h);
         
+        void lineTo(int x, int y);
+
+        void lineTo(float x, float y);
+
+        void moveTo(int x, int y);
+
+        void moveTo(float x, float y);
+
+        void stroke();
+
         void strokeRect(int x, int y, int w, int h);
     }
 }
