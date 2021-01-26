@@ -53,11 +53,14 @@
   </Target>
 
   <Target Name="WasmWriteJs">
-    <PropertyGroup>      
+    <Exec
+      Command="$(WasmWranglerBuildCommand) UpdateDotnetJs &quot;$(WasmOutputPath)/dotnet.js&quot;" />
+
+    <PropertyGroup>
       <_WasmWranglerJs>
-$([System.IO.File]::ReadAllText(&quot;$(MSBuildThisFileDirectory)/js/WasmWrangler.js&quot;))
-$([System.IO.File]::ReadAllText(&quot;$(WasmOutputPath)/managed/package.js&quot;))
-$([System.IO.File]::ReadAllText(&quot;$(WasmOutputPath)/dotnet.js&quot;))
+        $([System.IO.File]::ReadAllText(&quot;$(MSBuildThisFileDirectory)/js/WasmWrangler.js&quot;))
+        $([System.IO.File]::ReadAllText(&quot;$(WasmOutputPath)/managed/package.js&quot;))
+        $([System.IO.File]::ReadAllText(&quot;$(WasmOutputPath)/dotnet.js&quot;))
       </_WasmWranglerJs>
     </PropertyGroup>
     

@@ -48,6 +48,15 @@ namespace WasmWrangler.Build
                     }
 
                     return MinifyJs(args[1], args[2]);
+
+                case nameof(UpdateDotnetJs):
+                    if (args.Length < 2)
+                    {
+                        Console.Error.WriteLine($"Please provide 1 argument for {nameof(UpdateDotnetJs)}.");
+                        return 1;
+                    }
+
+                    return UpdateDotnetJs(args[1]);
             }
 
             return 0;
@@ -66,10 +75,10 @@ namespace WasmWrangler.Build
                 var client = new WebClient();
                 var zipPath = sdkPath + ".zip";
                 Console.WriteLine($"Downloading {sdkName} to {zipPath}");
-                
+
                 if (File.Exists(zipPath))
                     File.Delete(zipPath);
-                
+
                 client.DownloadFile(sdkUrl, zipPath);
 
                 if (Directory.Exists(sdkPath))
@@ -132,7 +141,7 @@ namespace WasmWrangler.Build
             var packageDirectory = Path.GetFileName(outputDirectory);
 
             var enableDebugging = debug ? "1" : "0";
-            
+
             var packageJs = $"WasmWrangler._config={{vfs_prefix:\"{packageDirectory}\",deploy_prefix:\"{packageDirectory}\",enable_debugging:{enableDebugging},file_list:[";
             packageJs += string.Join(",", assembliesToPackage.Select(x => $"'{x}'"));
             packageJs += "]};";
@@ -191,6 +200,18 @@ namespace WasmWrangler.Build
                 Console.Error.WriteLine(ex);
                 return 1;
             }
+
+            return 0;
+        }
+
+        private static int UpdateDotnetJs(string fileName)
+        {
+            string source = File.ReadAllText(fileName);
+
+            int index = source.IndexOf("if (ENVIRONMENT_IS_NODE) {");
+            source = source.Insert(index, "ENVIRONMENT_IS_WEB = true; ENVIRONMENT_IS_WORKER = false; ENVIRONMENT_IS_NODE = false; ENVIRONMENT_IS_SHELL = false;" + Environment.NewLine);
+
+            File.WriteAllText(fileName, source);
 
             return 0;
         }
